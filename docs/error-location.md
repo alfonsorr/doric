@@ -15,15 +15,15 @@ val df = List(("hi", 31)).toDF("str", "int")
 // df: DataFrame = [str: string, int: int]
 val col1 = colInt("str")
 // col1: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2631/635151391@18989e0)
+//   Kleisli(doric.types.SparkType$$Lambda$2631/1193887649@18989e0)
 // )
 val col2 = colString("int")
 // col2: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2631/635151391@5ad6f98e)
+//   Kleisli(doric.types.SparkType$$Lambda$2631/1193887649@5ad6f98e)
 // )
 val col3 = colInt("unknown")
 // col3: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2631/635151391@586728e8)
+//   Kleisli(doric.types.SparkType$$Lambda$2631/1193887649@586728e8)
 // )
 ```
 ```scala
