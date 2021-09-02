@@ -15,15 +15,15 @@ val df = List(("hi", 31)).toDF("str", "int")
 // df: DataFrame = [str: string, int: int]
 val col1 = colInt("str")
 // col1: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2631/1193887649@18989e0)
+//   Kleisli(doric.types.SparkType$$Lambda$10995/1756500068@7ed65f30)
 // )
 val col2 = colString("int")
 // col2: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2631/1193887649@5ad6f98e)
+//   Kleisli(doric.types.SparkType$$Lambda$10995/1756500068@41bc44fc)
 // )
 val col3 = colInt("unknown")
 // col3: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2631/1193887649@586728e8)
+//   Kleisli(doric.types.SparkType$$Lambda$10995/1756500068@4d8b9d87)
 // )
 ```
 ```scala
@@ -39,7 +39,7 @@ df.select(col1, col2, col3)
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:75)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:79)
 // 	at repl.MdocSession$App$$anonfun$6.apply(error-location.md:44)
 // 	at repl.MdocSession$App$$anonfun$6.apply(error-location.md:44)
 ```
