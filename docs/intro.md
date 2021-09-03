@@ -3,7 +3,8 @@ title: Doric Documentation
 permalink: docs/
 ---
 
-# Introduction to doric
+# Introduction to Doric
+## First steps with Doric
 
 Doric is very easy to work with, follow the [installation guide]({{ site.baseurl }}{% link docs/installation.md %})
 first.
@@ -15,13 +16,13 @@ Then just import doric to your code
 import doric._
 ```
 
-If you have basic knowlege of spark you have to change the way to reference to columns, only adding the expected type of
+If you have basic knowledge of spark you have to change the way to reference to columns, only adding the expected type of
 the column.
 
 ```scala
 val stringCol = col[String]("str")
 // stringCol: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2630/2087974216@34f2d3a6)
+//   Kleisli(doric.types.SparkType$$Lambda$2630/336410485@1f7853af)
 // )
 ```
 
@@ -73,8 +74,6 @@ df.select(wrongName)
 // 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
 // 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
 // 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:77)
-// 	... 2 more
 ```
 
 ```scala
@@ -101,8 +100,6 @@ df.select(wrongType)
 // 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
 // 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
 // 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:77)
-// 	... 2 more
 ```
 This type of errors are obtained in runtime, but now that we know the exact type of the column,
 we can operate according to the type.
@@ -110,7 +107,7 @@ we can operate according to the type.
 ```scala
 val concatCol = concat(stringCol, stringCol)
 // concatCol: DoricColumn[String] = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2639/1242262502@30b075b9)
+//   Kleisli(cats.data.Kleisli$$Lambda$2639/2105615295@53cba89f)
 // )
 df.select(concatCol).show()
 // +----------------+
@@ -135,7 +132,7 @@ val stringPlusInt = col[Int]("int") + col[String]("str")
 ```
  This way we won't have any kind of unexpected behaviour in our process.
  
-## Doric doesn't force you to use it all the time
+## Mix doric and spark
 Doric only adds method to your everyday Spark Dataframe, you can mix spark selects and doric.
 
 ```scala
@@ -169,7 +166,7 @@ df.select(f.col("str").asDoric[String]).show()
 //
 ```
 
-But we recomend to use allways the columns selectors from doric to prevent errors that doric can detect in compile time
+But we recomend to use always the columns selectors from doric to prevent errors that doric can detect in compile time
 ```scala
 val sparkToDoricColumn = (f.col("str") + f.lit(true)).asDoric[String]
 df.select(sparkToDoricColumn).show
@@ -203,54 +200,6 @@ df.select(sparkToDoricColumn).show
 // 	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$mapChildren$1(TreeNode.scala:408)
 // 	at org.apache.spark.sql.catalyst.trees.TreeNode.mapProductIterator(TreeNode.scala:244)
 // 	at org.apache.spark.sql.catalyst.trees.TreeNode.mapChildren(TreeNode.scala:406)
-// 	at org.apache.spark.sql.catalyst.trees.TreeNode.mapChildren(TreeNode.scala:359)
-// 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:339)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.$anonfun$transformExpressionsUp$1(QueryPlan.scala:104)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.$anonfun$mapExpressions$1(QueryPlan.scala:116)
-// 	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:74)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpression$1(QueryPlan.scala:116)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.recursiveTransform$1(QueryPlan.scala:127)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.$anonfun$mapExpressions$3(QueryPlan.scala:132)
-// 	at scala.collection.TraversableLike.$anonfun$map$1(TraversableLike.scala:286)
-// 	at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
-// 	at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
-// 	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
-// 	at scala.collection.TraversableLike.map(TraversableLike.scala:286)
-// 	at scala.collection.TraversableLike.map$(TraversableLike.scala:279)
-// 	at scala.collection.AbstractTraversable.map(Traversable.scala:108)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.recursiveTransform$1(QueryPlan.scala:132)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.$anonfun$mapExpressions$4(QueryPlan.scala:137)
-// 	at org.apache.spark.sql.catalyst.trees.TreeNode.mapProductIterator(TreeNode.scala:244)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.mapExpressions(QueryPlan.scala:137)
-// 	at org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionsUp(QueryPlan.scala:104)
-// 	at org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis$1(CheckAnalysis.scala:152)
-// 	at org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis$1$adapted(CheckAnalysis.scala:93)
-// 	at org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:184)
-// 	at org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis(CheckAnalysis.scala:93)
-// 	at org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis$(CheckAnalysis.scala:90)
-// 	at org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:155)
-// 	at org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:176)
-// 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:228)
-// 	at org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:173)
-// 	at org.apache.spark.sql.execution.QueryExecution.$anonfun$analyzed$1(QueryExecution.scala:73)
-// 	at org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:111)
-// 	at org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:143)
-// 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:775)
-// 	at org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:143)
-// 	at org.apache.spark.sql.execution.QueryExecution.analyzed$lzycompute(QueryExecution.scala:73)
-// 	at org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:71)
-// 	at org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:63)
-// 	at org.apache.spark.sql.Dataset$.$anonfun$ofRows$1(Dataset.scala:90)
-// 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:775)
-// 	at org.apache.spark.sql.Dataset$.ofRows(Dataset.scala:88)
-// 	at org.apache.spark.sql.Dataset.withPlan(Dataset.scala:3715)
-// 	at org.apache.spark.sql.Dataset.select(Dataset.scala:1462)
-// 	at doric.DoricColumn$.$anonfun$apply$1(DoricColumn.scala:29)
-// 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
-// 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
-// 	at cats.data.Kleisli.$anonfun$map$1(Kleisli.scala:40)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:77)
-// 	... 3 more
 ```
 
 In spark the sum of a string with a boolean will throw an error in runtime. In doric this code won't be able to compile.
@@ -269,15 +218,15 @@ We know that doric can be seen as an extra boilerplate to get the columns, that'
 ```scala
 colString("str") // similar to col[String]("str")
 // res6: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2630/2087974216@49318c2a)
+//   Kleisli(doric.types.SparkType$$Lambda$2630/336410485@6287e312)
 // ) // similar to col[String]("str")
 colInt("int") // similar to col[Int]("int")
 // res7: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2630/2087974216@17adbecf)
+//   Kleisli(doric.types.SparkType$$Lambda$2630/336410485@6a450cb5)
 // ) // similar to col[Int]("int")
 colArray[Int]("int") // similar to col[Array[Int]]("int")
 // res8: DoricColumn[Array[Int]] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2630/2087974216@59eb987a)
+//   Kleisli(doric.types.SparkType$$Lambda$2630/336410485@c4bb119)
 // )
 ```
 
@@ -323,15 +272,15 @@ Doric's way
 ```scala
 val dArrCol: DoricColumn[Array[Int]] = col[Array[Int]]("arr")
 // dArrCol: DoricColumn[Array[Int]] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2630/2087974216@74214ac3)
+//   Kleisli(doric.types.SparkType$$Lambda$2630/336410485@3b45a3e6)
 // )
 val dAddedOne: DoricColumn[Array[Int]] = dArrCol.transform(x => x + 1.lit)
 // dAddedOne: DoricColumn[Array[Int]] = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2639/1242262502@e00c94e)
+//   Kleisli(cats.data.Kleisli$$Lambda$2639/2105615295@7927209f)
 // )
 val dAddedAll: DoricColumn[Int] = dAddedOne.aggregate[Int](0.lit)((x, y) => x + y)
 // dAddedAll: DoricColumn[Int] = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2639/1242262502@b2db8bc)
+//   Kleisli(cats.data.Kleisli$$Lambda$2639/2105615295@283595db)
 // )
 
 dfArrays.select(dAddedOne as "complexTransformation").show
@@ -348,7 +297,7 @@ val complexCol: DoricColumn[Int] = col[Array[Int]]("arr")
   .transform(_ + 1.lit)
   .aggregate(0.lit)(_ + _)
 // complexCol: DoricColumn[Int] = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2639/1242262502@1c0ec502)
+//   Kleisli(cats.data.Kleisli$$Lambda$2639/2105615295@747476f1)
 // )
   
 dfArrays.select(complexCol as "complexTransformation").show
@@ -379,11 +328,11 @@ intDF.select(colS).show
 //
 ```
 
-Doric is a little more strict, forcing to transform this values to literal columns
+Doric is a little stricter, forcing to transform this values to literal columns
 ```scala
 val colD = colInt("int") + 1.lit
 // colD: DoricColumn[Int] = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2639/1242262502@6287e312)
+//   Kleisli(cats.data.Kleisli$$Lambda$2639/2105615295@6238b10a)
 // )
 
 intDF.select(colD).show
@@ -402,11 +351,11 @@ This is de basic flavor to work with doric, but this obvious transformations can
 import doric.implicitConversions.literalConversion
 val colSugarD = colInt("int") + 1
 // colSugarD: DoricColumn[Int] = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2639/1242262502@6a450cb5)
+//   Kleisli(cats.data.Kleisli$$Lambda$2639/2105615295@225b460a)
 // )
 val columConcatLiterals = concat("this", "is","doric") // concat expects DoricColumn[String] values, the conversion puts them as expected
 // columConcatLiterals: DoricColumn[String] = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2639/1242262502@c4bb119)
+//   Kleisli(cats.data.Kleisli$$Lambda$2639/2105615295@26c494d7)
 // ) // concat expects DoricColumn[String] values, the conversion puts them as expected
 
 intDF.select(colSugarD, columConcatLiterals).show
@@ -420,7 +369,7 @@ intDF.select(colSugarD, columConcatLiterals).show
 //
 ```
 
-This conversion will transform any pure scala value, to it's representation in a doric column, only if the type is valid
+This conversion will transform any pure scala value, to its representation in a doric column, only if the type is valid
 ```scala
 colInt("int") + 1f //an integer with a float value cant be directly added in doric
 // error: type mismatch;
