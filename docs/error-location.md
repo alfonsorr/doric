@@ -16,15 +16,15 @@ val df = List(("hi", 31)).toDF("str", "int")
 // df: DataFrame = [str: string, int: int]
 val col1 = colInt("str")
 // col1: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2700/965036719@73234691)
+//   Kleisli(doric.types.SparkType$$Lambda$2701/1397889001@40013051)
 // )
 val col2 = colString("int")
 // col2: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2700/965036719@26d24d7a)
+//   Kleisli(doric.types.SparkType$$Lambda$2701/1397889001@45849604)
 // )
 val col3 = colInt("unknown")
 // col3: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2700/965036719@5a78b52b)
+//   Kleisli(doric.types.SparkType$$Lambda$2701/1397889001@6cbbfe29)
 // )
 ```
 ```scala
@@ -40,7 +40,7 @@ df.select(col1, col2, col3)
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:79)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
 // 	at repl.MdocSession$App$$anonfun$6.apply(error-location.md:44)
 // 	at repl.MdocSession$App$$anonfun$6.apply(error-location.md:44)
 ```
@@ -76,15 +76,15 @@ Us as developers want to abstract from this suffix and focus only in the unique 
 ```scala
 colString("name_user")
 // res2: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2700/965036719@31fe0ce5)
+//   Kleisli(doric.types.SparkType$$Lambda$2701/1397889001@2f61de04)
 // )
 colInt("age_user")
 // res3: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2700/965036719@178dc733)
+//   Kleisli(doric.types.SparkType$$Lambda$2701/1397889001@5f5a33ed)
 // )
 colString("city_user")
 // res4: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2700/965036719@4641f66c)
+//   Kleisli(doric.types.SparkType$$Lambda$2701/1397889001@5b59c3d)
 // )
 ```
 So we can make a function to simplify it:
@@ -106,7 +106,7 @@ userDF.select(userc)
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:79)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
 // 	at repl.MdocSession$App$$anonfun$14.apply(error-location.md:97)
 // 	at repl.MdocSession$App$$anonfun$14.apply(error-location.md:95)
 ```
@@ -136,7 +136,7 @@ userDF.select(age, team)
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:79)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
 // 	at repl.MdocSession$App5$$anonfun$18.apply(error-location.md:153)
 // 	at repl.MdocSession$App5$$anonfun$18.apply(error-location.md:150)
 ```

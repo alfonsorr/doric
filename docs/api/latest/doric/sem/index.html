@@ -127,6 +127,10 @@
                         <a href="ChildColumnNotFound.html" title="">ChildColumnNotFound</a>
                       </li><li class="current-entities indented2">
                         <span class="separator"></span>
+                        <a class="class" href="ColumnMultyTypeError.html" title=""></a>
+                        <a href="ColumnMultyTypeError.html" title="">ColumnMultyTypeError</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
                         <a class="class" href="ColumnTypeError.html" title=""></a>
                         <a href="ColumnTypeError.html" title="">ColumnTypeError</a>
                       </li><li class="current-entities indented2">
@@ -149,7 +153,23 @@
                         <span class="separator"></span>
                         <a class="class" href="SparkErrorWrapper.html" title=""></a>
                         <a href="SparkErrorWrapper.html" title="">SparkErrorWrapper</a>
-                      </li><li name="doric.types" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+                      </li><li name="doric.syntax" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="syntax"></a><a id="syntax:syntax"></a>
+      <span class="permalink">
+      <a href="../../doric/syntax/index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../syntax/index.html"><span class="name">syntax</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="doric">doric</a></dd></dl></div>
+    </li><li name="doric.types" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="types"></a><a id="types:types"></a>
       <span class="permalink">
       <a href="../../doric/types/index.html" title="Permalink">
@@ -197,7 +217,7 @@
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><a href="https://www.scala-lang.org/api/2.12.14/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a>, <a href="https://www.scala-lang.org/api/2.12.14/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></div>
+          <div class="superTypes hiddenContent"><a href="https://www.scala-lang.org/api/2.12.15/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a>, <a href="https://www.scala-lang.org/api/2.12.15/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></div>
         </div></div>
         
 
@@ -273,7 +293,23 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="ChildColumnNotFound.html"><span class="name">ChildColumnNotFound</span></a><span class="params">(<span name="columnName">columnName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="validColumns">validColumns: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+        <a title="" href="ChildColumnNotFound.html"><span class="name">ChildColumnNotFound</span></a><span class="params">(<span name="columnName">columnName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="validColumns">validColumns: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="doric.sem.ColumnMultyTypeError" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ColumnMultyTypeErrorextendsDoricSingleErrorwithProductwithSerializable"></a><a id="ColumnMultyTypeError:ColumnMultyTypeError"></a>
+      <span class="permalink">
+      <a href="../../doric/sem/ColumnMultyTypeError.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ColumnMultyTypeError.html"><span class="name">ColumnMultyTypeError</span></a><span class="params">(<span name="columnName">columnName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="expectedTypes">expectedTypes: <span class="extype" name="scala.List">List</span>[<span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span>]</span>, <span name="foundType">foundType: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
       </span>
       
       
@@ -289,7 +325,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="ColumnTypeError.html"><span class="name">ColumnTypeError</span></a><span class="params">(<span name="columnName">columnName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="expectedType">expectedType: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>, <span name="foundType">foundType: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+        <a title="" href="ColumnTypeError.html"><span class="name">ColumnTypeError</span></a><span class="params">(<span name="columnName">columnName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="expectedType">expectedType: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>, <span name="foundType">foundType: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
       </span>
       
       
@@ -305,7 +341,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="DoricMultiError.html"><span class="name">DoricMultiError</span></a><span class="params">(<span name="functionType">functionType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="errors">errors: <span class="extype" name="cats.data.NonEmptyChain">NonEmptyChain</span>[<a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Throwable">Throwable</span> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+        <a title="" href="DoricMultiError.html"><span class="name">DoricMultiError</span></a><span class="params">(<span name="functionType">functionType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="errors">errors: <span class="extype" name="cats.data.NonEmptyChain">NonEmptyChain</span>[<a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Throwable">Throwable</span> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
       </span>
       
       
@@ -337,7 +373,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="JoinDoricSingleError.html"><span class="name">JoinDoricSingleError</span></a><span class="params">(<span name="sideError">sideError: <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></span>, <span name="isLeft">isLeft: <a href="https://www.scala-lang.org/api/2.12.14/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+        <a title="" href="JoinDoricSingleError.html"><span class="name">JoinDoricSingleError</span></a><span class="params">(<span name="sideError">sideError: <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></span>, <span name="isLeft">isLeft: <a href="https://www.scala-lang.org/api/2.12.15/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
       </span>
       
       
@@ -353,7 +389,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="Location.html"><span class="name">Location</span></a><span class="params">(<span name="fileName">fileName: <span class="extype" name="sourcecode.FileName">FileName</span></span>, <span name="lineNumber">lineNumber: <span class="extype" name="sourcecode.Line">Line</span></span>)</span><span class="result"> extends <a href="https://www.scala-lang.org/api/2.12.14/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+        <a title="" href="Location.html"><span class="name">Location</span></a><span class="params">(<span name="fileName">fileName: <span class="extype" name="sourcecode.FileName">FileName</span></span>, <span name="lineNumber">lineNumber: <span class="extype" name="sourcecode.Line">Line</span></span>)</span><span class="result"> extends <a href="https://www.scala-lang.org/api/2.12.15/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
       </span>
       
       
@@ -369,7 +405,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="SparkErrorWrapper.html"><span class="name">SparkErrorWrapper</span></a><span class="params">(<span name="sparkCause">sparkCause: <span class="extype" name="scala.Throwable">Throwable</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.14/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+        <a title="" href="SparkErrorWrapper.html"><span class="name">SparkErrorWrapper</span></a><span class="params">(<span name="sparkCause">sparkCause: <span class="extype" name="scala.Throwable">Throwable</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
       </span>
       
       
@@ -393,7 +429,7 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a title="" href="Location$.html"><span class="name">Location</span></a><span class="result"> extends <a href="https://www.scala-lang.org/api/2.12.14/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+        <a title="" href="Location$.html"><span class="name">Location</span></a><span class="result"> extends <a href="https://www.scala-lang.org/api/2.12.15/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
       </span>
       
       
@@ -408,9 +444,9 @@
 
         <div id="inheritedMembers">
         <div class="parent" name="scala.AnyRef">
-              <h3>Inherited from <a href="https://www.scala-lang.org/api/2.12.14/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></h3>
+              <h3>Inherited from <a href="https://www.scala-lang.org/api/2.12.15/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
-              <h3>Inherited from <a href="https://www.scala-lang.org/api/2.12.14/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></h3>
+              <h3>Inherited from <a href="https://www.scala-lang.org/api/2.12.15/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></h3>
             </div>
         
         </div>
