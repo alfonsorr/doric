@@ -167,10 +167,6 @@
                         <a href="CollectSyntax.html" title="">CollectSyntax</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
-                        <a class="trait" href="DStruct.html" title=""></a>
-                        <a href="DStruct.html" title="">DStruct</a>
-                      </li><li class="current-entities indented1">
-                        <span class="separator"></span>
                         <a class="class" href="DStructOps.html" title=""></a>
                         <a href="DStructOps.html" title="">DStructOps</a>
                       </li><li class="current-entities indented1">
@@ -535,7 +531,7 @@
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>] to
             <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>]] performed by method ArrowAssoc in scala.Predef.
-            This conversion will take place only if T is a superclass of Any and a subclass of Array[Nothing] with DStruct with Map[Nothing, Nothing] with Boolean with String (T &gt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a> &lt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Array.html#scala.Array" class="extype" name="scala.Array">Array</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <a href="DStruct.html" class="extype" name="doric.DStruct">DStruct</a> with <span class="extype" name="scala.Predef.Map">Map</span>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>, <a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <a href="https://www.scala-lang.org/api/2.12.15/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a> with <span class="extype" name="scala.Predef.String">String</span>).
+            This conversion will take place only if T is a superclass of Any and a subclass of Array[Nothing] with Row with Map[Nothing, Nothing] with Boolean with String (T &gt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a> &lt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Array.html#scala.Array" class="extype" name="scala.Array">Array</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <span class="extype" name="org.apache.spark.sql.Row">Row</span> with <span class="extype" name="scala.Predef.Map">Map</span>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>, <a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <a href="https://www.scala-lang.org/api/2.12.15/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a> with <span class="extype" name="scala.Predef.String">String</span>).
           </dd><dt>Definition Classes</dt><dd>ArrowAssoc</dd><dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
@@ -1202,7 +1198,7 @@ match.
   a reference to the child column of the provided type.</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>] to
             <a href="index.html#DStructOpsextendsAnyRef" class="extmbr" name="doric.DStructOps">doric.DStructOps</a> performed by method DStructOps in doric.syntax.DStructs.
-            This conversion will take place only if T is DStruct (T =:= <a href="DStruct.html" class="extype" name="doric.DStruct">DStruct</a>).
+            This conversion will take place only if T is Row (T =:= <span class="extype" name="org.apache.spark.sql.Row">Row</span>).
           </dd><dt>Definition Classes</dt><dd>DStructOps</dd></dl></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
@@ -1529,7 +1525,10 @@ spaces. The length of binary strings includes binary zeros.
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>] to
             <a href="index.html#LiteralOps[L]extendsAnyRef" class="extmbr" name="doric.LiteralOps">doric.LiteralOps</a>[<a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>]] performed by method LiteralOps in doric.syntax.LiteralConversions.
             This conversion will take place only if an implicit value of type <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>]] is in scope.
-          </dd><dt>Definition Classes</dt><dd>LiteralOps</dd></dl></div>
+          </dd><dt>Definition Classes</dt><dd>LiteralOps</dd><dt>Annotations</dt><dd>
+                <span class="name">@inline</span><span class="args">()</span>
+              
+        </dd></dl></div>
     </li><li name="doric.syntax.StringColumns.StringOperationsSyntax#locate" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="String Type">
       <a id="locate(substr:doric.StringColumn,pos:doric.IntegerColumn):doric.IntegerColumn"></a><a id="locate(StringColumn,IntegerColumn):IntegerColumn"></a>
       <span class="permalink">
@@ -2495,7 +2494,7 @@ casting String to Int, that can be resulted in null types.</p></div><dl class="p
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>] to
             <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.DoricColumn">DoricColumn</a>[<span class="extype" name="doric.DoricColumn.T">T</span>]] performed by method ArrowAssoc in scala.Predef.
-            This conversion will take place only if T is a superclass of Any and a subclass of Array[Nothing] with DStruct with Map[Nothing, Nothing] with Boolean with String (T &gt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a> &lt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Array.html#scala.Array" class="extype" name="scala.Array">Array</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <a href="DStruct.html" class="extype" name="doric.DStruct">DStruct</a> with <span class="extype" name="scala.Predef.Map">Map</span>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>, <a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <a href="https://www.scala-lang.org/api/2.12.15/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a> with <span class="extype" name="scala.Predef.String">String</span>).
+            This conversion will take place only if T is a superclass of Any and a subclass of Array[Nothing] with Row with Map[Nothing, Nothing] with Boolean with String (T &gt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a> &lt;: <a href="https://www.scala-lang.org/api/2.12.15/scala/Array.html#scala.Array" class="extype" name="scala.Array">Array</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <span class="extype" name="org.apache.spark.sql.Row">Row</span> with <span class="extype" name="scala.Predef.Map">Map</span>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>, <a href="https://www.scala-lang.org/api/2.12.15/scala/Nothing.html#scala.Nothing" class="extype" name="scala.Nothing">Nothing</a>] with <a href="https://www.scala-lang.org/api/2.12.15/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a> with <span class="extype" name="scala.Predef.String">String</span>).
           </dd><dt>Definition Classes</dt><dd>ArrowAssoc</dd></dl></div>
     </li>
               </ol>

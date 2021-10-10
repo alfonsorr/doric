@@ -16,33 +16,33 @@ val df = List(("hi", 31)).toDF("str", "int")
 // df: DataFrame = [str: string, int: int]
 val col1 = colInt("str")
 // col1: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2701/1285347532@40013051)
+//   Kleisli(doric.types.SparkType$$Lambda$2934/938242636@3792fed8)
 // )
 val col2 = colString("int")
 // col2: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2701/1285347532@45849604)
+//   Kleisli(doric.types.SparkType$$Lambda$2934/938242636@d164938)
 // )
 val col3 = colInt("unknown")
 // col3: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2701/1285347532@6cbbfe29)
+//   Kleisli(doric.types.SparkType$$Lambda$2934/938242636@4cd079fe)
 // )
 ```
 ```scala
 df.select(col1, col2, col3)
 // doric.sem.DoricMultiError: Found 3 errors in select
 //   The column with name 'str' is of type StringType and it was expected to be IntegerType
-//   	located at . (error-location.md:31)
-//   The column with name 'int' is of type IntegerType and it was expected to be StringType
 //   	located at . (error-location.md:34)
-//   Cannot resolve column name "unknown" among (str, int)
+//   The column with name 'int' is of type IntegerType and it was expected to be StringType
 //   	located at . (error-location.md:37)
+//   Cannot resolve column name "unknown" among (str, int)
+//   	located at . (error-location.md:40)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
-// 	at repl.MdocSession$App$$anonfun$6.apply(error-location.md:44)
-// 	at repl.MdocSession$App$$anonfun$6.apply(error-location.md:44)
+// 	at repl.MdocSession$App0$$anonfun$6.apply(error-location.md:47)
+// 	at repl.MdocSession$App0$$anonfun$6.apply(error-location.md:47)
 ```
 
 The select statement throws a single exception, and it contains 3 different errors.
@@ -75,16 +75,16 @@ userDF.printSchema
 Us as developers want to abstract from this suffix and focus only in the unique part of the name:
 ```scala
 colString("name_user")
-// res2: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2701/1285347532@2f61de04)
+// res3: DoricColumn[String] = DoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2934/938242636@38991781)
 // )
 colInt("age_user")
-// res3: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2701/1285347532@5f5a33ed)
+// res4: DoricColumn[Int] = DoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2934/938242636@3c577368)
 // )
 colString("city_user")
-// res4: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$2701/1285347532@5b59c3d)
+// res5: DoricColumn[String] = DoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2934/938242636@57c7ec30)
 // )
 ```
 So we can make a function to simplify it:
@@ -101,14 +101,14 @@ val userc = user[Int]("name") //wrong type :S
 userDF.select(userc)
 // doric.sem.DoricMultiError: Found 1 error in select
 //   The column with name 'name_user' is of type StringType and it was expected to be IntegerType
-//   	located at . (error-location.md:88)
+//   	located at . (error-location.md:91)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
-// 	at repl.MdocSession$App$$anonfun$14.apply(error-location.md:97)
-// 	at repl.MdocSession$App$$anonfun$14.apply(error-location.md:95)
+// 	at repl.MdocSession$App0$$anonfun$14.apply(error-location.md:100)
+// 	at repl.MdocSession$App0$$anonfun$14.apply(error-location.md:98)
 ```
 
 What we really want is to mark as the source the place we are using our `user` method. We can achieve this by adding only an implicit value to the definition:
@@ -129,14 +129,14 @@ val team = user[String]("team")
 userDF.select(age, team)
 // doric.sem.DoricMultiError: Found 2 errors in select
 //   The column with name 'name_user' is of type StringType and it was expected to be IntegerType
-//   	located at . (error-location.md:151)
+//   	located at . (error-location.md:154)
 //   Cannot resolve column name "team_user" among (name_user, city_user, age_user)
-//   	located at . (error-location.md:152)
+//   	located at . (error-location.md:155)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
-// 	at repl.MdocSession$App5$$anonfun$18.apply(error-location.md:153)
-// 	at repl.MdocSession$App5$$anonfun$18.apply(error-location.md:150)
+// 	at repl.MdocSession$App6$$anonfun$18.apply(error-location.md:156)
+// 	at repl.MdocSession$App6$$anonfun$18.apply(error-location.md:153)
 ```
