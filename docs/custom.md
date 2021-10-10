@@ -1,5 +1,6 @@
 ---
-title: Custom types in doric permalink: docs/custom/
+title: Custom types in doric
+permalink: docs/custom/
 ---
 # Custom types
 Bored that spark limits the interaction with the outside world? Need a more descriptive value to insert into your
