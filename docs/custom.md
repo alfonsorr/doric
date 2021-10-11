@@ -8,7 +8,7 @@ dataframe? Doric's got your back with his custom types. The only thing you need 
 will represent your value, this is easier to see with an example.
 
 ## User as a string
-Lets think a field with the name and the surname of a
+Let's think a field with the name and the surname of a
 user, we want to represent it outside of spark as a case class:
 
 ```scala
@@ -31,11 +31,11 @@ implicit val userSparkType: SparkType[User] = SparkType[String].customType[User]
 // userSparkType: SparkType[User] = doric.types.SparkType$$anon$1@774013dc
 ```
 
-Lets take a closer look, first we are creating a implicit `SparkType` for `User`. And the way to do this is invoquing
-the implicit SparkType of the original SparkType we want to base our custom type, calling `SparkType[String]`. One we
-have it, we can call the method `customType`. This method needs to lambdas, the first one will transform from our custom
+Let's take a closer look, first we are creating an implicit `SparkType` for `User`. And the way to do this is invoking
+the implicit SparkType of the original datatype we want to use, in our case calling `SparkType[String]`. Once we
+have it, we can call the method `customType`. This method needs two lambdas, the first one will transform from our custom
 type to the base type, in our case we create a single string with the character `#` as a separator, the second one is
-the opossite function, will transform from `String` to our custom `User`, in our case, split the String by the
+the opposite function, will transform from `String` to our custom `User`, in our case, split the String by the
 character `#`  and reconstruct the `User` class.
 
 Now we have a valid SparkType, we can use it for everything:
@@ -56,14 +56,14 @@ println(df.collectCols(col[User]("user")))
 // List(User(Jane,Doe))
 ```
 
-We have to allways keep in mind that inside our dataframe, the user is represented as a String:
+We have to always keep in mind that inside our dataframe, the user is represented as a String:
 ```scala
 df.select(User("John", "Doe").lit.as("user")).printSchema
 // root
 //  |-- user: string (nullable = false)
 //
 ```
-So can be a good idea to create a casting to the string value, in this case spark wont do nothing because its a `String` inside.
+So can be a good idea to create a casting to the string value, in this case spark will do nothing because it's already a `String` inside the dataframe.
 ```scala
 import doric.types.SparkCasting
 implicit val userStringCast = SparkCasting[User, String]
