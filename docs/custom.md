@@ -1,5 +1,6 @@
 ---
-title: Custom types in doric permalink: docs/custom/
+title: Custom types in doric
+permalink: docs/custom/
 ---
 
 
@@ -139,7 +140,7 @@ val changeScore: IntegerColumn = when[Int]
   .caseW(col[UserState]("state") === Relation, col[Int]("score") * 10)
   .otherwise(col[Int]("score") * 12)
 // changeScore: IntegerColumn = DoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$3016/2109356783@30ed4034)
+//   Kleisli(cats.data.Kleisli$$Lambda$3016/464010963@30ed4034)
 // )
 ```
 
