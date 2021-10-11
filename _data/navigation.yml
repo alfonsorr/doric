@@ -4,15 +4,17 @@ docs:
     children:
       - title: "Installation"
         url: /docs/installation/
+      - title: "Introduction"
+        url: /docs/
       - title: "Typed Columns"
         url: /docs/typed/
-      - title: Error location
+      - title: "Error location"
         url: /docs/errors/
       - title: "Custom types"
         url: /docs/custom/
 
 main:
   - title: "Documentation"
-    url: /docs/
+    url: /docs/introduction
   - title: "API"
     url: /docs/api/latest/

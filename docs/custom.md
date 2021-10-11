@@ -28,7 +28,7 @@ implicit val userSparkType: SparkType[User] = SparkType[String].customType[User]
           User(name, surname)
         }
       )
-// userSparkType: SparkType[User] = doric.types.SparkType$$anon$1@1a139347
+// userSparkType: SparkType[User] = doric.types.SparkType$$anon$1@774013dc
 ```
 
 Lets take a closer look, first we are creating a implicit `SparkType` for `User`. And the way to do this is invoquing
@@ -67,7 +67,7 @@ So can be a good idea to create a casting to the string value, in this case spar
 ```scala
 import doric.types.SparkCasting
 implicit val userStringCast = SparkCasting[User, String]
-// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@21c34bf8
+// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@7ebc5be6
 ```
 
 But the real power of this custom types is the ability to create also custom functions for the `DoricColumn[User]`
@@ -113,14 +113,27 @@ val stateToSpark: UserState => Int = {
 // stateToSpark: UserState => Int = <function1>
 
 implicit val userStateSparkType: SparkType[UserState] = SparkType[Int].customType(stateToSpark, stateFromSpark)
-// userStateSparkType: SparkType[UserState] = doric.types.SparkType$$anon$1@559e3f67
+// userStateSparkType: SparkType[UserState] = doric.types.SparkType$$anon$1@4627dfda
 ```
 
 ## Custom types with type parameters
-Doric not only allows to create simple types, it can create complex types like `Set`, represented in spark as an array. We will need to know that our type inside of spark will still be an array, with the main difference that if we insert something in our column it can be repeated.
+Doric not only allows to create simple types, it can create complex types like `Set`, represented in spark as a `List` or `Array`. We will need to know that our type inside of spark will still be an array, with the main difference that if we insert something in our column it can be repeated.
 This is as simple as create the following lines:
+```scala
+implicit def setSparkType[T: SparkType]: SparkType[Set[T]] =
+  SparkType[List[T]].customType(_.toList, _.toSet)
 ```
-import scala.reflect.api.TypeTag
-implicit def setSparkType[T: SparkType: TypeTag]: SparkType[Set[T]] =
-  SparkType[Array[T]].customType(_.toSet, _.toArray)
+All set up, let's enjoy our new type
+```scala
+val dfWithSet = df.select(Set("a", "b", "a", "c", "b").lit.as("mysetInSpark"))
+// dfWithSet: DataFrame = [mysetInSpark: array<string>]
+dfWithSet.show
+// +------------+
+// |mysetInSpark|
+// +------------+
+// |   [a, b, c]|
+// +------------+
+// 
+println(dfWithSet.collectCols(col[Set[String]]("mysetInSpark")).head)
+// Set(a, b, c)
 ```
