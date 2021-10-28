@@ -13,36 +13,39 @@ Let's see an example of an error
 import doric._
 
 val df = List(("hi", 31)).toDF("str", "int")
-// df: DataFrame = [str: string, int: int]
-val col1 = colInt("str")
-// col1: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$3012/1512816276@7c9b0c16)
+// df: org.apache.spark.sql.package.DataFrame = [str: string, int: int]
+val col1 = colInt(c"str")
+// col1: NamedDoricColumn[Int] = NamedDoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2288/1340525660@524ba12b),
+//   "str"
 // )
-val col2 = colString("int")
-// col2: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$3012/1512816276@34e1c23d)
+val col2 = colString(c"int")
+// col2: NamedDoricColumn[String] = NamedDoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2288/1340525660@41861964),
+//   "int"
 // )
-val col3 = colInt("unknown")
-// col3: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$3012/1512816276@240fa4ad)
+val col3 = colInt(c"unknown")
+// col3: NamedDoricColumn[Int] = NamedDoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2288/1340525660@4db8b888),
+//   "unknown"
 // )
 ```
 ```scala
 df.select(col1, col2, col3)
 // doric.sem.DoricMultiError: Found 3 errors in select
 //   The column with name 'str' is of type StringType and it was expected to be IntegerType
-//   	located at . (error-location.md:34)
+//   	located at . (error-location.md:26)
 //   The column with name 'int' is of type IntegerType and it was expected to be StringType
-//   	located at . (error-location.md:37)
+//   	located at . (error-location.md:29)
 //   Cannot resolve column name "unknown" among (str, int)
-//   	located at . (error-location.md:40)
+//   	located at . (error-location.md:32)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
-// 	at repl.MdocSession$App0$$anonfun$6.apply(error-location.md:47)
-// 	at repl.MdocSession$App0$$anonfun$6.apply(error-location.md:47)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
+// 	at repl.MdocSession$App0$$anonfun$6.apply(error-location.md:39)
+// 	at repl.MdocSession$App0$$anonfun$6.apply(error-location.md:39)
 ```
 
 The select statement throws a single exception, and it contains 3 different errors.
@@ -74,41 +77,44 @@ userDF.printSchema
 
 Us as developers want to abstract from this suffix and focus only in the unique part of the name:
 ```scala
-colString("name_user")
-// res3: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$3012/1512816276@333d5a0c)
+colString(c"name_user")
+// res3: NamedDoricColumn[String] = NamedDoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2288/1340525660@891f18f),
+//   "name_user"
 // )
-colInt("age_user")
-// res4: DoricColumn[Int] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$3012/1512816276@1abf38d1)
+colInt(c"age_user")
+// res4: NamedDoricColumn[Int] = NamedDoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2288/1340525660@189e986f),
+//   "age_user"
 // )
-colString("city_user")
-// res5: DoricColumn[String] = DoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$3012/1512816276@1d3bf0af)
+colString(c"city_user")
+// res5: NamedDoricColumn[String] = NamedDoricColumn(
+//   Kleisli(doric.types.SparkType$$Lambda$2288/1340525660@218289de),
+//   "city_user"
 // )
 ```
 So we can make a function to simplify it:
 ```scala
 import doric.types.SparkType
-def user[T: SparkType](colName: String): DoricColumn[T] = {
+def user[T: SparkType](colName: CName): DoricColumn[T] = {
   col[T](colName + "_user")
 }
 ```
 In valid cases it works ok, bug when an error is produce because one of these references, it will point to the line `col[T](colName + "_user")` that is not the real problem.
 
 ```scala
-val userc = user[Int]("name") //wrong type :S
+val userc = user[Int](c"name") //wrong type :S
 userDF.select(userc)
 // doric.sem.DoricMultiError: Found 1 error in select
 //   The column with name 'name_user' is of type StringType and it was expected to be IntegerType
-//   	located at . (error-location.md:91)
+//   	located at . (error-location.md:83)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
-// 	at repl.MdocSession$App0$$anonfun$14.apply(error-location.md:100)
-// 	at repl.MdocSession$App0$$anonfun$14.apply(error-location.md:98)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
+// 	at repl.MdocSession$App0$$anonfun$14.apply(error-location.md:92)
+// 	at repl.MdocSession$App0$$anonfun$14.apply(error-location.md:90)
 ```
 
 What we really want is to mark as the source the place we are using our `user` method. We can achieve this by adding only an implicit value to the definition:
@@ -118,25 +124,25 @@ import doric._
 import doric.sem.Location
 import doric.types.SparkType
 
-def user[T: SparkType](colName: String)(implicit location: Location): DoricColumn[T] = {
+def user[T: SparkType](colName: CName)(implicit location: Location): DoricColumn[T] = {
   col[T](colName + "_user")
 }
 ```
 Now if we repeat the same error we will be pointed to the real problem
 ```scala
-val age = user[Int]("name")
-val team = user[String]("team")
+val age = user[Int](c"name")
+val team = user[String](c"team")
 userDF.select(age, team)
 // doric.sem.DoricMultiError: Found 2 errors in select
 //   The column with name 'name_user' is of type StringType and it was expected to be IntegerType
-//   	located at . (error-location.md:154)
+//   	located at . (error-location.md:138)
 //   Cannot resolve column name "team_user" among (name_user, city_user, age_user)
-//   	located at . (error-location.md:155)
+//   	located at . (error-location.md:139)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:120)
-// 	at repl.MdocSession$App6$$anonfun$18.apply(error-location.md:156)
-// 	at repl.MdocSession$App6$$anonfun$18.apply(error-location.md:153)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
+// 	at repl.MdocSession$App6$$anonfun$18.apply(error-location.md:140)
+// 	at repl.MdocSession$App6$$anonfun$18.apply(error-location.md:137)
 ```
