@@ -31,7 +31,7 @@ implicit val userSparkType: SparkType[User] = SparkType[String].customType[User]
           User(name, surname)
         }
       )
-// userSparkType: SparkType[User] = doric.types.SparkType$$anon$1@6ebf5f26
+// userSparkType: SparkType[User] = doric.types.SparkType$$anon$1@3787eac3
 ```
 
 Let's take a closer look, first we are creating an implicit `SparkType` for `User`. And the way to do this is invoking
@@ -80,7 +80,7 @@ a `String` inside the dataframe.
 ```scala
 import doric.types.SparkCasting
 implicit val userStringCast = SparkCasting[User, String]
-// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@3524ee20
+// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@5453020f
 ```
 
 But the real power of this custom types is the ability to create also custom functions for the `DoricColumn[User]`
@@ -129,7 +129,7 @@ val stateToSpark: UserState => Int = {
 // stateToSpark: UserState => Int = <function1>
 
 implicit val userStateSparkType: SparkType[UserState] = SparkType[Int].customType(stateToSpark, stateFromSpark)
-// userStateSparkType: SparkType[UserState] = doric.types.SparkType$$anon$1@6bc1c8d0
+// userStateSparkType: SparkType[UserState] = doric.types.SparkType$$anon$1@744d0cfb
 ```
 
 Now let's do some complex logic, increase a score depending on the state of the user.
@@ -140,7 +140,7 @@ val changeScore: IntegerColumn = when[Int]
   .caseW(col[UserState](c"state") === Relation, col[Int](c"score") * 10)
   .otherwise(col[Int](c"score") * 12)
 // changeScore: IntegerColumn = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2297/1516133095@7f93fce1)
+//   Kleisli(cats.data.Kleisli$$Lambda$1495/764204494@7c943143)
 // )
 ```
 

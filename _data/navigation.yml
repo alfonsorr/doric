@@ -9,7 +9,7 @@ docs:
       - title: "Typed Columns"
         url: /docs/typed/
       - title: "Doric column ADT"
-        url: /docs/types-columns/
+        url: /docs/adt-columns/
       - title: "Error location"
         url: /docs/errors/
       - title: Advance API elements
