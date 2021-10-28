@@ -8,7 +8,7 @@ Doric is compatible with spark version 3.1.2. Just add the dependency in your bu
 
 The latest stable version of doric is 0.0.1.
 
-The latest experimental version of doric is 0.0.0+129-fdf91422-SNAPSHOT.
+The latest experimental version of doric is 0.0.0+130-ed6ccda9-SNAPSHOT.
 
 ## Sbt
 ```scala
@@ -25,5 +25,5 @@ libraryDependencies += "org.hablapps" % "doric_2.12" % "0.0.1"
 
 Doric requires to activate the following flag when creating the spark context:
 `spark.sql.datetime.java8API.enabled` equal to true.
-This is to make doric always return the most moder apis to use with spark.
 
+Doric is committed to use the most modern API's first.
