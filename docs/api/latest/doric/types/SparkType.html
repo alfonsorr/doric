@@ -106,6 +106,14 @@
                         <a class="trait" href="Casting.html" title=""></a>
                         <a href="Casting.html" title="">Casting</a>
                       </li><li class="current-entities indented2">
+                        <a class="object" href="CollectionType$.html" title=""></a>
+                        <a class="trait" href="CollectionType.html" title=""></a>
+                        <a href="CollectionType.html" title="">CollectionType</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="CustomSparkType$.html" title=""></a>
+                        <a class="trait" href="CustomSparkType.html" title=""></a>
+                        <a href="CustomSparkType.html" title="">CustomSparkType</a>
+                      </li><li class="current-entities indented2">
                         <a class="object" href="DateType$.html" title=""></a>
                         <a class="trait" href="DateType.html" title=""></a>
                         <a href="DateType.html" title="">DateType</a>
@@ -117,6 +125,10 @@
                         <a class="object" href="NumericType$.html" title=""></a>
                         <a class="trait" href="NumericType.html" title=""></a>
                         <a href="NumericType.html" title="">NumericType</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="class" href="OriginalSparkType.html" title=""></a>
+                        <a href="OriginalSparkType.html" title="">OriginalSparkType</a>
                       </li><li class="current-entities indented2">
                         <a class="object" href="SparkCasting$.html" title=""></a>
                         <a class="trait" href="SparkCasting.html" title=""></a>
@@ -158,7 +170,7 @@
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
+        <span class="modifier">sealed </span>
         <span class="kind">trait</span>
       </span>
       <span class="symbol">
@@ -167,8 +179,9 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Typeclass to relate a type T with it's spark DataType</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>
-  the scala type of the instance</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Typeclass to relate a type T with it's spark DataType
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>
+the scala type of the instance</p></dd></dl><dl class="attributes block"> <dt>Self Type</dt><dd><a href="" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.T">T</span>]</dd><dt>Annotations</dt><dd>
                 <span class="name">@implicitNotFound</span><span class="args">(<span>
       
       <span class="defval" name="&quot;Cant use the type ${T} to generate the typed column. Check your imported SparkType[${T}] instances&quot;">...</span>
@@ -179,7 +192,12 @@
             Linear Supertypes
           </span>
           <div class="superTypes hiddenContent"><a href="https://www.scala-lang.org/api/2.12.15/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a>, <a href="https://www.scala-lang.org/api/2.12.15/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></div>
-        </div></div>
+        </div><div class="toggleContainer block">
+            <span class="toggle">
+              Known Subclasses
+            </span>
+            <div class="subClasses hiddenContent"><a href="OriginalSparkType.html" class="extype" name="doric.types.OriginalSparkType">OriginalSparkType</a></div>
+          </div></div>
         
 
       <div id="mbrsel">
@@ -248,8 +266,10 @@
         <span class="name">dataType</span><span class="result">: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>
       </span>
       
-      <p class="shortcomment cmt">The spark DataType</p><div class="fullcomment"><div class="comment cmt"><p>The spark DataType</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
-  the spark DataType</p></dd></dl></div>
+      <p class="shortcomment cmt">The spark DataType
+</p><div class="fullcomment"><div class="comment cmt"><p>The spark DataType
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
+the spark DataType</p></dd></dl></div>
     </li><li name="doric.types.SparkType#literalTo" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="literalTo:T=&gt;Any"></a><a id="literalTo:(T)⇒Any"></a>
       <span class="permalink">
@@ -420,9 +440,9 @@
               
         </dd></dl></div>
     </li><li name="doric.types.SparkType#customType" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="customType[O](f:O=&gt;T,f2:T=&gt;O):doric.types.SparkType[O]"></a><a id="customType[O]((O)⇒T,(T)⇒O):SparkType[O]"></a>
+      <a id="customType[O](f:O=&gt;T,f2:T=&gt;O):doric.types.CustomSparkType[O]"></a><a id="customType[O]((O)⇒T,(T)⇒O):CustomSparkType[O]"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType.html#customType[O](f:O=&gt;T,f2:T=&gt;O):doric.types.SparkType[O]" title="Permalink">
+      <a href="../../doric/types/SparkType.html#customType[O](f:O=&gt;T,f2:T=&gt;O):doric.types.CustomSparkType[O]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -431,7 +451,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">customType</span><span class="tparams">[<span name="O">O</span>]</span><span class="params">(<span name="f">f: (<span class="extype" name="doric.types.SparkType.customType.O">O</span>) ⇒ <span class="extype" name="doric.types.SparkType.T">T</span></span>, <span name="f2">f2: (<span class="extype" name="doric.types.SparkType.T">T</span>) ⇒ <span class="extype" name="doric.types.SparkType.customType.O">O</span></span>)</span><span class="result">: <a href="" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.customType.O">O</span>]</span>
+        <span class="name">customType</span><span class="tparams">[<span name="O">O</span>]</span><span class="params">(<span name="f">f: (<span class="extype" name="doric.types.SparkType.customType.O">O</span>) ⇒ <span class="extype" name="doric.types.SparkType.T">T</span></span>, <span name="f2">f2: (<span class="extype" name="doric.types.SparkType.T">T</span>) ⇒ <span class="extype" name="doric.types.SparkType.customType.O">O</span></span>)</span><span class="result">: <a href="CustomSparkType.html" class="extype" name="doric.types.CustomSparkType">CustomSparkType</a>[<span class="extype" name="doric.types.SparkType.customType.O">O</span>]</span>
       </span>
       
       
@@ -667,9 +687,9 @@ if can be null</p></div><dl class="paramcmts block"><dt class="param">column</dt
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="doric.syntax.LiteralConversions.LiteralOps#lit" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="lit:doric.DoricColumn[L]"></a><a id="lit:DoricColumn[SparkType[T]]"></a>
+      <a id="lit:doric.LiteralDoricColumn[L]"></a><a id="lit:LiteralDoricColumn[SparkType[T]]"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType.html#lit:doric.DoricColumn[L]" title="Permalink">
+      <a href="../../doric/types/SparkType.html#lit:doric.LiteralDoricColumn[L]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -678,7 +698,7 @@ if can be null</p></div><dl class="paramcmts block"><dt class="param">column</dt
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="implicit">lit</span><span class="result">: <a href="../DoricColumn.html" class="extype" name="doric.DoricColumn">DoricColumn</a>[<a href="" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.T">T</span>]]</span>
+        <span class="implicit">lit</span><span class="result">: <a href="../LiteralDoricColumn.html" class="extype" name="doric.LiteralDoricColumn">LiteralDoricColumn</a>[<a href="" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.T">T</span>]]</span>
       </span>
       
       <p class="shortcomment cmt">Transforms the original value to a literal.</p><div class="fullcomment"><div class="comment cmt"><p>Transforms the original value to a literal.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
@@ -792,8 +812,10 @@ if can be null</p></div><dl class="paramcmts block"><dt class="param">column</dt
       </span>
       
       <p class="shortcomment cmt">Validates if a column of the in put dataframe exist and is of the spark
-DataType provided</p><div class="fullcomment"><div class="comment cmt"><p>Validates if a column of the in put dataframe exist and is of the spark
-DataType provided</p></div><dl class="paramcmts block"><dt class="param">colName</dt><dd class="cmt"><p>
+DataType provided
+</p><div class="fullcomment"><div class="comment cmt"><p>Validates if a column of the in put dataframe exist and is of the spark
+DataType provided
+</p></div><dl class="paramcmts block"><dt class="param">colName</dt><dd class="cmt"><p>
   name of the column to extract</p></dd><dt class="param">location</dt><dd class="cmt"><p>
   object that links to the position if an error is created</p></dd><dt>returns</dt><dd class="cmt"><p>
   A Doric column that validates al the logic</p></dd></dl></div>

@@ -106,6 +106,14 @@
                         <a class="trait" href="Casting.html" title=""></a>
                         <a href="Casting.html" title="">Casting</a>
                       </li><li class="current-entities indented2">
+                        <a class="object" href="CollectionType$.html" title=""></a>
+                        <a class="trait" href="CollectionType.html" title=""></a>
+                        <a href="CollectionType.html" title="">CollectionType</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="CustomSparkType$.html" title=""></a>
+                        <a class="trait" href="CustomSparkType.html" title=""></a>
+                        <a href="CustomSparkType.html" title="">CustomSparkType</a>
+                      </li><li class="current-entities indented2">
                         <a class="object" href="DateType$.html" title=""></a>
                         <a class="trait" href="DateType.html" title=""></a>
                         <a href="DateType.html" title="">DateType</a>
@@ -117,6 +125,10 @@
                         <a class="object" href="NumericType$.html" title=""></a>
                         <a class="trait" href="NumericType.html" title=""></a>
                         <a href="NumericType.html" title="">NumericType</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="class" href="OriginalSparkType.html" title=""></a>
+                        <a href="OriginalSparkType.html" title="">OriginalSparkType</a>
                       </li><li class="current-entities indented2">
                         <a class="object" href="SparkCasting$.html" title=""></a>
                         <a class="trait" href="SparkCasting.html" title=""></a>
@@ -272,22 +284,6 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="doric.types.SparkType#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply[A](dt:org.apache.spark.sql.types.DataType):doric.types.SparkType[A]"></a><a id="apply[A](DataType):SparkType[A]"></a>
-      <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#apply[A](dt:org.apache.spark.sql.types.DataType):doric.types.SparkType[A]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">apply</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="dt">dt: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.apply.A">A</span>]</span>
-      </span>
-      
-      
     </li><li name="doric.types.SparkType#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply[A](implicitevidence$1:doric.types.SparkType[A]):doric.types.SparkType[A]"></a><a id="apply[A](SparkType[A]):SparkType[A]"></a>
       <span class="permalink">
@@ -433,6 +429,22 @@
       </span>
       
       
+    </li><li name="doric.types.SparkType#fromCustom" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fromCustom[T](implicitc:doric.types.CustomSparkType[T]):doric.types.SparkType[T]"></a><a id="fromCustom[T](CustomSparkType[T]):SparkType[T]"></a>
+      <span class="permalink">
+      <a href="../../doric/types/SparkType$.html#fromCustom[T](implicitc:doric.types.CustomSparkType[T]):doric.types.SparkType[T]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fromCustom</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="c">c: <a href="CustomSparkType.html" class="extype" name="doric.types.CustomSparkType">CustomSparkType</a>[<span class="extype" name="doric.types.SparkType.fromCustom.T">T</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromCustom.T">T</span>]</span>
+      </span>
+      
+      
     </li><li name="doric.types.SparkType#fromDStruct" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="fromDStruct:doric.types.SparkType[org.apache.spark.sql.Row]"></a><a id="fromDStruct:SparkType[Row]"></a>
       <span class="permalink">
@@ -446,22 +458,6 @@
       </span>
       <span class="symbol">
         <span class="name">fromDStruct</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="org.apache.spark.sql.Row">Row</span>]</span>
-      </span>
-      
-      
-    </li><li name="doric.types.SparkType#fromDate" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromDate:doric.types.SparkType[java.sql.Date]"></a><a id="fromDate:SparkType[Date]"></a>
-      <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromDate:doric.types.SparkType[java.sql.Date]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fromDate</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.sql.Date">Date</span>]</span>
       </span>
       
       
@@ -622,22 +618,6 @@
       </span>
       <span class="symbol">
         <span class="name">fromStringDf</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
-      </span>
-      
-      
-    </li><li name="doric.types.SparkType#fromTimestamp" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromTimestamp:doric.types.SparkType[java.sql.Timestamp]"></a><a id="fromTimestamp:SparkType[Timestamp]"></a>
-      <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromTimestamp:doric.types.SparkType[java.sql.Timestamp]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fromTimestamp</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.sql.Timestamp">Timestamp</span>]</span>
       </span>
       
       
