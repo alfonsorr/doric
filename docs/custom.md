@@ -22,16 +22,16 @@ But we don't want to represent it in spark as a struct, it will be better to rep
 this is super simple, just type this code:
 
 ```scala
-import doric.types.{CustomSparkType, SparkType}
+import doric.types.SparkType
 
-implicit val userSparkType: CustomSparkType[User] = SparkType[String].customType[User](
+implicit val userSparkType = SparkType[String].customType[User](
         x => s"${x.name}#${x.surname}",
         x => {
           val name :: surname :: Nil = x.split("#").toList
           User(name, surname)
         }
       )
-// userSparkType: CustomSparkType[User] = doric.types.SparkType$$anon$1@71b01319
+// userSparkType: SparkType[User]{type OriginalSparkType = String} = doric.types.SparkType$$anon$1@4d96c290
 ```
 
 Let's take a closer look, first we are creating an implicit `SparkType` for `User`. And the way to do this is invoking
@@ -46,8 +46,13 @@ Now we have a valid SparkType, we can use it for everything:
 * use it as a literal
 
 ```scala
-df.withColumn(c"user", User("John", "Doe").lit)
-// res1: org.apache.spark.sql.package.DataFrame = [user: string]
+df.withColumn(c"user", User("John", "Doe").lit).show()
+// +--------+
+// |    user|
+// +--------+
+// |John#Doe|
+// +--------+
+//
 ```
 
 * select a column with type `User`
@@ -80,7 +85,7 @@ a `String` inside the dataframe.
 ```scala
 import doric.types.SparkCasting
 implicit val userStringCast = SparkCasting[User, String]
-// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@28fdce67
+// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@2d63534d
 ```
 
 But the real power of this custom types is the ability to create also custom functions for the `DoricColumn[User]`
@@ -128,8 +133,8 @@ val stateToSpark: UserState => Int = {
 }
 // stateToSpark: UserState => Int = <function1>
 
-implicit val userStateSparkType: CustomSparkType[UserState] = SparkType[Int].customType(stateToSpark, stateFromSpark)
-// userStateSparkType: CustomSparkType[UserState] = doric.types.SparkType$$anon$1@24c9a52a
+implicit val userStateSparkType = SparkType[Int].customType(stateToSpark, stateFromSpark)
+// userStateSparkType: SparkType[UserState]{type OriginalSparkType = Int} = doric.types.SparkType$$anon$1@6316b9e3
 ```
 
 Now let's do some complex logic, increase a score depending on the state of the user.
@@ -140,7 +145,7 @@ val changeScore: IntegerColumn = when[Int]
   .caseW(col[UserState](c"state") === Relation, col[Int](c"score") * 10)
   .otherwise(col[Int](c"score") * 12)
 // changeScore: IntegerColumn = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$1494/1167442374@55105271)
+//   Kleisli(cats.data.Kleisli$$Lambda$1497/304780874@186f7553)
 // )
 ```
 
@@ -172,8 +177,8 @@ or `Array`. We will need to know that our type inside of spark will still be an 
 we insert something in our column it can be repeated. This is as simple as create the following lines:
 
 ```scala
-implicit def setSparkType[T: SparkType]: CustomSparkType[Set[T]] =
-  SparkType[List[T]].customType(_.toList, _.toSet)
+implicit def setSparkType[T: SparkType] =
+  SparkType[List[T]].customType[Set[T]](_.toList, _.toSet)
 ```
 
 All set up, let's enjoy our new type

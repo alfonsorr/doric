@@ -110,10 +110,6 @@
                         <a class="trait" href="CollectionType.html" title=""></a>
                         <a href="CollectionType.html" title="">CollectionType</a>
                       </li><li class="current-entities indented2">
-                        <a class="object" href="CustomSparkType$.html" title=""></a>
-                        <a class="trait" href="CustomSparkType.html" title=""></a>
-                        <a href="CustomSparkType.html" title="">CustomSparkType</a>
-                      </li><li class="current-entities indented2">
                         <a class="object" href="DateType$.html" title=""></a>
                         <a class="trait" href="DateType.html" title=""></a>
                         <a href="DateType.html" title="">DateType</a>
@@ -125,10 +121,6 @@
                         <a class="object" href="NumericType$.html" title=""></a>
                         <a class="trait" href="NumericType.html" title=""></a>
                         <a href="NumericType.html" title="">NumericType</a>
-                      </li><li class="current-entities indented2">
-                        <span class="separator"></span>
-                        <a class="class" href="OriginalSparkType.html" title=""></a>
-                        <a href="OriginalSparkType.html" title="">OriginalSparkType</a>
                       </li><li class="current-entities indented2">
                         <a class="object" href="SparkCasting$.html" title=""></a>
                         <a class="trait" href="SparkCasting.html" title=""></a>
@@ -285,9 +277,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="doric.types.SparkType#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply[A](implicitevidence$1:doric.types.SparkType[A]):doric.types.SparkType[A]"></a><a id="apply[A](SparkType[A]):SparkType[A]"></a>
+      <a id="apply[T](implicitst:doric.types.SparkType[T]):doric.types.SparkType[T]{typeOriginalSparkType=st.OriginalSparkType}"></a><a id="apply[T](SparkType[T]):SparkType[T]{typeOriginalSparkType=st.OriginalSparkType}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#apply[A](implicitevidence$1:doric.types.SparkType[A]):doric.types.SparkType[A]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#apply[T](implicitst:doric.types.SparkType[T]):doric.types.SparkType[T]{typeOriginalSparkType=st.OriginalSparkType}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -296,7 +288,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.apply.A">A</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.apply.A">A</span>]</span>
+        <span class="name">apply</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="st">st: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.apply.T">T</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.apply.T">T</span>] { type OriginalSparkType = st.OriginalSparkType }</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
@@ -343,6 +335,22 @@
                 <span class="name">@native</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li name="doric.types.SparkType#customType" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="customType[F,T](f:T=&gt;F,f2:F=&gt;T)(implicitst:doric.types.SparkType[F]):doric.types.SparkType[T]{typeOriginalSparkType=st.OriginalSparkType}"></a><a id="customType[F,T]((T)⇒F,(F)⇒T)(SparkType[F]):SparkType[T]{typeOriginalSparkType=st.OriginalSparkType}"></a>
+      <span class="permalink">
+      <a href="../../doric/types/SparkType$.html#customType[F,T](f:T=&gt;F,f2:F=&gt;T)(implicitst:doric.types.SparkType[F]):doric.types.SparkType[T]{typeOriginalSparkType=st.OriginalSparkType}" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">customType</span><span class="tparams">[<span name="F">F</span>, <span name="T">T</span>]</span><span class="params">(<span name="f">f: (<span class="extype" name="doric.types.SparkType.customType.T">T</span>) ⇒ <span class="extype" name="doric.types.SparkType.customType.F">F</span></span>, <span name="f2">f2: (<span class="extype" name="doric.types.SparkType.customType.F">F</span>) ⇒ <span class="extype" name="doric.types.SparkType.customType.T">T</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="st">st: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.customType.F">F</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.customType.T">T</span>] { type OriginalSparkType = st.OriginalSparkType }</span>
+      </span>
+      
+      
     </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
       <span class="permalink">
@@ -398,9 +406,9 @@
               
         </dd></dl></div>
     </li><li name="doric.types.SparkType#fromArray" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromArray[A](implicitevidence$4:doric.types.SparkType[A],implicitevidence$5:scala.reflect.ClassTag[A]):doric.types.SparkType[Array[A]]"></a><a id="fromArray[A](SparkType[A],ClassTag[A]):SparkType[Array[A]]"></a>
+      <a id="fromArray[A,O](implicitevidence$3:scala.reflect.ClassTag[A],implicitevidence$4:scala.reflect.ClassTag[O],implicitst:doric.types.SparkType[A]{typeOriginalSparkType=O}):doric.types.SparkType[Array[A]]{typeOriginalSparkType=Array[O]}"></a><a id="fromArray[A,O](ClassTag[A],ClassTag[O],SparkType[A]{typeOriginalSparkType=O}):SparkType[Array[A]]{typeOriginalSparkType=Array[O]}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromArray[A](implicitevidence$4:doric.types.SparkType[A],implicitevidence$5:scala.reflect.ClassTag[A]):doric.types.SparkType[Array[A]]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromArray[A,O](implicitevidence$3:scala.reflect.ClassTag[A],implicitevidence$4:scala.reflect.ClassTag[O],implicitst:doric.types.SparkType[A]{typeOriginalSparkType=O}):doric.types.SparkType[Array[A]]{typeOriginalSparkType=Array[O]}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -409,14 +417,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fromArray</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromArray.A">A</span>]</span>, <span name="arg1">arg1: <a href="https://www.scala-lang.org/api/2.12.15/scala/reflect/ClassTag.html#scala.reflect.ClassTag" class="extype" name="scala.reflect.ClassTag">ClassTag</a>[<span class="extype" name="doric.types.SparkType.fromArray.A">A</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Array.html#scala.Array" class="extype" name="scala.Array">Array</a>[<span class="extype" name="doric.types.SparkType.fromArray.A">A</span>]]</span>
+        <span class="name">fromArray</span><span class="tparams">[<span name="A">A</span>, <span name="O">O</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="https://www.scala-lang.org/api/2.12.15/scala/reflect/ClassTag.html#scala.reflect.ClassTag" class="extype" name="scala.reflect.ClassTag">ClassTag</a>[<span class="extype" name="doric.types.SparkType.fromArray.A">A</span>]</span>, <span name="arg1">arg1: <a href="https://www.scala-lang.org/api/2.12.15/scala/reflect/ClassTag.html#scala.reflect.ClassTag" class="extype" name="scala.reflect.ClassTag">ClassTag</a>[<span class="extype" name="doric.types.SparkType.fromArray.O">O</span>]</span>, <span name="st">st: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromArray.A">A</span>] { type OriginalSparkType = O }</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Array.html#scala.Array" class="extype" name="scala.Array">Array</a>[<span class="extype" name="doric.types.SparkType.fromArray.A">A</span>]] { type OriginalSparkType = Array[O] }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromBoolean" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromBoolean:doric.types.SparkType[Boolean]"></a><a id="fromBoolean:SparkType[Boolean]"></a>
+      <a id="fromBoolean:doric.types.SparkType[Boolean]{typeOriginalSparkType=Boolean}"></a><a id="fromBoolean:SparkType[Boolean]{typeOriginalSparkType=Boolean}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromBoolean:doric.types.SparkType[Boolean]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromBoolean:doric.types.SparkType[Boolean]{typeOriginalSparkType=Boolean}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -425,30 +433,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromBoolean</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a>]</span>
+        <span class="name">fromBoolean</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a>] { type OriginalSparkType = Boolean }</span>
       </span>
       
       
-    </li><li name="doric.types.SparkType#fromCustom" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromCustom[T](implicitc:doric.types.CustomSparkType[T]):doric.types.SparkType[T]"></a><a id="fromCustom[T](CustomSparkType[T]):SparkType[T]"></a>
+    </li><li name="doric.types.SparkType#fromDate" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fromDate:doric.types.SparkType[java.sql.Date]{typeOriginalSparkType=java.time.LocalDate}"></a><a id="fromDate:SparkType[Date]{typeOriginalSparkType=java.time.LocalDate}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromCustom[T](implicitc:doric.types.CustomSparkType[T]):doric.types.SparkType[T]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fromCustom</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="c">c: <a href="CustomSparkType.html" class="extype" name="doric.types.CustomSparkType">CustomSparkType</a>[<span class="extype" name="doric.types.SparkType.fromCustom.T">T</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromCustom.T">T</span>]</span>
-      </span>
-      
-      
-    </li><li name="doric.types.SparkType#fromDStruct" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromDStruct:doric.types.SparkType[org.apache.spark.sql.Row]"></a><a id="fromDStruct:SparkType[Row]"></a>
-      <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromDStruct:doric.types.SparkType[org.apache.spark.sql.Row]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromDate:doric.types.SparkType[java.sql.Date]{typeOriginalSparkType=java.time.LocalDate}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -457,14 +449,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromDStruct</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="org.apache.spark.sql.Row">Row</span>]</span>
+        <span class="name">fromDate</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.sql.Date">Date</span>] { type OriginalSparkType = java.time.LocalDate }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromDouble" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromDouble:doric.types.SparkType[Double]"></a><a id="fromDouble:SparkType[Double]"></a>
+      <a id="fromDouble:doric.types.SparkType[Double]{typeOriginalSparkType=Double}"></a><a id="fromDouble:SparkType[Double]{typeOriginalSparkType=Double}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromDouble:doric.types.SparkType[Double]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromDouble:doric.types.SparkType[Double]{typeOriginalSparkType=Double}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -473,14 +465,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromDouble</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Double.html#scala.Double" class="extype" name="scala.Double">Double</a>]</span>
+        <span class="name">fromDouble</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Double.html#scala.Double" class="extype" name="scala.Double">Double</a>] { type OriginalSparkType = Double }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromFloat" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromFloat:doric.types.SparkType[Float]"></a><a id="fromFloat:SparkType[Float]"></a>
+      <a id="fromFloat:doric.types.SparkType[Float]{typeOriginalSparkType=Float}"></a><a id="fromFloat:SparkType[Float]{typeOriginalSparkType=Float}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromFloat:doric.types.SparkType[Float]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromFloat:doric.types.SparkType[Float]{typeOriginalSparkType=Float}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -489,14 +481,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromFloat</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Float.html#scala.Float" class="extype" name="scala.Float">Float</a>]</span>
+        <span class="name">fromFloat</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Float.html#scala.Float" class="extype" name="scala.Float">Float</a>] { type OriginalSparkType = Float }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromInstant" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromInstant:doric.types.SparkType[java.time.Instant]"></a><a id="fromInstant:SparkType[Instant]"></a>
+      <a id="fromInstant:doric.types.SparkType[java.time.Instant]{typeOriginalSparkType=java.time.Instant}"></a><a id="fromInstant:SparkType[Instant]{typeOriginalSparkType=java.time.Instant}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromInstant:doric.types.SparkType[java.time.Instant]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromInstant:doric.types.SparkType[java.time.Instant]{typeOriginalSparkType=java.time.Instant}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -505,14 +497,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromInstant</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.time.Instant">Instant</span>]</span>
+        <span class="name">fromInstant</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.time.Instant">Instant</span>] { type OriginalSparkType = java.time.Instant }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromInt" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromInt:doric.types.SparkType[Int]"></a><a id="fromInt:SparkType[Int]"></a>
+      <a id="fromInt:doric.types.SparkType[Int]{typeOriginalSparkType=Int}"></a><a id="fromInt:SparkType[Int]{typeOriginalSparkType=Int}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromInt:doric.types.SparkType[Int]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromInt:doric.types.SparkType[Int]{typeOriginalSparkType=Int}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -521,14 +513,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromInt</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a>]</span>
+        <span class="name">fromInt</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a>] { type OriginalSparkType = Int }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromList" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromList[A](implicitevidence$6:doric.types.SparkType[A]):doric.types.SparkType[List[A]]"></a><a id="fromList[A](SparkType[A]):SparkType[List[A]]"></a>
+      <a id="fromList[A](implicitst:doric.types.SparkType[A]):doric.types.SparkType[List[A]]{typeOriginalSparkType=List[st.OriginalSparkType]}"></a><a id="fromList[A](SparkType[A]):SparkType[List[A]]{typeOriginalSparkType=List[st.OriginalSparkType]}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromList[A](implicitevidence$6:doric.types.SparkType[A]):doric.types.SparkType[List[A]]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromList[A](implicitst:doric.types.SparkType[A]):doric.types.SparkType[List[A]]{typeOriginalSparkType=List[st.OriginalSparkType]}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -537,14 +529,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fromList</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromList.A">A</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="doric.types.SparkType.fromList.A">A</span>]]</span>
+        <span class="name">fromList</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="st">st: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromList.A">A</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="doric.types.SparkType.fromList.A">A</span>]] { type OriginalSparkType = List[st.OriginalSparkType] }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromLocalDate" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromLocalDate:doric.types.SparkType[java.time.LocalDate]"></a><a id="fromLocalDate:SparkType[LocalDate]"></a>
+      <a id="fromLocalDate:doric.types.SparkType[java.time.LocalDate]{typeOriginalSparkType=java.time.LocalDate}"></a><a id="fromLocalDate:SparkType[LocalDate]{typeOriginalSparkType=java.time.LocalDate}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromLocalDate:doric.types.SparkType[java.time.LocalDate]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromLocalDate:doric.types.SparkType[java.time.LocalDate]{typeOriginalSparkType=java.time.LocalDate}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -553,14 +545,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromLocalDate</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.time.LocalDate">LocalDate</span>]</span>
+        <span class="name">fromLocalDate</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.time.LocalDate">LocalDate</span>] { type OriginalSparkType = java.time.LocalDate }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromLong" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromLong:doric.types.SparkType[Long]"></a><a id="fromLong:SparkType[Long]"></a>
+      <a id="fromLong:doric.types.SparkType[Long]{typeOriginalSparkType=Long}"></a><a id="fromLong:SparkType[Long]{typeOriginalSparkType=Long}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromLong:doric.types.SparkType[Long]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromLong:doric.types.SparkType[Long]{typeOriginalSparkType=Long}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -569,14 +561,14 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromLong</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Long.html#scala.Long" class="extype" name="scala.Long">Long</a>]</span>
+        <span class="name">fromLong</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Long.html#scala.Long" class="extype" name="scala.Long">Long</a>] { type OriginalSparkType = Long }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromMap[K,V](implicitevidence$2:doric.types.SparkType[K],implicitevidence$3:doric.types.SparkType[V]):doric.types.SparkType[Map[K,V]]"></a><a id="fromMap[K,V](SparkType[K],SparkType[V]):SparkType[Map[K,V]]"></a>
+      <a id="fromMap[K,V](implicitevidence$1:doric.types.SparkType[K],implicitevidence$2:doric.types.SparkType[V],implicitstk:doric.types.SparkType[K],implicitstv:doric.types.SparkType[V]):doric.types.SparkType[Map[K,V]]{typeOriginalSparkType=Map[stk.OriginalSparkType,stv.OriginalSparkType]}"></a><a id="fromMap[K,V](SparkType[K],SparkType[V],SparkType[K],SparkType[V]):SparkType[Map[K,V]]{typeOriginalSparkType=Map[stk.OriginalSparkType,stv.OriginalSparkType]}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromMap[K,V](implicitevidence$2:doric.types.SparkType[K],implicitevidence$3:doric.types.SparkType[V]):doric.types.SparkType[Map[K,V]]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromMap[K,V](implicitevidence$1:doric.types.SparkType[K],implicitevidence$2:doric.types.SparkType[V],implicitstk:doric.types.SparkType[K],implicitstv:doric.types.SparkType[V]):doric.types.SparkType[Map[K,V]]{typeOriginalSparkType=Map[stk.OriginalSparkType,stv.OriginalSparkType]}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -585,14 +577,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fromMap</span><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromMap.K">K</span>]</span>, <span name="arg1">arg1: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromMap.V">V</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="doric.types.SparkType.fromMap.K">K</span>, <span class="extype" name="doric.types.SparkType.fromMap.V">V</span>]]</span>
+        <span class="name">fromMap</span><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromMap.K">K</span>]</span>, <span name="arg1">arg1: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromMap.V">V</span>]</span>, <span name="stk">stk: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromMap.K">K</span>]</span>, <span name="stv">stv: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromMap.V">V</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="doric.types.SparkType.fromMap.K">K</span>, <span class="extype" name="doric.types.SparkType.fromMap.V">V</span>]] { type OriginalSparkType = Map[stk.OriginalSparkType,stv.OriginalSparkType] }</span>
       </span>
       
       
     </li><li name="doric.types.SparkType#fromOption" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromOption[A](implicitevidence$7:doric.types.SparkType[A]):doric.types.SparkType[Option[A]]"></a><a id="fromOption[A](SparkType[A]):SparkType[Option[A]]"></a>
+      <a id="fromOption[A](implicitst:doric.types.SparkType[A]):doric.types.SparkType[Option[A]]{typeOriginalSparkType=st.OriginalSparkType}"></a><a id="fromOption[A](SparkType[A]):SparkType[Option[A]]{typeOriginalSparkType=st.OriginalSparkType}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromOption[A](implicitevidence$7:doric.types.SparkType[A]):doric.types.SparkType[Option[A]]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromOption[A](implicitst:doric.types.SparkType[A]):doric.types.SparkType[Option[A]]{typeOriginalSparkType=st.OriginalSparkType}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -601,14 +593,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fromOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromOption.A">A</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Option.html#scala.Option" class="extype" name="scala.Option">Option</a>[<span class="extype" name="doric.types.SparkType.fromOption.A">A</span>]]</span>
+        <span class="name">fromOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="st">st: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.types.SparkType.fromOption.A">A</span>]</span>)</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="https://www.scala-lang.org/api/2.12.15/scala/Option.html#scala.Option" class="extype" name="scala.Option">Option</a>[<span class="extype" name="doric.types.SparkType.fromOption.A">A</span>]] { type OriginalSparkType = st.OriginalSparkType }</span>
       </span>
       
       
-    </li><li name="doric.types.SparkType#fromStringDf" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fromStringDf:doric.types.SparkType[String]"></a><a id="fromStringDf:SparkType[String]"></a>
+    </li><li name="doric.types.SparkType#fromRow" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fromRow:doric.types.SparkType[org.apache.spark.sql.Row]{typeOriginalSparkType=org.apache.spark.sql.Row}"></a><a id="fromRow:SparkType[Row]{typeOriginalSparkType=org.apache.spark.sql.Row}"></a>
       <span class="permalink">
-      <a href="../../doric/types/SparkType$.html#fromStringDf:doric.types.SparkType[String]" title="Permalink">
+      <a href="../../doric/types/SparkType$.html#fromRow:doric.types.SparkType[org.apache.spark.sql.Row]{typeOriginalSparkType=org.apache.spark.sql.Row}" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -617,7 +609,39 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">fromStringDf</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+        <span class="name">fromRow</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="org.apache.spark.sql.Row">Row</span>] { type OriginalSparkType = org.apache.spark.sql.Row }</span>
+      </span>
+      
+      
+    </li><li name="doric.types.SparkType#fromStringDf" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fromStringDf:doric.types.SparkType[String]{typeOriginalSparkType=String}"></a><a id="fromStringDf:SparkType[String]{typeOriginalSparkType=String}"></a>
+      <span class="permalink">
+      <a href="../../doric/types/SparkType$.html#fromStringDf:doric.types.SparkType[String]{typeOriginalSparkType=String}" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fromStringDf</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="scala.Predef.String">String</span>] { type OriginalSparkType = String }</span>
+      </span>
+      
+      
+    </li><li name="doric.types.SparkType#fromTimestamp" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fromTimestamp:doric.types.SparkType[java.sql.Timestamp]{typeOriginalSparkType=java.time.Instant}"></a><a id="fromTimestamp:SparkType[Timestamp]{typeOriginalSparkType=java.time.Instant}"></a>
+      <span class="permalink">
+      <a href="../../doric/types/SparkType$.html#fromTimestamp:doric.types.SparkType[java.sql.Timestamp]{typeOriginalSparkType=java.time.Instant}" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fromTimestamp</span><span class="result">: <a href="SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="java.sql.Timestamp">Timestamp</span>] { type OriginalSparkType = java.time.Instant }</span>
       </span>
       
       
