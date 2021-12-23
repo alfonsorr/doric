@@ -159,6 +159,10 @@
                         <a href="BasicCol.html" title="Extension methods for any kind of column">BasicCol</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
+                        <a class="class" href="BinaryOperationsSyntax.html" title=""></a>
+                        <a href="BinaryOperationsSyntax.html" title="">BinaryOperationsSyntax</a>
+                      </li><li class="current-entities indented1">
+                        <span class="separator"></span>
                         <a class="class" href="BooleanOperationsSyntax.html" title=""></a>
                         <a href="BooleanOperationsSyntax.html" title="">BooleanOperationsSyntax</a>
                       </li><li class="current-entities indented1">
@@ -218,10 +222,6 @@
                         <a class="class" href="LeftDoricColumn.html" title=""></a>
                         <a href="LeftDoricColumn.html" title="">LeftDoricColumn</a>
                       </li><li class="current-entities indented1">
-                        <span class="separator"></span>
-                        <a class="class" href="LiteralColOps.html" title=""></a>
-                        <a href="LiteralColOps.html" title="">LiteralColOps</a>
-                      </li><li class="current-entities indented1">
                         <a class="object" href="LiteralDoricColumn$.html" title=""></a>
                         <a class="class" href="LiteralDoricColumn.html" title=""></a>
                         <a href="LiteralDoricColumn.html" title="">LiteralDoricColumn</a>
@@ -229,6 +229,10 @@
                         <span class="separator"></span>
                         <a class="class" href="LiteralOps.html" title=""></a>
                         <a href="LiteralOps.html" title="">LiteralOps</a>
+                      </li><li class="current-entities indented1">
+                        <span class="separator"></span>
+                        <a class="class" href="LongOperationsSyntax.html" title=""></a>
+                        <a href="LongOperationsSyntax.html" title="">LongOperationsSyntax</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
                         <a class="class" href="MapColumnOps.html" title="Extension methods for Map Columns"></a>
@@ -672,7 +676,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#java.lang.String" class="extype" name="java.lang.String">String</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -717,11 +721,12 @@
         <span class="implicit shadowed">lit</span><span class="result">: <a href="LiteralDoricColumn.html" class="extype" name="doric.LiteralDoricColumn">LiteralDoricColumn</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>]</span>
       </span>
       
-      <p class="shortcomment cmt">Transforms the original value to a literal.</p><div class="fullcomment"><div class="comment cmt"><p>Transforms the original value to a literal.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
-  a literal with the same type.</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+      <p class="shortcomment cmt">Transforms the original value to a literal.</p><div class="fullcomment"><div class="comment cmt"><p>Transforms the original value to a literal.
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
+a literal with the same type.</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a> to
             <a href="index.html#LiteralOps[L]extendsAnyRef" class="extmbr" name="doric.LiteralOps">doric.LiteralOps</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] performed by method LiteralOps in doric.syntax.LiteralConversions.
-            This conversion will take place only if an implicit value of type <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] is in scope.
+            This conversion will take place only if an implicit value of type <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] is in scope and at the same time an implicit value of type <a href="types/LiteralSparkType.html" class="extype" name="doric.types.LiteralSparkType">LiteralSparkType</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] is in scope.
           </dd><dt class="implicit">Shadowing</dt><dd>This implicitly inherited member is ambiguous. One or more implicitly inherited members have similar signatures, so calling this member may produce an ambiguous implicit conversion compiler error.<br />To access this member you can use a <a href="http://stackoverflow.com/questions/2087250/what-is-the-purpose-of-type-ascription-in-scala" target="_blank">type ascription</a>:<br /><div class="cmt"><pre>(stringIntCNameOps: doric.LiteralOps[StringIntCNameOps]).lit</pre></div></dd><dt>Definition Classes</dt><dd>LiteralOps</dd><dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
@@ -741,11 +746,12 @@
         <span class="implicit shadowed">lit</span><span class="result">: <a href="LiteralDoricColumn.html" class="extype" name="doric.LiteralDoricColumn">LiteralDoricColumn</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>]</span>
       </span>
       
-      <p class="shortcomment cmt">Transforms the original value to a literal.</p><div class="fullcomment"><div class="comment cmt"><p>Transforms the original value to a literal.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
-  a literal with the same type.</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+      <p class="shortcomment cmt">Transforms the original value to a literal.</p><div class="fullcomment"><div class="comment cmt"><p>Transforms the original value to a literal.
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
+a literal with the same type.</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a> to
             <a href="index.html#LiteralOps[L]extendsAnyRef" class="extmbr" name="doric.LiteralOps">doric.LiteralOps</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] performed by method LiteralOps in doric.syntax.LiteralConversions.
-            This conversion will take place only if an implicit value of type <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] is in scope.
+            This conversion will take place only if an implicit value of type <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] is in scope and at the same time an implicit value of type <a href="types/LiteralSparkType.html" class="extype" name="doric.types.LiteralSparkType">LiteralSparkType</a>[<a href="" class="extype" name="doric.StringIntCNameOps">StringIntCNameOps</a>] is in scope.
           </dd><dt class="implicit">Shadowing</dt><dd>This implicitly inherited member is ambiguous. One or more implicitly inherited members have similar signatures, so calling this member may produce an ambiguous implicit conversion compiler error.<br />To access this member you can use a <a href="http://stackoverflow.com/questions/2087250/what-is-the-purpose-of-type-ascription-in-scala" target="_blank">type ascription</a>:<br /><div class="cmt"><pre>(stringIntCNameOps: doric.LiteralOps[StringIntCNameOps]).lit</pre></div></dd><dt>Definition Classes</dt><dd>LiteralOps</dd><dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               

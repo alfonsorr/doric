@@ -514,7 +514,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#java.lang.Class" class="extype" name="java.lang.Class">Class</a>[_]</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd><dt>Annotations</dt><dd>
@@ -522,9 +522,9 @@
               
         </dd></dl></div>
     </li><li name="doric.LiteralDoricColumn.LiteralGetter#getColumnValueAsSparkValue" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="getColumnValueAsSparkValue(implicitc:doric.types.SparkType[T]):c.OriginalSparkType"></a><a id="getColumnValueAsSparkValue(SparkType[T]):OriginalSparkType"></a>
+      <a id="getColumnValueAsSparkValue(implicitc:doric.types.LiteralSparkType[T]):c.OriginalSparkType"></a><a id="getColumnValueAsSparkValue(LiteralSparkType[T]):OriginalSparkType"></a>
       <span class="permalink">
-      <a href="../doric/LiteralDoricColumn$$LiteralGetter.html#getColumnValueAsSparkValue(implicitc:doric.types.SparkType[T]):c.OriginalSparkType" title="Permalink">
+      <a href="../doric/LiteralDoricColumn$$LiteralGetter.html#getColumnValueAsSparkValue(implicitc:doric.types.LiteralSparkType[T]):c.OriginalSparkType" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -533,7 +533,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getColumnValueAsSparkValue</span><span class="params">(<span class="implicit">implicit </span><span name="c">c: <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>]</span>)</span><span class="result">: <a href="types/SparkType.html#OriginalSparkType" class="extmbr" name="doric.types.SparkType.OriginalSparkType">OriginalSparkType</a></span>
+        <span class="name">getColumnValueAsSparkValue</span><span class="params">(<span class="implicit">implicit </span><span name="c">c: <a href="types/LiteralSparkType.html" class="extype" name="doric.types.LiteralSparkType">LiteralSparkType</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>]</span>)</span><span class="result">: <a href="types/LiteralSparkType.html#OriginalSparkType" class="extmbr" name="doric.types.LiteralSparkType.OriginalSparkType">OriginalSparkType</a></span>
       </span>
       
       
@@ -587,11 +587,12 @@
         <span class="implicit">lit</span><span class="result">: <a href="LiteralDoricColumn.html" class="extype" name="doric.LiteralDoricColumn">LiteralDoricColumn</a>[<a href="" class="extype" name="doric.LiteralDoricColumn.LiteralGetter">LiteralGetter</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>]]</span>
       </span>
       
-      <p class="shortcomment cmt">Transforms the original value to a literal.</p><div class="fullcomment"><div class="comment cmt"><p>Transforms the original value to a literal.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
-  a literal with the same type.</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+      <p class="shortcomment cmt">Transforms the original value to a literal.</p><div class="fullcomment"><div class="comment cmt"><p>Transforms the original value to a literal.
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
+a literal with the same type.</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.LiteralDoricColumn.LiteralGetter">LiteralGetter</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>] to
             <a href="index.html#LiteralOps[L]extendsAnyRef" class="extmbr" name="doric.LiteralOps">doric.LiteralOps</a>[<a href="" class="extype" name="doric.LiteralDoricColumn.LiteralGetter">LiteralGetter</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>]] performed by method LiteralOps in doric.syntax.LiteralConversions.
-            This conversion will take place only if an implicit value of type <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="" class="extype" name="doric.LiteralDoricColumn.LiteralGetter">LiteralGetter</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>]] is in scope.
+            This conversion will take place only if an implicit value of type <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>[<a href="" class="extype" name="doric.LiteralDoricColumn.LiteralGetter">LiteralGetter</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>]] is in scope and at the same time an implicit value of type <a href="types/LiteralSparkType.html" class="extype" name="doric.types.LiteralSparkType">LiteralSparkType</a>[<a href="" class="extype" name="doric.LiteralDoricColumn.LiteralGetter">LiteralGetter</a>[<span class="extype" name="doric.LiteralDoricColumn.LiteralGetter.T">T</span>]] is in scope.
           </dd><dt>Definition Classes</dt><dd>LiteralOps</dd><dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
@@ -678,7 +679,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#java.lang.String" class="extype" name="java.lang.String">String</a></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>

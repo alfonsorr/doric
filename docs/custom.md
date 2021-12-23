@@ -22,24 +22,29 @@ But we don't want to represent it in spark as a struct, it will be better to rep
 this is super simple, just type this code:
 
 ```scala
-import doric.types.SparkType
+import doric.types.{SparkType, LiteralSparkType}
 
 implicit val userSparkType = SparkType[String].customType[User](
-        x => s"${x.name}#${x.surname}",
         x => {
           val name :: surname :: Nil = x.split("#").toList
           User(name, surname)
         }
       )
-// userSparkType: SparkType[User]{type OriginalSparkType = String} = doric.types.SparkType$$anon$1@4d96c290
+// userSparkType: SparkType[User]{type OriginalSparkType = String} = doric.types.SparkType$$anon$1@77e8492f
+      
+implicit val userLiteralSparkType =
+  LiteralSparkType[String].customType[User](x => s"${x.name}#${x.surname}")
+// userLiteralSparkType: LiteralSparkType[User]{type OriginalSparkType = String} = doric.types.LiteralSparkType$$anon$1@1263d20d
 ```
 
 Let's take a closer look, first we are creating an implicit `SparkType` for `User`. And the way to do this is invoking
 the implicit SparkType of the original datatype we want to use, in our case calling `SparkType[String]`. Once we have
-it, we can call the method `customType`. This method needs two lambdas, the first one will transform from our custom
-type to the base type, in our case we create a single string with the character `#` as a separator, the second one is
-the opposite function, will transform from `String` to our custom `User`, in our case, split the String by the
-character `#`  and reconstruct the `User` class.
+it, we can call the method `customType`. This method needs the function that will transform from `String` to our
+custom `User`, in our case, split the String by the character `#`  and reconstruct the `User` class. Also, to allow to
+use the `User` class as a literal value, we need to create a LiteralSparkType, that starting with the original type that
+we created it, we call the method `customType` and passing the type of our `User`
+and we have to provide the opposite function to the one for the `SparkType`, in our case how to create the `String` from
+our `User`.
 
 Now we have a valid SparkType, we can use it for everything:
 
@@ -85,7 +90,7 @@ a `String` inside the dataframe.
 ```scala
 import doric.types.SparkCasting
 implicit val userStringCast = SparkCasting[User, String]
-// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@2d63534d
+// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@260d878a
 ```
 
 But the real power of this custom types is the ability to create also custom functions for the `DoricColumn[User]`
@@ -133,8 +138,10 @@ val stateToSpark: UserState => Int = {
 }
 // stateToSpark: UserState => Int = <function1>
 
-implicit val userStateSparkType = SparkType[Int].customType(stateToSpark, stateFromSpark)
-// userStateSparkType: SparkType[UserState]{type OriginalSparkType = Int} = doric.types.SparkType$$anon$1@6316b9e3
+implicit val userStateSparkType = SparkType[Int].customType(stateFromSpark)
+// userStateSparkType: SparkType[UserState]{type OriginalSparkType = Int} = doric.types.SparkType$$anon$1@13190355
+implicit val userLiteralStateSparkType = LiteralSparkType[Int].customType(stateToSpark)
+// userLiteralStateSparkType: LiteralSparkType[UserState]{type OriginalSparkType = Int} = doric.types.LiteralSparkType$$anon$1@1f664881
 ```
 
 Now let's do some complex logic, increase a score depending on the state of the user.
@@ -145,7 +152,7 @@ val changeScore: IntegerColumn = when[Int]
   .caseW(col[UserState](c"state") === Relation, col[Int](c"score") * 10)
   .otherwise(col[Int](c"score") * 12)
 // changeScore: IntegerColumn = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$1497/304780874@186f7553)
+//   Kleisli(cats.data.Kleisli$$Lambda$1493/1501886024@7aafac17)
 // )
 ```
 
@@ -178,7 +185,10 @@ we insert something in our column it can be repeated. This is as simple as creat
 
 ```scala
 implicit def setSparkType[T: SparkType] =
-  SparkType[List[T]].customType[Set[T]](_.toList, _.toSet)
+  SparkType[List[T]].customType[Set[T]](_.toSet)
+  
+implicit def setLiteralSparkType[T: LiteralSparkType](implicit lst: SparkType[Set[T]]) =
+  LiteralSparkType[List[T]].customType[Set[T]](_.toList)
 ```
 
 All set up, let's enjoy our new type
