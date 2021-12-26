@@ -16,17 +16,17 @@ val df = List(("hi", 31)).toDF("str", "int")
 // df: org.apache.spark.sql.package.DataFrame = [str: string, int: int]
 val col1 = colInt(c"str")
 // col1: NamedDoricColumn[Int] = NamedDoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$1489/344416465@5dcd3a19),
+//   Kleisli(doric.types.SparkType$$Lambda$1489/237128003@5a8fb312),
 //   "str"
 // )
 val col2 = colString(c"int")
 // col2: NamedDoricColumn[String] = NamedDoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$1489/344416465@7ce2bfb),
+//   Kleisli(doric.types.SparkType$$Lambda$1489/237128003@421a752b),
 //   "int"
 // )
 val col3 = colInt(c"unknown")
 // col3: NamedDoricColumn[Int] = NamedDoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$1489/344416465@5a8fb312),
+//   Kleisli(doric.types.SparkType$$Lambda$1489/237128003@76339283),
 //   "unknown"
 // )
 ```
@@ -79,17 +79,17 @@ Us as developers want to abstract from this suffix and focus only in the unique 
 ```scala
 colString(c"name_user")
 // res3: NamedDoricColumn[String] = NamedDoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$1489/344416465@27e4ca66),
+//   Kleisli(doric.types.SparkType$$Lambda$1489/237128003@5c8b6b4d),
 //   "name_user"
 // )
 colInt(c"age_user")
 // res4: NamedDoricColumn[Int] = NamedDoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$1489/344416465@36c6509c),
+//   Kleisli(doric.types.SparkType$$Lambda$1489/237128003@7b0ad007),
 //   "age_user"
 // )
 colString(c"city_user")
 // res5: NamedDoricColumn[String] = NamedDoricColumn(
-//   Kleisli(doric.types.SparkType$$Lambda$1489/344416465@5c8b6b4d),
+//   Kleisli(doric.types.SparkType$$Lambda$1489/237128003@7abc82fa),
 //   "city_user"
 // )
 ```
