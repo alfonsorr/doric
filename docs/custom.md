@@ -6,9 +6,13 @@ permalink: docs/custom/
 
 # Custom types
 
-Bored that spark limits the interaction with the outside world? Need a more descriptive value to insert into your
-dataframe? Doric's got your back with his custom types. The only thing you need to know is the datatype of spark that
-will represent your value, this is easier to see with an example.
+The limitation of the sql nature of Spark SQL limits the amount of types it contains. Doric tries to make easier to
+connect the scala API of Spark with any other element you need in scala. The sparkType typeclass is the one in charge to
+show spark how your custom types are represented, and how can we stract it from the dataframe. Also, to make it easier
+to use as literals your custom types, doric has the typeclass LiteralSparkType, that is in charge of transforming the
+literal value to the spark representation.
+
+Now we show a few usefully examples to learn how to create our custom types in doric.
 
 ## User as a string
 
@@ -30,19 +34,19 @@ implicit val userSparkType = SparkType[String].customType[User](
           User(name, surname)
         }
       )
-// userSparkType: SparkType[User]{type OriginalSparkType = String} = doric.types.SparkType$$anon$1@77e8492f
+// userSparkType: SparkType[User]{type OriginalSparkType = String} = doric.types.SparkType$$anon$1@3fcc58f8
       
 implicit val userLiteralSparkType =
   LiteralSparkType[String].customType[User](x => s"${x.name}#${x.surname}")
-// userLiteralSparkType: LiteralSparkType[User]{type OriginalSparkType = String} = doric.types.LiteralSparkType$$anon$1@1263d20d
+// userLiteralSparkType: LiteralSparkType[User]{type OriginalSparkType = String} = doric.types.LiteralSparkType$$anon$1@51f714d1
 ```
 
 Let's take a closer look, first we are creating an implicit `SparkType` for `User`. And the way to do this is invoking
-the implicit SparkType of the original datatype we want to use, in our case calling `SparkType[String]`. Once we have
-it, we can call the method `customType`. This method needs the function that will transform from `String` to our
-custom `User`, in our case, split the String by the character `#`  and reconstruct the `User` class. Also, to allow to
-use the `User` class as a literal value, we need to create a LiteralSparkType, that starting with the original type that
-we created it, we call the method `customType` and passing the type of our `User`
+the SparkType of the original datatype we want to use, in our case calling `SparkType[String]`. Once we have it, we can
+call the method `customType`. This method needs the function that will transform from `String` to our custom `User`,
+split the String by the character `#`  and reconstruct the `User` class. Also, to allow to use the `User` class as a
+literal value, we need to create a LiteralSparkType, that starting with the original type that we created it, we call
+the method `customType` and passing the type of our `User`
 and we have to provide the opposite function to the one for the `SparkType`, in our case how to create the `String` from
 our `User`.
 
@@ -90,7 +94,7 @@ a `String` inside the dataframe.
 ```scala
 import doric.types.SparkCasting
 implicit val userStringCast = SparkCasting[User, String]
-// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@260d878a
+// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@1263d20d
 ```
 
 But the real power of this custom types is the ability to create also custom functions for the `DoricColumn[User]`
@@ -120,7 +124,7 @@ object Relation extends UserState
 object Married extends UserState
 ```
 
-Now we can create our `SparkType[UserState]` using `Int` as our base `DataType`
+Now we can create our `SparkType[UserState]` using `Int` as our base `DataType`. Also the `LiteralSparkType[UserState]`
 
 ```scala
 val stateFromSpark: Int => UserState = {
@@ -139,9 +143,9 @@ val stateToSpark: UserState => Int = {
 // stateToSpark: UserState => Int = <function1>
 
 implicit val userStateSparkType = SparkType[Int].customType(stateFromSpark)
-// userStateSparkType: SparkType[UserState]{type OriginalSparkType = Int} = doric.types.SparkType$$anon$1@13190355
+// userStateSparkType: SparkType[UserState]{type OriginalSparkType = Int} = doric.types.SparkType$$anon$1@4f355321
 implicit val userLiteralStateSparkType = LiteralSparkType[Int].customType(stateToSpark)
-// userLiteralStateSparkType: LiteralSparkType[UserState]{type OriginalSparkType = Int} = doric.types.LiteralSparkType$$anon$1@1f664881
+// userLiteralStateSparkType: LiteralSparkType[UserState]{type OriginalSparkType = Int} = doric.types.LiteralSparkType$$anon$1@260d878a
 ```
 
 Now let's do some complex logic, increase a score depending on the state of the user.
@@ -152,11 +156,11 @@ val changeScore: IntegerColumn = when[Int]
   .caseW(col[UserState](c"state") === Relation, col[Int](c"score") * 10)
   .otherwise(col[Int](c"score") * 12)
 // changeScore: IntegerColumn = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$1493/1501886024@7aafac17)
+//   Kleisli(cats.data.Kleisli$$Lambda$1493/847528437@13190355)
 // )
 ```
 
-Don't tell me that this code is not readable and will be maintainable in the next time you need to touch it.
+This way we can make our code closer to scala syntax, but with all the power of Spark.
 
 ```scala
 import spark.implicits._
