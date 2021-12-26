@@ -34,11 +34,11 @@ implicit val userSparkType = SparkType[String].customType[User](
           User(name, surname)
         }
       )
-// userSparkType: SparkType[User]{type OriginalSparkType = String} = doric.types.SparkType$$anon$1@51a7ee4e
+// userSparkType: SparkType[User]{type OriginalSparkType = String} = doric.types.SparkType$$anon$1@5b1c4b48
       
 implicit val userLiteralSparkType =
   LiteralSparkType[String].customType[User](x => s"${x.name}#${x.surname}")
-// userLiteralSparkType: LiteralSparkType[User]{type OriginalSparkType = String} = doric.types.LiteralSparkType$$anon$1@424c8ebe
+// userLiteralSparkType: LiteralSparkType[User]{type OriginalSparkType = String} = doric.types.LiteralSparkType$$anon$1@5e435f0d
 ```
 
 Let's take a closer look, first we are creating an implicit `SparkType` for `User`. And the way to do this is invoking
@@ -94,7 +94,7 @@ a `String` inside the dataframe.
 ```scala
 import doric.types.SparkCasting
 implicit val userStringCast = SparkCasting[User, String]
-// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@3fcc58f8
+// userStringCast: types.Casting[User, String] = doric.types.SparkCasting$$anon$1@424c8ebe
 ```
 
 But the real power of this custom types is the ability to create also custom functions for the `DoricColumn[User]`
@@ -143,9 +143,9 @@ val stateToSpark: UserState => Int = {
 // stateToSpark: UserState => Int = <function1>
 
 implicit val userStateSparkType = SparkType[Int].customType(stateFromSpark)
-// userStateSparkType: SparkType[UserState]{type OriginalSparkType = Int} = doric.types.SparkType$$anon$1@51f714d1
+// userStateSparkType: SparkType[UserState]{type OriginalSparkType = Int} = doric.types.SparkType$$anon$1@7bb3cbb4
 implicit val userLiteralStateSparkType = LiteralSparkType[Int].customType(stateToSpark)
-// userLiteralStateSparkType: LiteralSparkType[UserState]{type OriginalSparkType = Int} = doric.types.LiteralSparkType$$anon$1@77e8492f
+// userLiteralStateSparkType: LiteralSparkType[UserState]{type OriginalSparkType = Int} = doric.types.LiteralSparkType$$anon$1@3fcc58f8
 ```
 
 Now let's do some complex logic, increase a score depending on the state of the user.
@@ -156,7 +156,7 @@ val changeScore: IntegerColumn = when[Int]
   .caseW(col[UserState](c"state") === Relation, col[Int](c"score") * 10)
   .otherwise(col[Int](c"score") * 12)
 // changeScore: IntegerColumn = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$1493/552245969@1263d20d)
+//   Kleisli(cats.data.Kleisli$$Lambda$1493/1031517033@51f714d1)
 // )
 ```
 
