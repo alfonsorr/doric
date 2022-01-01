@@ -8,7 +8,7 @@ permalink: docs/custom/
 
 The limitation of the sql nature of Spark SQL limits the amount of types it contains. Doric tries to make easier to
 connect the scala API of Spark with any other element you need in scala. The sparkType typeclass is the one in charge to
-show spark how your custom types are represented, and how can we stract it from the dataframe. Also, to make it easier
+show spark how your custom types are represented, and how can we extract it from the DataFrame. Also, to make it easier
 to use as literals your custom types, doric has the typeclass LiteralSparkType, that is in charge of transforming the
 literal value to the spark representation.
 
@@ -156,7 +156,7 @@ val changeScore: IntegerColumn = when[Int]
   .caseW(col[UserState](c"state") === Relation, col[Int](c"score") * 10)
   .otherwise(col[Int](c"score") * 12)
 // changeScore: IntegerColumn = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$1493/1501886024@6a636c62)
+//   Kleisli(cats.data.Kleisli$$Lambda$1493/73749451@6a636c62)
 // )
 ```
 
