@@ -24,5 +24,5 @@ Doric provides out of the box some basic types that have a correspondence in dat
 |Option[T]| |Wrapper to make easier to handle nullable values|
 
 With these types you will always track the type of your columns and know what transformations are allowed in each moment.
-To know all possible transformations, you can take a look at the [DoricColumn API doc](/docs/api/latest/doric/DoricColumn.html).
+To know all possible transformations, you can take a look at the [DoricColumn API doc](https://www.hablapps.com/doric/docs/api/latest/doric/DoricColumn.html).
 Timestamp and Date are custom types derived from the most modern API of time manipulation spark can handle.
