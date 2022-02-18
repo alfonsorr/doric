@@ -17,7 +17,7 @@ val ex1: DoricColumn[String] =
     .caseW(col[Int]("int_col") > 3, "big") // conditions always are boolean, and the return type is checked
     .otherwise("small") // 
 // ex1: DoricColumn[String] = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$1475/2107284848@7c3223aa)
+//   Kleisli(cats.data.Kleisli$$Lambda$1437/440090096@25587290)
 // ) // 
   
 val ex2: DoricColumn[String] =
@@ -26,7 +26,7 @@ val ex2: DoricColumn[String] =
     .caseW(col[Int]("int_col") > 0, "small")
     .otherwiseNull // know that are cases that it can return null values
 // ex2: DoricColumn[String] = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$1475/2107284848@7683d632)
+//   Kleisli(cats.data.Kleisli$$Lambda$1437/440090096@716eae1)
 // ) // know that are cases that it can return null values
   
 List(0, 1, 2, 3, 4, 5).toDF("int_col")
@@ -56,7 +56,7 @@ val matchEx1: DoricColumn[Int] = matchToType[Int]("my_column") // we only know t
   .caseType[Array[Int]](_.getIndex(0) + 10) // a complex transformation in case it's an array of integers
   .inOtherCaseError // in any other case, it will produce an error that will be displayed as any other [doric errors](/docs/errors/)
 // matchEx1: DoricColumn[Int] = TransformationDoricColumn(
-//   Kleisli(doric.syntax.NonEmptyTypeMatcher$$Lambda$2961/439949307@513bec8c)
+//   Kleisli(doric.syntax.NonEmptyTypeMatcher$$Lambda$2952/528503672@7ffe8a82)
 // )
 ```
 Then you can use like the normal doric column it is
@@ -101,8 +101,8 @@ List(1L,2L,3L).toDF("my_column").select(matchEx1.as("isErrorLong"))
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
-// 	at repl.MdocSession$App$$anonfun$12.apply(advanced-operations.md:72)
-// 	at repl.MdocSession$App$$anonfun$12.apply(advanced-operations.md:72)
+// 	at repl.MdocSession$App$$anonfun$4.apply(advanced-operations.md:72)
+// 	at repl.MdocSession$App$$anonfun$4.apply(advanced-operations.md:72)
 ```
 If you always want to return a value, you can end the matchToType with a default value
 
@@ -111,7 +111,7 @@ val matchEx2 = matchToType[Int]("my_column")
   .caseType[Int](identity)
   .inOtherCase(-1)
 // matchEx2: DoricColumn[Int] = TransformationDoricColumn(
-//   Kleisli(doric.syntax.NonEmptyTypeMatcher$$Lambda$2996/221237139@6b9fc5c7)
+//   Kleisli(doric.syntax.NonEmptyTypeMatcher$$Lambda$2987/321432453@4a29a1e6)
 // )
 ```
 
