@@ -12,6 +12,21 @@ import org.apache.spark.sql.catalyst.expressions.Literal
 
 sealed trait DoricColumn[T] {
   val elem: Doric[Column]
+
+  @inline private[doric] def apply(df: Dataset[_]): DoricValidated[Column] =
+    elem.run(df)
+
+  @inline private[doric] def run(df: Dataset[_]): DoricValidated[Column] =
+    elem.run(df)
+
+  @inline private[doric] def mapDC[TDC](f: Column => Column): DoricColumn[TDC] =
+    elem.map(f).toDC
+
+  @inline private[doric] def mapWithDC[TDC, T2](
+      dc: DoricColumn[T2],
+      f: (Column, Column) => Column
+  ): DoricColumn[TDC] =
+    (elem, dc.elem).mapN(f).toDC
 }
 
 case class NamedDoricColumn[T] private[doric] (

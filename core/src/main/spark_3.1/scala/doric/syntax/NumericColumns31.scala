@@ -17,7 +17,7 @@ private[syntax] trait NumericColumns31 {
       * @see [[org.apache.spark.sql.functions.timestamp_seconds]]
       */
     def timestampSeconds: TimestampColumn =
-      column.elem.map(f.timestamp_seconds).toDC
+      column.mapDC(f.timestamp_seconds)
   }
 
 }

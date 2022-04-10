@@ -21,7 +21,7 @@ private[syntax] trait BooleanColumns31 {
       * @group Boolean Type
       * @see [[org.apache.spark.sql.functions.assert_true(c:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.assert_true]]
       */
-    def assertTrue: NullColumn = column.elem.map(f.assert_true).toDC
+    def assertTrue: NullColumn = column.mapDC(f.assert_true)
 
     /**
       * Returns null if the condition is true; throws an exception with the error message otherwise.

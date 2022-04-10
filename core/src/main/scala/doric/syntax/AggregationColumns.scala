@@ -18,7 +18,7 @@ private[syntax] trait AggregationColumns {
   def sum[T](col: DoricColumn[T])(implicit
       nt: NumericType[T]
   ): DoricColumn[nt.Sum] =
-    col.elem.map(f.sum).toDC
+    col.mapDC(f.sum)
 
   /**
     * Aggregate function: returns the number of items in a group.
@@ -27,7 +27,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.count(e:* org.apache.spark.sql.functions.count]]
     */
   def count(col: DoricColumn[_]): LongColumn =
-    col.elem.map(f.count).toDC
+    col.mapDC(f.count)
 
   /**
     * Aggregate function: returns the number of items in a group.
@@ -51,7 +51,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.first(e:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.first]]
     */
   def first[T](col: DoricColumn[T]): DoricColumn[T] =
-    col.elem.map(f.first).toDC
+    col.mapDC(f.first)
 
   /**
     * Aggregate function: returns the first value in a group.
@@ -66,7 +66,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.first(e:org\.apache\.spark\.sql\.Column,ignoreNulls:* org.apache.spark.sql.functions.first]]
     */
   def first[T](col: DoricColumn[T], ignoreNulls: Boolean): DoricColumn[T] =
-    col.elem.map(f.first(_, ignoreNulls)).toDC
+    col.mapDC(f.first(_, ignoreNulls))
 
   /**
     * Aggregate function: returns the last value in a group.
@@ -81,7 +81,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.last(e:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.last]]
     */
   def last[T](col: DoricColumn[T]): DoricColumn[T] =
-    col.elem.map(f.last).toDC
+    col.mapDC(f.last)
 
   /**
     * Aggregate function: returns the last value in a group.
@@ -96,7 +96,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.last(e:org\.apache\.spark\.sql\.Column,ignoreNulls:* org.apache.spark.sql.functions.last]]
     */
   def last[T](col: DoricColumn[T], ignoreNulls: Boolean): DoricColumn[T] =
-    col.elem.map(f.last(_, ignoreNulls)).toDC
+    col.mapDC(f.last(_, ignoreNulls))
 
   /**
     * Aggregate function: returns the approximate number of distinct items in a group.
@@ -105,7 +105,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.approx_count_distinct(e:org\.apache\.spark\.sql\.Column,rsd:* org.apache.spark.sql.functions.approx_count_distinct]]
     */
   def aproxCountDistinct(col: DoricColumn[_], rsd: Double): LongColumn =
-    col.elem.map(f.approx_count_distinct(_, rsd)).toDC
+    col.mapDC(f.approx_count_distinct(_, rsd))
 
   /**
     * Aggregate function: returns the approximate number of distinct items in a group.
@@ -114,7 +114,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.approx_count_distinct(e:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.approx_count_distinct]]
     */
   def aproxCountDistinct(col: DoricColumn[_]): LongColumn =
-    col.elem.map(f.approx_count_distinct).toDC
+    col.mapDC(f.approx_count_distinct)
 
   /**
     * Aggregate function: returns the approximate number of distinct items in a group.
@@ -141,7 +141,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.avg(e:* org.apache.spark.sql.functions.avg]]
     */
   def avg[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.avg).toDC
+    col.mapDC(f.avg)
 
   /**
     * Aggregate function: returns a list of objects with duplicates.
@@ -153,7 +153,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.collect_list(e:* org.apache.spark.sql.functions.collect_list]]
     */
   def collectList[T](col: DoricColumn[T]): ArrayColumn[T] =
-    col.elem.map(f.collect_list).toDC
+    col.mapDC(f.collect_list)
 
   /**
     * Aggregate function: returns a set of objects with duplicate elements eliminated.
@@ -165,7 +165,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.collect_set(e:* org.apache.spark.sql.functions.collect_set]]
     */
   def collectSet[T](col: DoricColumn[T]): ArrayColumn[T] =
-    col.elem.map(f.collect_set).toDC
+    col.mapDC(f.collect_set)
 
   /**
     * Aggregate function: returns the Pearson Correlation Coefficient for two columns.
@@ -225,7 +225,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.kurtosis(e:* org.apache.spark.sql.functions.kurtosis]]
     */
   def kurtosis(col: DoubleColumn): DoubleColumn =
-    col.elem.map(f.kurtosis).toDC
+    col.mapDC(f.kurtosis)
 
   /**
     * Aggregate function: returns the maximum value of the expression in a group.
@@ -234,7 +234,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.max(e:* org.apache.spark.sql.functions.max]]
     */
   def max[T](col: DoricColumn[T]): DoricColumn[T] =
-    col.elem.map(f.max).toDC
+    col.mapDC(f.max)
 
   /**
     * Aggregate function: returns the maximum value of the expression in a group.
@@ -243,7 +243,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.min(e:* org.apache.spark.sql.functions.min]]
     */
   def min[T](col: DoricColumn[T]): DoricColumn[T] =
-    col.elem.map(f.min).toDC
+    col.mapDC(f.min)
 
   /**
     * Aggregate function: returns the maximum value of the expression in a group.
@@ -252,7 +252,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.mean(e:* org.apache.spark.sql.functions.mean]]
     */
   def mean[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.mean).toDC
+    col.mapDC(f.mean)
 
   /**
     * Aggregate function: returns the skewness of the values in a group.
@@ -261,7 +261,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.skewness(e:* org.apache.spark.sql.functions.skewness]]
     */
   def skewness[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.skewness).toDC
+    col.mapDC(f.skewness)
 
   /**
     * Aggregate function: alias for `stddev_samp`.
@@ -270,7 +270,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.stddev(e:* org.apache.spark.sql.functions.stddev]]
     */
   def stdDev[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.stddev).toDC
+    col.mapDC(f.stddev)
 
   /**
     * Aggregate function: returns the sample standard deviation of the expression in a group.
@@ -279,7 +279,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.stddev_samp(e:* org.apache.spark.sql.functions.stddev_samp]]
     */
   def stdDevSamp[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.stddev_samp).toDC
+    col.mapDC(f.stddev_samp)
 
   /**
     * Aggregate function: returns the population standard deviation of the expression in a group.
@@ -288,7 +288,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.stddev_pop(e:* org.apache.spark.sql.functions.stddev_pop]]
     */
   def stdDevPop[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.stddev_pop).toDC
+    col.mapDC(f.stddev_pop)
 
   /**
     * Aggregate function: returns the sum of distinct values in the expression.
@@ -312,7 +312,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.variance(e:* org.apache.spark.sql.functions.variance]]
     */
   def variance[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.variance).toDC
+    col.mapDC(f.variance)
 
   /**
     * Aggregate function: returns the unbiased variance of the values in a group.
@@ -321,7 +321,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.var_samp(e:* org.apache.spark.sql.functions.var_samp]]
     */
   def varSamp[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.var_samp).toDC
+    col.mapDC(f.var_samp)
 
   /**
     * Aggregate function: returns the population variance of the values in a group.
@@ -330,7 +330,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.var_pop(e:* org.apache.spark.sql.functions.var_pop]]
     */
   def varPop[T: NumericType](col: DoricColumn[T]): DoubleColumn =
-    col.elem.map(f.var_pop).toDC
+    col.mapDC(f.var_pop)
 
   /**
     * Aggregate function: indicates whether a specified column in a GROUP BY list is aggregated
@@ -340,7 +340,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.grouping(e:* org.apache.spark.sql.functions.grouping]]
     */
   def grouping(col: DoricColumn[_]): ByteColumn =
-    col.elem.map(f.grouping).toDC
+    col.mapDC(f.grouping)
 
   /**
     * Aggregate function: indicates whether a specified column in a GROUP BY list is aggregated

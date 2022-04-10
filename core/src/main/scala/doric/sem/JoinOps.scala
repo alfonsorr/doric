@@ -39,10 +39,10 @@ private[sem] trait JoinOps {
       val elems = col +: cols.toList
       (
         elems
-          .traverse(_.elem.run(df))
+          .traverse(_(df))
           .leftMap(_.map(JoinDoricSingleError(_, isLeft = true))),
         elems
-          .traverse(_.elem.run(df2))
+          .traverse(_(df2))
           .leftMap(_.map(JoinDoricSingleError(_, isLeft = false)))
       ).mapN((left, right) =>
         df.join(
@@ -111,7 +111,7 @@ private[sem] trait JoinOps {
       val elems = column +: columns.toList
       (
         elems
-          .traverse(_.elem.run(df.toDF()))
+          .traverse(_(df.toDF()))
           .leftMap(_.map(JoinDoricSingleError(_, isLeft = true))),
         elems.traverse(
           _.elem

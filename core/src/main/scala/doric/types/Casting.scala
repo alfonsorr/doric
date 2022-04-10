@@ -74,7 +74,7 @@ trait SparkCasting[From, To] extends Casting[From, To] {
     if (SparkType[From].dataType == SparkType[To].dataType)
       column.elem.toDC
     else
-      column.elem.map(_.cast(SparkType[To].dataType)).toDC
+      column.mapDC(_.cast(SparkType[To].dataType))
 }
 
 object SparkCasting {

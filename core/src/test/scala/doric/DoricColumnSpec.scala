@@ -17,13 +17,13 @@ class DoricColumnSpec extends DoricTestElements with EitherValues {
   def testValue[T: SparkType: Encoder](example: T): Unit = {
     val df = List(example).toDF(column)
 
-    col[T](column).elem.run(df).toEither.value
+    col[T](column).run(df).toEither.value
   }
   def testValueNullable[T: SparkType](
       example: T
   )(implicit enc: Encoder[Option[T]]): Unit = {
     val df = List(Some(example), None).toDF(column)
-    col[T](column).elem.run(df).toEither.value
+    col[T](column).run(df).toEither.value
   }
 
   describe("each column should represent their datatype") {
@@ -66,29 +66,29 @@ class DoricColumnSpec extends DoricTestElements with EitherValues {
     it("works for DStruct") {
       val df =
         List(((1, "hola"), 1)).toDF(column, "extra").select(column)
-      col[Row](column).elem.run(df).toEither.value
+      col[Row](column).run(df).toEither.value
 
       val df2 = List((Some((1, "hola")), 1), (None, 1))
         .toDF(column, "extra")
         .select(column)
-      col[Row](column).elem.run(df2).toEither.value
+      col[Row](column).run(df2).toEither.value
     }
     it("works for structs if accessed directly") {
       val df = List((User("John", "doe", 34), 1))
         .toDF("col", "delete")
         .select("col")
 
-      col[String]("col.name").elem.run(df).toEither.value
-      col[Int]("col.age").elem.run(df).toEither.value
+      col[String]("col.name").run(df).toEither.value
+      col[Int]("col.age").run(df).toEither.value
     }
     it("works for arrays if accessed directly an index") {
       val df = List((List("hola", "adios"), 1))
         .toDF(column, "delete")
         .select(column)
 
-      (column.cname / c"0")[String].elem.run(df).toEither.value
-      (column.cname / c"1")[String].elem.run(df).toEither.value
-      (column.cname / c"2")[String].elem.run(df).toEither.value
+      (column.cname / c"0")[String].run(df).toEither.value
+      (column.cname / c"1")[String].run(df).toEither.value
+      (column.cname / c"2")[String].run(df).toEither.value
     }
   }
 
@@ -98,27 +98,27 @@ class DoricColumnSpec extends DoricTestElements with EitherValues {
     it("should create a column using uncheckedTypeAndExistence") {
       val unchecked = DoricColumn.uncheckedTypeAndExistence(f.col("myColumn"))
 
-      unchecked.elem.run(df).toEither shouldBe Right(f.col("myColumn"))
+      unchecked(df).toEither shouldBe Right(f.col("myColumn"))
     }
 
     it("should not fail creating a column using uncheckedTypeAndExistence") {
       val unchecked =
         DoricColumn.uncheckedTypeAndExistence(f.col("nonExistentCol"))
 
-      unchecked.elem.run(df).toEither shouldBe Right(f.col("nonExistentCol"))
+      unchecked(df).toEither shouldBe Right(f.col("nonExistentCol"))
     }
 
     it("should create an uncheckedType") {
       val dCol: DoricColumn[_] = DoricColumn.uncheckedType(f.col("myColumn"))
 
-      dCol.elem.run(df).toEither shouldBe Right(f.col("myColumn"))
+      dCol(df).toEither shouldBe Right(f.col("myColumn"))
     }
 
     it("should fail creating an uncheckedType if not valid") {
       val dCol: DoricColumn[_] =
         DoricColumn.uncheckedType(f.col("nonExistentCol"))
 
-      val error = dCol.elem.run(df).toEither.left.value.head
+      val error = dCol(df).toEither.left.value.head
 
       error shouldBe an[SparkErrorWrapper]
       error.getMessage should include("cannot resolve '")

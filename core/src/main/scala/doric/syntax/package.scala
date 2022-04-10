@@ -1,6 +1,7 @@
 package doric
 
 import cats.implicits._
+
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions.{ElementAt, Expression, LambdaFunction, UnresolvedNamedLambdaVariable}
 
@@ -40,7 +41,7 @@ package object syntax {
   @inline private[syntax] def reverseAbstract[T](
       dc: DoricColumn[T]
   ): DoricColumn[T] =
-    dc.elem.map(f.reverse).toDC
+    dc.mapDC(f.reverse)
 
   @inline private[syntax] def x[A]: DoricColumn[A] =
     DoricColumn.uncheckedTypeAndExistence[A](new Column(xarg))

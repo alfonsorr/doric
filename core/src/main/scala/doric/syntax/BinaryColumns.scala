@@ -37,7 +37,7 @@ private[syntax] trait BinaryColumns {
       * @group Binary Type
       * @see [[org.apache.spark.sql.functions.md5]]
       */
-    def md5: StringColumn = column.elem.map(f.md5).toDC
+    def md5: StringColumn = column.mapDC(f.md5)
 
     /**
       * Calculates the SHA-1 digest of a binary column and returns the value
@@ -46,7 +46,7 @@ private[syntax] trait BinaryColumns {
       * @group Binary Type
       * @see [[org.apache.spark.sql.functions.sha1]]
       */
-    def sha1: StringColumn = column.elem.map(f.sha1).toDC
+    def sha1: StringColumn = column.mapDC(f.sha1)
 
     /**
       * Calculates the SHA-2 family of hash functions of a binary column and
@@ -57,7 +57,7 @@ private[syntax] trait BinaryColumns {
       * @see [[org.apache.spark.sql.functions.sha2]]
       */
     def sha2(numBits: Int): StringColumn =
-      column.elem.map(x => f.sha2(x, numBits)).toDC
+      column.mapDC(x => f.sha2(x, numBits))
 
     /**
       * Calculates the cyclic redundancy check value (CRC32) of a binary column and
@@ -66,7 +66,7 @@ private[syntax] trait BinaryColumns {
       * @group Binary Type
       * @see [[org.apache.spark.sql.functions.crc32]]
       */
-    def crc32: LongColumn = column.elem.map(f.crc32).toDC
+    def crc32: LongColumn = column.mapDC(f.crc32)
 
     /**
       * Computes the BASE64 encoding of a binary column and returns it as a string column.
@@ -75,7 +75,7 @@ private[syntax] trait BinaryColumns {
       * @group Binary Type
       * @see [[org.apache.spark.sql.functions.base64]]
       */
-    def base64: StringColumn = column.elem.map(f.base64).toDC
+    def base64: StringColumn = column.mapDC(f.base64)
   }
 
 }

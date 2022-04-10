@@ -67,7 +67,7 @@ private[syntax] trait ArrayColumns {
       * the DoricColumn with the selected element.
       */
     def getIndex(n: Int): DoricColumn[T] =
-      col.elem.map(_.apply(n)).toDC
+      col.mapDC(_.apply(n))
 
     /**
       * Transform each element with the provided function.
@@ -221,7 +221,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.array_distinct]]
       */
-    def distinct: ArrayColumn[T] = col.elem.map(f.array_distinct).toDC
+    def distinct: ArrayColumn[T] = col.mapDC(f.array_distinct)
 
     /**
       * Returns an array of the elements in the first array but not in the second array,
@@ -281,7 +281,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.array_max]]
       */
-    def max: DoricColumn[T] = col.elem.map(f.array_max).toDC
+    def max: DoricColumn[T] = col.mapDC(f.array_max)
 
     /**
       * Returns the minimum value in the array.
@@ -289,7 +289,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.array_min]]
       */
-    def min: DoricColumn[T] = col.elem.map(f.array_min).toDC
+    def min: DoricColumn[T] = col.mapDC(f.array_min)
 
     /**
       * Locates the position of the first occurrence of the value in the given array as long.
@@ -327,7 +327,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.array_sort]]
       */
-    def sortAscNullsLast: ArrayColumn[T] = col.elem.map(f.array_sort).toDC
+    def sortAscNullsLast: ArrayColumn[T] = col.mapDC(f.array_sort)
 
     /**
       * Sorts the input array for the given column in ascending order,
@@ -337,7 +337,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.sort_array(e:org\.apache\.spark\.sql\.Column,asc* org.apache.spark.sql.functions.sort_array]]
       */
-    def sortAscNullsFirst: ArrayColumn[T] = col.elem.map(f.sort_array).toDC
+    def sortAscNullsFirst: ArrayColumn[T] = col.mapDC(f.sort_array)
 
     /**
       * Sorts the input array for the given column in ascending or descending order,
@@ -408,7 +408,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.explode]]
       */
-    def explode: DoricColumn[T] = col.elem.map(f.explode).toDC
+    def explode: DoricColumn[T] = col.mapDC(f.explode)
 
     /**
       * Creates a new row for each element in the given array column.
@@ -417,7 +417,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.explode_outer]]
       */
-    def explodeOuter: DoricColumn[T] = col.elem.map(f.explode_outer).toDC
+    def explodeOuter: DoricColumn[T] = col.mapDC(f.explode_outer)
 
     /**
       * Returns whether a predicate holds for every element in the array.
@@ -447,11 +447,11 @@ private[syntax] trait ArrayColumns {
       * Returns a random permutation of the given array.
       *
       * @note
-      *   The function is non-deterministic.
+      * The function is non-deterministic.
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.shuffle]]
       */
-    def shuffle: ArrayColumn[T] = col.elem.map(f.shuffle).toDC
+    def shuffle: ArrayColumn[T] = col.mapDC(f.shuffle)
 
     /**
       * Returns length of array.
@@ -463,7 +463,7 @@ private[syntax] trait ArrayColumns {
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.size]]
       */
-    def size: IntegerColumn = col.elem.map(f.size).toDC
+    def size: IntegerColumn = col.mapDC(f.size)
 
     /**
       * Returns an array containing all the elements in the column from index `start` (or starting from the

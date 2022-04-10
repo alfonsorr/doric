@@ -26,8 +26,7 @@ private[sem] trait TransformOps {
       * even `StackOverflowException`.
       */
     def withColumn(colName: String, col: DoricColumn[_]): DataFrame = {
-      col.elem
-        .run(df.toDF())
+      col(df.toDF())
         .map(df.withColumn(colName, _))
         .returnOrThrow("withColumn")
     }

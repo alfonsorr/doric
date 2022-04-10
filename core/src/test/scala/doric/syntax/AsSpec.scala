@@ -25,7 +25,7 @@ class AsSpec extends DoricTestElements with EitherValues with Matchers {
 
     it("should return a SparkError if the column doesn't exist") {
       val originalColumn = sparkCol("error").asDoric[Int]
-      val errors         = originalColumn.elem.run(df).toEither.left.value
+      val errors         = originalColumn(df).toEither.left.value
       errors.length shouldBe 1
       val errorMessage = errors.head.message.take(57)
       errorMessage should startWith("cannot resolve")
@@ -35,7 +35,7 @@ class AsSpec extends DoricTestElements with EitherValues with Matchers {
 
     it("should return a SparkError if the column doesn't match the type") {
       val originalColumn = sparkCol("int").asDoric[String]
-      val errors         = originalColumn.elem.run(df).toEither.left.value
+      val errors         = originalColumn(df).toEither.left.value
       errors.length shouldBe 1
       errors.head.message shouldBe "The column with name 'int' is of type IntegerType and it was expected to be StringType"
       errors.head.location.fileName.value shouldBe "AsSpec.scala"

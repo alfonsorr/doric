@@ -81,7 +81,7 @@ private[doric] case class NonEmptyTypeMatcher[A: SparkType](
   private def getFirstValid(df: Dataset[_]): Option[DoricValidated[Column]] =
     transformations.reverse
       .collectFirst {
-        case MatchType(v, t, _) if v.run(df).isValid => t.elem.run(df)
+        case MatchType(v, t, _) if v.run(df).isValid => t(df)
       }
 
   /**
@@ -94,7 +94,7 @@ private[doric] case class NonEmptyTypeMatcher[A: SparkType](
   def inOtherCase(default: DoricColumn[A]): DoricColumn[A] =
     Kleisli[DoricValidated, Dataset[_], Column] { df =>
       getFirstValid(df)
-        .fold(default.elem.run(df))(identity)
+        .fold(default(df))(identity)
     }.toDC
 
   /**

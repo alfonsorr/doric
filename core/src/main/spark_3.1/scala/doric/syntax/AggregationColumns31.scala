@@ -34,9 +34,7 @@ private[syntax] trait AggregationColumns31 {
       s"The accuracy provided must be a literal between (0, ${Int.MaxValue}]" +
         s" (current value = $accuracy)"
     )
-    col.elem
-      .map(f.percentile_approx(_, f.lit(percentage), f.lit(accuracy)))
-      .toDC
+    col.mapDC(f.percentile_approx(_, f.lit(percentage), f.lit(accuracy)))
   }
 
   /**
@@ -66,8 +64,6 @@ private[syntax] trait AggregationColumns31 {
       s"The accuracy provided must be a literal between (0, ${Int.MaxValue}]" +
         s" (current value = $accuracy)"
     )
-    col.elem
-      .map(f.percentile_approx(_, f.lit(percentage), f.lit(accuracy)))
-      .toDC
+    col.mapDC(f.percentile_approx(_, f.lit(percentage), f.lit(accuracy)))
   }
 }

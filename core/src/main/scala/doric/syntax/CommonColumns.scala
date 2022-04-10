@@ -4,8 +4,9 @@ package syntax
 import cats.implicits._
 import doric.sem.Location
 import doric.types.{Casting, SparkType, UnsafeCasting}
-import org.apache.spark.sql.catalyst.expressions.ArrayRepeat
+
 import org.apache.spark.sql.{Column, functions => f}
+import org.apache.spark.sql.catalyst.expressions.ArrayRepeat
 
 private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
 
@@ -183,32 +184,35 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
 
     /**
       * Checks if the element is equal to any of the provided literals.
+      *
       * @group All Types
       * @param elems
-      *   literals to compare to
+      * literals to compare to
       * @return
-      *   Boolean DoricColumn with the comparation logic.
+      * Boolean DoricColumn with the comparation logic.
       * @see [[org.apache.spark.sql.Column.isin]]
       */
-    def isIn(elems: T*): BooleanColumn = column.elem.map(_.isin(elems: _*)).toDC
+    def isIn(elems: T*): BooleanColumn = column.mapDC(_.isin(elems: _*))
 
     /**
       * Checks if the value of the column is null
+      *
       * @group All Types
       * @return
-      *   Boolean DoricColumn
+      * Boolean DoricColumn
       * @see [[org.apache.spark.sql.Column.isNull]]
       */
-    def isNull: BooleanColumn = column.elem.map(_.isNull).toDC
+    def isNull: BooleanColumn = column.mapDC(_.isNull)
 
     /**
       * Checks if the value of the column is not null
+      *
       * @group All Types
       * @return
-      *   Boolean DoricColumn
+      * Boolean DoricColumn
       * @see [[org.apache.spark.sql.Column.isNotNull]]
       */
-    def isNotNull: BooleanColumn = column.elem.map(_.isNotNull).toDC
+    def isNotNull: BooleanColumn = column.mapDC(_.isNotNull)
 
     /**
       * Creates an array containing the left argument repeated the number of times given by the

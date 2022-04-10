@@ -61,7 +61,7 @@ class TypeMatcherSpec
           .caseType[Array[Int]](_.getIndex(0) + col("int2"))
           .inOtherCase(12.lit)
 
-        val errors = testColumn.elem.run(df).toEither.left.value
+        val errors = testColumn(df).toEither.left.value
         errors.length shouldBe 1
         errors.head.message should startWith(
           "Cannot resolve column name \"int2\" among (colArr, int, str)"
@@ -76,7 +76,7 @@ class TypeMatcherSpec
           .caseType[String](_.unsafeCast)
           .inOtherCase(col("int3"))
 
-        val errors = testColumn.elem.run(df).toEither.left.value
+        val errors = testColumn(df).toEither.left.value
         errors.length shouldBe 1
         errors.head.message should startWith(
           "Cannot resolve column name \"int3\" among (colArr, int, str)"
@@ -91,7 +91,7 @@ class TypeMatcherSpec
           .caseType[String](_.unsafeCast)
           .inOtherCaseError
 
-        val errors = testColumn.elem.run(df).toEither.left.value
+        val errors = testColumn(df).toEither.left.value
         errors.length shouldBe 1
         errors.head.message shouldBe "The matched column with name 'colArr' is of type IntegerType and it was expected to be one of [StringType, IntegerType]"
       }

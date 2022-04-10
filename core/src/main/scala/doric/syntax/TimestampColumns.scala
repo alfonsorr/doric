@@ -3,12 +3,10 @@ package syntax
 
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import doric.types.TimestampType
-import org.apache.spark.sql.catalyst.expressions.{FromUTCTimestamp, ToUTCTimestamp}
-import org.apache.spark.sql.{Column, functions => f}
-
 import java.sql.Timestamp
 
-import org.apache.spark.sql.{functions => f}
+import org.apache.spark.sql.{Column, functions => f}
+import org.apache.spark.sql.catalyst.expressions.{FromUTCTimestamp, ToUTCTimestamp}
 
 private[syntax] trait TimestampColumns {
 
@@ -66,7 +64,7 @@ private[syntax] trait TimestampColumns {
       * @group Timestamp Type
       * @see [[org.apache.spark.sql.functions.second]]
       */
-    def second: IntegerColumn = column.elem.map(f.second).toDC
+    def second: IntegerColumn = column.mapDC(f.second)
 
     /**
       * Generates tumbling time windows given a timestamp specifying column. Window
@@ -79,7 +77,7 @@ private[syntax] trait TimestampColumns {
       * @see [[org.apache.spark.sql.functions.window(timeColumn:org\.apache\.spark\.sql\.Column,windowDuration:String):* org.apache.spark.sql.functions.window]]
       */
     def window(windowDuration: String): RowColumn =
-      column.elem.map(x => f.window(x, windowDuration)).toDC
+      column.mapDC(x => f.window(x, windowDuration))
 
     /**
       * Generates tumbling time windows given a timestamp specifying column. Window
@@ -111,28 +109,26 @@ private[syntax] trait TimestampColumns {
         slideDuration: String,
         startTime: String = "0 second"
     ): RowColumn =
-      column.elem
-        .map(x => f.window(x, windowDuration, slideDuration, startTime))
-        .toDC
+      column.mapDC(x => f.window(x, windowDuration, slideDuration, startTime))
 
     /**
       * Safe casting to Date column
       *
       * @group Timestamp Type
       * @return
-      *   a Date Column without the hour
+      * a Date Column without the hour
       * @see [[org.apache.spark.sql.functions.to_date(e:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.to_date]]
       */
-    def toDate: DateColumn = column.elem.map(f.to_date).toDC
+    def toDate: DateColumn = column.mapDC(f.to_date)
 
     /**
       * Safe casting to LocalDate column
       *
       * @group Timestamp Type
       * @return
-      *   a LocalDate Column without the hour
+      * a LocalDate Column without the hour
       * @see [[org.apache.spark.sql.functions.to_date(e:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.to_date]]
       */
-    def toLocalDate: LocalDateColumn = column.elem.map(f.to_date).toDC
+    def toLocalDate: LocalDateColumn = column.mapDC(f.to_date)
   }
 }

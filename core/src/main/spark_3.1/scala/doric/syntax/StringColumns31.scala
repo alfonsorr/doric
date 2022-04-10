@@ -20,6 +20,6 @@ private[syntax] trait StringColumns31 {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.raise_error]]
       */
-    def raiseError: NullColumn = s.elem.map(f.raise_error).toDC
+    def raiseError: NullColumn = s.mapDC(f.raise_error)
   }
 }

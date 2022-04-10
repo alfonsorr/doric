@@ -6,7 +6,7 @@ import cats.implicits.catsSyntaxTuple2Semigroupal
 import org.apache.spark.sql.{Column, Dataset}
 
 sealed abstract class JoinSideDoricColumn[T] protected (
-    val elem: Doric[Column]
+    private[doric] val elem: Doric[Column]
 ) {
   type OtherSide <: JoinSideDoricColumn[T]
   def ===(otherElem: OtherSide): DoricJoinColumn = {

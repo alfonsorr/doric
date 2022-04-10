@@ -113,7 +113,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.ascii]]
       */
-    def ascii: IntegerColumn = s.elem.map(f.ascii).toDC
+    def ascii: IntegerColumn = s.mapDC(f.ascii)
 
     /**
       * Returns a new string column by converting the first letter of each word
@@ -124,7 +124,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.initcap]]
       */
-    def initCap: StringColumn = s.elem.map(f.initcap).toDC
+    def initCap: StringColumn = s.mapDC(f.initcap)
 
     /**
       * Locate the position of the first occurrence of substr column in the
@@ -151,7 +151,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.length]]
       */
-    def length: IntegerColumn = s.elem.map(f.length).toDC
+    def length: IntegerColumn = s.mapDC(f.length)
 
     /**
       * Computes the Levenshtein distance of the two given string columns.
@@ -189,7 +189,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.lower]]
       */
-    def lower: StringColumn = s.elem.map(f.lower).toDC
+    def lower: StringColumn = s.mapDC(f.lower)
 
     /**
       * Left-pad the string column with pad to a length of len. If the string
@@ -212,7 +212,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.ltrim(e:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.ltrim]]
       */
-    def ltrim: StringColumn = s.elem.map(f.ltrim).toDC
+    def ltrim: StringColumn = s.mapDC(f.ltrim)
 
     /**
       * Trim the specified character string from left end for the specified
@@ -305,7 +305,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.rtrim(e:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.rtrim]]
       */
-    def rtrim: StringColumn = s.elem.map(f.rtrim).toDC
+    def rtrim: StringColumn = s.mapDC(f.rtrim)
 
     /**
       * Trim the specified character string from right end for the specified
@@ -325,7 +325,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.soundex]]
       */
-    def soundex: StringColumn = s.elem.map(f.soundex).toDC
+    def soundex: StringColumn = s.mapDC(f.soundex)
 
     /**
       * Splits str around matches of the given pattern.
@@ -413,7 +413,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.trim(e:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.trim]]
       */
-    def trim: StringColumn = s.elem.map(f.trim).toDC
+    def trim: StringColumn = s.mapDC(f.trim)
 
     /**
       * Trim the specified character from both ends for the specified string
@@ -435,7 +435,7 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.upper]]
       */
-    def upper: StringColumn = s.elem.map(f.upper).toDC
+    def upper: StringColumn = s.mapDC(f.upper)
 
     /**
       * Returns a reversed string.
@@ -535,19 +535,19 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.unbase64]]
       */
-    def unbase64: BinaryColumn = s.elem.map(f.unbase64).toDC
+    def unbase64: BinaryColumn = s.mapDC(f.unbase64)
 
     /**
       * Converts date/timestamp to Unix timestamp (in seconds),
       * using the default timezone and the default locale.
       *
       * @return
-      *   A long
+      * A long
       *
       * @group String Type
       * @see [[org.apache.spark.sql.functions.unix_timestamp(s:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.unix_timestamp]]
       */
-    def unixTimestamp: LongColumn = s.elem.map(f.unix_timestamp).toDC
+    def unixTimestamp: LongColumn = s.mapDC(f.unix_timestamp)
 
     /**
       * Converts date/timestamp with given pattern to Unix timestamp (in seconds).

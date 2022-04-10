@@ -42,7 +42,7 @@ private[syntax] trait NumericColumns {
     * @see [[org.apache.spark.sql.functions.rand(seed* org.apache.spark.sql.functions.rand]]
     */
   def random(seed: LongColumn): DoubleColumn =
-    seed.elem.map(s => new Column(Rand(s.expr))).toDC
+    seed.mapDC(s => new Column(Rand(s.expr)))
 
   /**
     * Generate a column with independent and identically distributed (i.i.d.) samples from
@@ -63,7 +63,7 @@ private[syntax] trait NumericColumns {
     * @see [[org.apache.spark.sql.functions.randn(seed* org.apache.spark.sql.functions.randn]]
     */
   def randomN(seed: LongColumn): DoubleColumn =
-    seed.elem.map(s => new Column(Randn(s.expr))).toDC
+    seed.mapDC(s => new Column(Randn(s.expr)))
 
   /**
     * Partition ID.
@@ -172,11 +172,12 @@ private[syntax] trait NumericColumns {
 
     /**
       * Checks if the value of the column is not a number
+      *
       * @group All Types
       * @return
-      *   Boolean DoricColumn
+      * Boolean DoricColumn
       */
-    def isNaN: BooleanColumn = column.elem.map(_.isNaN).toDC
+    def isNaN: BooleanColumn = column.mapDC(_.isNaN)
 
   }
 
@@ -192,7 +193,7 @@ private[syntax] trait NumericColumns {
       * @group Numeric Type
       * @see [[org.apache.spark.sql.functions.from_unixtime(ut:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.from_unixtime]]
       */
-    def fromUnixTime: StringColumn = column.elem.map(f.from_unixtime).toDC
+    def fromUnixTime: StringColumn = column.mapDC(f.from_unixtime)
 
     /**
       * Converts the number of seconds from unix epoch (1970-01-01 00:00:00 UTC) to a string

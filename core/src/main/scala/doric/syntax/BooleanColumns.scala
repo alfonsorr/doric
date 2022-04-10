@@ -13,7 +13,7 @@ private[syntax] trait BooleanColumns {
     * @group Boolean Type
     * @see [[org.apache.spark.sql.functions.not]]
     */
-  def not(col: BooleanColumn): BooleanColumn = col.elem.map(f.not).toDC
+  def not(col: BooleanColumn): BooleanColumn = col.mapDC(f.not)
 
   /**
     * Inversion of boolean expression, i.e. NOT.

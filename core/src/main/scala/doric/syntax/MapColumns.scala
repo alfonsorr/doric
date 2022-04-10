@@ -2,8 +2,9 @@ package doric
 package syntax
 
 import cats.implicits._
-import org.apache.spark.sql.catalyst.expressions.{ElementAt, MapFilter, MapZipWith, TransformKeys, TransformValues}
-import org.apache.spark.sql.{Column, Row, functions => f}
+
+import org.apache.spark.sql.{Column, functions => f}
+import org.apache.spark.sql.catalyst.expressions.{MapFilter, MapZipWith, TransformKeys, TransformValues}
 import org.apache.spark.sql.functions.{map_keys, map_values}
 
 private[syntax] trait MapColumns {
@@ -103,7 +104,7 @@ private[syntax] trait MapColumns {
       * @see [[org.apache.spark.sql.functions.map_keys]]
       */
     def keys: DoricColumn[Array[K]] =
-      map.elem.map(map_keys).toDC
+      map.mapDC(map_keys)
 
     /**
       * Returns an unordered array containing the values of the map.
@@ -114,7 +115,7 @@ private[syntax] trait MapColumns {
       * @see [[org.apache.spark.sql.functions.map_values]]
       */
     def values: DoricColumn[Array[V]] =
-      map.elem.map(map_values).toDC
+      map.mapDC(map_values)
 
     /**
       * Returns value for the given key in value.
@@ -135,7 +136,7 @@ private[syntax] trait MapColumns {
       * @group Map Type
       * @see [[org.apache.spark.sql.functions.size]]
       */
-    def size: IntegerColumn = map.elem.map(f.size).toDC
+    def size: IntegerColumn = map.mapDC(f.size)
 
     /**
       * Returns a map whose key-value pairs satisfy a predicate.
