@@ -211,6 +211,10 @@
                         <a href="DoricColumn.html" title="">DoricColumn</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
+                        <a class="object" href="DoricColumnPrivateAPI$.html" title=""></a>
+                        <a href="DoricColumnPrivateAPI$.html" title="">DoricColumnPrivateAPI</a>
+                      </li><li class="current-entities indented1">
+                        <span class="separator"></span>
                         <a class="class" href="DoricJoinColumn.html" title=""></a>
                         <a href="DoricJoinColumn.html" title="">DoricJoinColumn</a>
                       </li><li class="current-entities indented1">
@@ -1166,7 +1170,7 @@ If either argument is null, the result will also be null.
       
       <p class="shortcomment cmt">Returns the number of days from date column to <code>dateCol</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Returns the number of days from date column to <code>dateCol</code>.
 </p></div><dl class="paramcmts block"><dt class="param">dateCol</dt><dd class="cmt"><p>
-  A Date or Timestamp column</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+A Date or Timestamp column</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.NamedDoricColumn">NamedDoricColumn</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] to
             <a href="index.html#DateColumnLikeSyntax[T]extendsAnyRef" class="extmbr" name="doric.DateColumnLikeSyntax">doric.DateColumnLikeSyntax</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] performed by method DateColumnLikeSyntax in doric.syntax.DateColumns.
             This conversion will take place only if T is <a href="http://stackoverflow.com/questions/2982276/what-is-a-context-bound-in-scala" target="_blank">
@@ -1437,15 +1441,15 @@ If either argument is null, the result will also be null.
 format given by the second argument.</p><div class="fullcomment"><div class="comment cmt"><p>Converts a date to a value of string in the format specified by the date
 format given by the second argument.
 </p></div><dl class="paramcmts block"><dt class="param">format</dt><dd class="cmt"><p>
-  A pattern <code>dd.MM.yyyy</code> would return a string like <code>18.03.1993</code></p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+A pattern <code>dd.MM.yyyy</code> would return a string like <code>18.03.1993</code></p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.NamedDoricColumn">NamedDoricColumn</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] to
             <a href="index.html#DateColumnLikeSyntax[T]extendsAnyRef" class="extmbr" name="doric.DateColumnLikeSyntax">doric.DateColumnLikeSyntax</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] performed by method DateColumnLikeSyntax in doric.syntax.DateColumns.
             This conversion will take place only if T is <a href="http://stackoverflow.com/questions/2982276/what-is-a-context-bound-in-scala" target="_blank">
         context-bounded</a> by doric.types.DateType (T: <a href="types/DateType.html" class="extype" name="doric.types.DateType">DateType</a>) and at the same time T is <a href="http://stackoverflow.com/questions/2982276/what-is-a-context-bound-in-scala" target="_blank">
         context-bounded</a> by doric.types.SparkType (T: <a href="types/SparkType.html" class="extype" name="doric.types.SparkType">SparkType</a>).
           </dd><dt>Definition Classes</dt><dd>DateColumnLikeSyntax</dd><dt>Exceptions thrown</dt><dd><span class="cmt"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html" class="extype" name="java.lang.IllegalArgumentException"><code>java.lang.IllegalArgumentException</code></a> if malformed format</p></span></dd><dt>Note</dt><dd><span class="cmt"><p>
-  Use specialized functions like 'year' whenever possible as they benefit from a
-  specialized implementation.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#date_format(dateExpr:%3C?%3E,format:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.date_format</a></p></span></dd></dl></div>
+Use specialized functions like 'year' whenever possible as they benefit from a
+specialized implementation.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#date_format(dateExpr:%3C?%3E,format:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.date_format</a></p></span></dd></dl></div>
     </li><li name="doric.syntax.NumericColumns.NumericOperationsSyntax#formatNumber" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Numeric Type">
       <a id="formatNumber(decimals:doric.IntegerColumn):doric.StringColumn"></a><a id="formatNumber(IntegerColumn):StringColumn"></a>
       <span class="permalink">
@@ -1660,8 +1664,8 @@ given string. Returns null if either of the arguments are null.
             <a href="index.html#StringOperationsSyntaxextendsAnyRef" class="extmbr" name="doric.StringOperationsSyntax">doric.StringOperationsSyntax</a> performed by method StringOperationsSyntax in doric.syntax.StringColumns.
             This conversion will take place only if T is String (T =:= <span class="extype" name="scala.Predef.String">String</span>).
           </dd><dt>Definition Classes</dt><dd>StringOperationsSyntax</dd><dt>Note</dt><dd><span class="cmt"><p>
-  The position is not zero based, but 1 based index. Returns 0 if substr
-  could not be found in str.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#instr(str:%3C?%3E,substring:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.instr</a></p></span></dd></dl></div>
+The position is not zero based, but 1 based index. Returns 0 if substr
+could not be found in str.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#instr(str:%3C?%3E,substring:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.instr</a></p></span></dd></dl></div>
     </li><li name="doric.syntax.StringColumns.StringOperationsSyntax#initCap" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="String Type">
       <a id="initCap:doric.StringColumn"></a><a id="initCap:StringColumn"></a>
       <span class="permalink">
@@ -1960,8 +1964,8 @@ column, after position pos.
             <a href="index.html#StringOperationsSyntaxextendsAnyRef" class="extmbr" name="doric.StringOperationsSyntax">doric.StringOperationsSyntax</a> performed by method StringOperationsSyntax in doric.syntax.StringColumns.
             This conversion will take place only if T is String (T =:= <span class="extype" name="scala.Predef.String">String</span>).
           </dd><dt>Definition Classes</dt><dd>StringOperationsSyntax</dd><dt>To do</dt><dd><span class="cmt"><p>scaladoc link (issue #135)</p></span></dd><dt>Note</dt><dd><span class="cmt"><p>
-  The position is not zero based, but 1 based index. returns 0 if substr
-  could not be found in str.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p>org.apache.spark.sql.functions.locate</p></span></dd></dl></div>
+The position is not zero based, but 1 based index. returns 0 if substr
+could not be found in str.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p>org.apache.spark.sql.functions.locate</p></span></dd></dl></div>
     </li><li name="doric.syntax.StringColumns.StringOperationsSyntax#lower" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="String Type">
       <a id="lower:doric.StringColumn"></a><a id="lower:StringColumn"></a>
       <span class="permalink">
@@ -2209,7 +2213,7 @@ Timestamp(<span class="lit">"2017-06-01 00:00:00"</span>).monthsBetween(Timestam
 specified day of the week.</p><div class="fullcomment"><div class="comment cmt"><p>Returns the first date which is later than the value of the <code>date</code> column that is on the
 specified day of the week.
 </p></div><dl class="paramcmts block"><dt class="param">dayOfWeek</dt><dd class="cmt"><p>
-  Case insensitive, and accepts: &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+Case insensitive, and accepts: &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.NamedDoricColumn">NamedDoricColumn</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] to
             <a href="index.html#DateColumnLikeSyntax[T]extendsAnyRef" class="extmbr" name="doric.DateColumnLikeSyntax">doric.DateColumnLikeSyntax</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] performed by method DateColumnLikeSyntax in doric.syntax.DateColumns.
             This conversion will take place only if T is <a href="http://stackoverflow.com/questions/2982276/what-is-a-context-bound-in-scala" target="_blank">
@@ -2219,7 +2223,7 @@ specified day of the week.
                <ol><li class="cmt"><p>For example, <code>Date(&quot;2015-07-27&quot;).nextDay(&quot;Sunday&quot;)</code> returns Date(&quot;2015-08-02&quot;)
 because that is the first Sunday after 2015-07-27.</p></li></ol>
             </div><dt>To do</dt><dd><span class="cmt"><p>scaladoc link (issue #135)</p></span></dd><dt>Note</dt><dd><span class="cmt"><p>
-  Timestamp columns will be truncated to Date column</p></span></dd><dt>See also</dt><dd><span class="cmt"><p>org.apache.spark.sql.functions.next_day</p></span></dd></dl></div>
+Timestamp columns will be truncated to Date column</p></span></dd><dt>See also</dt><dd><span class="cmt"><p>org.apache.spark.sql.functions.next_day</p></span></dd></dl></div>
     </li><li name="scala.AnyRef#notify" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <span class="permalink">
@@ -2814,7 +2818,7 @@ of length <code>len</code> when str is Binary type
             <a href="index.html#StringOperationsSyntaxextendsAnyRef" class="extmbr" name="doric.StringOperationsSyntax">doric.StringOperationsSyntax</a> performed by method StringOperationsSyntax in doric.syntax.StringColumns.
             This conversion will take place only if T is String (T =:= <span class="extype" name="scala.Predef.String">String</span>).
           </dd><dt>Definition Classes</dt><dd>StringOperationsSyntax</dd><dt>Note</dt><dd><span class="cmt"><p>
-  The position is not zero based, but 1 based index.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#substring(str:%3C?%3E,pos:%3C?%3E,len:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.substring</a></p></span></dd></dl></div>
+The position is not zero based, but 1 based index.</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#substring(str:%3C?%3E,pos:%3C?%3E,len:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.substring</a></p></span></dd></dl></div>
     </li><li name="doric.syntax.StringColumns.StringOperationsSyntax#substringIndex" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="String Type">
       <a id="substringIndex(delim:doric.StringColumn,count:doric.IntegerColumn):doric.StringColumn"></a><a id="substringIndex(StringColumn,IntegerColumn):StringColumn"></a>
       <span class="permalink">
@@ -2877,9 +2881,9 @@ for delim.
 href=&quot;https://spark.apache.org/docs/latest/sql-ref-datetime-pattern.html&quot;&gt;
 Datetime Patterns</a> for valid date and time format patterns
 </p></div><dl class="paramcmts block"><dt class="param">format</dt><dd class="cmt"><p>
-  A date time pattern detailing the format of <code>e</code> when <code>e</code>is a string</p></dd><dt>returns</dt><dd class="cmt"><p>
-  A date, or null if <code>e</code> was a string that could not be cast to a date
-  or <code>format</code> was an invalid format</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+A date time pattern detailing the format of <code>e</code> when <code>e</code>is a string</p></dd><dt>returns</dt><dd class="cmt"><p>
+A date, or null if <code>e</code> was a string that could not be cast to a date
+or <code>format</code> was an invalid format</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.NamedDoricColumn">NamedDoricColumn</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] to
             <a href="index.html#StringOperationsSyntaxextendsAnyRef" class="extmbr" name="doric.StringOperationsSyntax">doric.StringOperationsSyntax</a> performed by method StringOperationsSyntax in doric.syntax.StringColumns.
             This conversion will take place only if T is String (T =:= <span class="extype" name="scala.Predef.String">String</span>).
@@ -2975,9 +2979,9 @@ a LocalDate Column without the hour</p></dd></dl><dl class="attributes block"> <
 href=&quot;https://spark.apache.org/docs/latest/sql-ref-datetime-pattern.html&quot;&gt;
 Datetime Patterns</a> for valid date and time format patterns
 </p></div><dl class="paramcmts block"><dt class="param">format</dt><dd class="cmt"><p>
-  A date time pattern detailing the format of <code>s</code> when <code>s</code> is a string</p></dd><dt>returns</dt><dd class="cmt"><p>
-  A timestamp, or null if <code>s</code> was a string that could not be cast to a
-  timestamp or <code>format</code> was an invalid format</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+A date time pattern detailing the format of <code>s</code> when <code>s</code> is a string</p></dd><dt>returns</dt><dd class="cmt"><p>
+A timestamp, or null if <code>s</code> was a string that could not be cast to a
+timestamp or <code>format</code> was an invalid format</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.NamedDoricColumn">NamedDoricColumn</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] to
             <a href="index.html#StringOperationsSyntaxextendsAnyRef" class="extmbr" name="doric.StringOperationsSyntax">doric.StringOperationsSyntax</a> performed by method StringOperationsSyntax in doric.syntax.StringColumns.
             This conversion will take place only if T is String (T =:= <span class="extype" name="scala.Predef.String">String</span>).
@@ -3172,7 +3176,7 @@ column (literal).
           </dd><dt>Definition Classes</dt><dd>DateColumnLikeSyntax</dd><div class="block">Example:
                <ol><li class="cmt"><p>For example, <code>Timestamp(&quot;2018-11-19 12:01:19&quot;).trunc(&quot;year&quot;)</code> returns Date(&quot;2018-01-01&quot;)</p></li></ol>
             </div><dt>Note</dt><dd><span class="cmt"><p>
-  Timestamp columns will be truncated to Date column</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#trunc(date:%3C?%3E,format:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.trunc</a></p></span><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#date_trunc(format:%3C?%3E,timestamp:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.date_trunc</a></p></span></dd></dl></div>
+Timestamp columns will be truncated to Date column</p></span></dd><dt>See also</dt><dd><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#trunc(date:%3C?%3E,format:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.trunc</a></p></span><span class="cmt"><p><a href="https://spark.apache.org/docs/3.0.3/api/scala/org/apache/spark/sql/functions$.html#date_trunc(format:%3C?%3E,timestamp:%3C?%3E):org.apache.spark.sql.Column" class="extype" name="org.apache.spark.sql.functions">org.apache.spark.sql.functions.date_trunc</a></p></span></dd></dl></div>
     </li><li name="doric.syntax.StringColumns.StringOperationsSyntax#unbase64" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="String Type">
       <a id="unbase64:doric.BinaryColumn"></a><a id="unbase64:BinaryColumn"></a>
       <span class="permalink">
@@ -3212,7 +3216,7 @@ This is the reverse of base64.
       
       <p class="shortcomment cmt">Converts date/timestamp with given pattern to Unix timestamp (in seconds).</p><div class="fullcomment"><div class="comment cmt"><p>Converts date/timestamp with given pattern to Unix timestamp (in seconds).
 </p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>
-  A long, or null if the input was a string not of the correct format</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
+A long, or null if the input was a string not of the correct format</p></dd></dl><dl class="attributes block"> <dt class="implicit">Implicit</dt><dd>
             This member is added by an implicit conversion from <a href="" class="extype" name="doric.NamedDoricColumn">NamedDoricColumn</a>[<span class="extype" name="doric.NamedDoricColumn.T">T</span>] to
             <a href="index.html#StringOperationsSyntaxextendsAnyRef" class="extmbr" name="doric.StringOperationsSyntax">doric.StringOperationsSyntax</a> performed by method StringOperationsSyntax in doric.syntax.StringColumns.
             This conversion will take place only if T is String (T =:= <span class="extype" name="scala.Predef.String">String</span>).
