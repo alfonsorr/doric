@@ -1,8 +1,8 @@
 package doric
 package syntax
 
-import cats.implicits.toTraverseOps
 import doric.types.{BinaryType, SparkType}
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{functions => f}
 
@@ -24,7 +24,7 @@ private[syntax] trait BinaryColumns {
       col: BinaryColumn,
       cols: BinaryColumn*
   ): BinaryColumn =
-    (col +: cols).toList.traverse(_.elem).map(f.concat(_: _*)).toDC
+    (col +: cols).toList.mapDC(f.concat(_: _*))
 
   implicit class BinaryOperationsSyntax[T: BinaryType: SparkType](
       column: DoricColumn[T]

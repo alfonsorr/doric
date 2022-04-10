@@ -1,7 +1,7 @@
 package doric
 package syntax
 
-import cats.implicits._
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{functions => f}
 
@@ -31,6 +31,6 @@ private[syntax] trait BooleanColumns31 {
       * @see [[org.apache.spark.sql.functions.assert_true(c:org\.apache\.spark\.sql\.Column,e:* org.apache.spark.sql.functions.assert_true]]
       */
     def assertTrue(msg: StringColumn): NullColumn =
-      (column.elem, msg.elem).mapN(f.assert_true).toDC
+      (column, msg).mapNDC(f.assert_true)
   }
 }

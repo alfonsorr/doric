@@ -1,10 +1,10 @@
 package doric
 package syntax
 
-import cats.implicits.{catsSyntaxApplicativeId, catsSyntaxTuple2Semigroupal, catsSyntaxTuple3Semigroupal}
 import doric.types.{Casting, SparkType}
-import org.apache.spark.sql.functions.{lit => sparkLit, when => sparkWhen}
-import org.apache.spark.sql.Column
+import doric.DoricColumnPrivateAPI._
+
+import org.apache.spark.sql.functions.{when => sparkWhen}
 
 final private[doric] case class WhenBuilder[T](
     private[doric] val cases: Vector[(BooleanColumn, DoricColumn[T])] =
@@ -13,8 +13,9 @@ final private[doric] case class WhenBuilder[T](
 
   /**
     * Marks the rest of cases as null values of the provided type
+    *
     * @param dt
-    *   Type class for spark data type
+    * Type class for spark data type
     * @return
     *   The doric column with the provided logic in the builder
     */
@@ -25,7 +26,7 @@ final private[doric] case class WhenBuilder[T](
     if (cases.isEmpty) {
       lit(null).cast[T]
     } else
-      casesToWhenColumn.toDC
+      casesToWhenColumn
 
   /**
     * ads a case that if the condition is matched, the value is returned
@@ -39,12 +40,12 @@ final private[doric] case class WhenBuilder[T](
   def caseW(cond: BooleanColumn, elem: DoricColumn[T]): WhenBuilder[T] =
     WhenBuilder(cases.:+((cond, elem)))
 
-  private def casesToWhenColumn: Doric[Column] = {
+  private def casesToWhenColumn[TAux]: DoricColumn[TAux] = {
     val first = cases.head
     cases.tail.foldLeft(
-      (first._1.elem, first._2.elem).mapN((c, a) => sparkWhen(c, a))
+      (first._1, first._2).mapNDC[TAux]((c, a) => sparkWhen(c, a))
     )((acc, c) =>
-      (acc, c._1.elem, c._2.elem).mapN((a, cond, algo) => a.when(cond, algo))
+      (acc, c._1, c._2).mapNDC((a, cond, algo) => a.when(cond, algo))
     )
   }
 
@@ -57,6 +58,6 @@ final private[doric] case class WhenBuilder[T](
     */
   def otherwise(other: DoricColumn[T]): DoricColumn[T] =
     if (cases.isEmpty) other
-    else (casesToWhenColumn, other.elem).mapN(_.otherwise(_)).toDC
+    else (casesToWhenColumn, other).mapNDC(_.otherwise(_))
 
 }

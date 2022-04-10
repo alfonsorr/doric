@@ -1,9 +1,9 @@
 package doric
 package syntax
 
-import cats.implicits._
 import doric.sem.Location
 import doric.types.{Casting, SparkType, UnsafeCasting}
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions.ArrayRepeat
@@ -25,7 +25,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.coalesce]]
     */
   def coalesce[T](cols: DoricColumn[T]*): DoricColumn[T] =
-    cols.toList.traverse(_.elem).map(f.coalesce(_: _*)).toDC
+    cols.toList.mapDC(f.coalesce(_: _*))
 
   /**
     * Calculates the hash code of given columns, and returns the result as an integer column.
@@ -34,7 +34,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.hash]]
     */
   def hash(cols: DoricColumn[_]*): IntegerColumn =
-    cols.toList.traverse(_.elem).map(f.hash(_: _*)).toDC
+    cols.toList.mapDC(f.hash(_: _*))
 
   /**
     * Calculates the hash code of given columns using the 64-bit
@@ -44,7 +44,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.xxhash64]]
     */
   def xxhash64(cols: DoricColumn[_]*): LongColumn =
-    cols.toList.traverse(_.elem).map(f.xxhash64(_: _*)).toDC
+    cols.toList.mapDC(f.xxhash64(_: _*))
 
   /**
     * Returns the least value of the list of values, skipping null values.
@@ -55,7 +55,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.least(exprs* org.apache.spark.sql.functions.least]]
     */
   def least[T](col: DoricColumn[T], cols: DoricColumn[T]*): DoricColumn[T] =
-    (col +: cols).toList.traverse(_.elem).map(f.least(_: _*)).toDC
+    (col +: cols).toList.mapDC(f.least(_: _*))
 
   /**
     * Returns the greatest value of the list of values, skipping null values.
@@ -66,7 +66,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.greatest(exprs* org.apache.spark.sql.functions.greatest]]
     */
   def greatest[T](col: DoricColumn[T], cols: DoricColumn[T]*): DoricColumn[T] =
-    (col +: cols).toList.traverse(_.elem).map(f.greatest(_: _*)).toDC
+    (col +: cols).toList.mapDC(f.greatest(_: _*))
 
   override protected def constructSide[T](
       column: Doric[Column],
@@ -134,7 +134,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
       * a reference to a Boolean DoricColumn with the comparation
       */
     def ===(other: DoricColumn[T]): BooleanColumn =
-      (column.elem, other.elem).mapN(_ === _).toDC
+      (column, other).mapNDC(_ === _)
 
     /**
       * Type safe distinct between Columns
@@ -145,7 +145,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
       *   a reference to a Boolean DoricColumn with the comparation
       */
     def =!=(other: DoricColumn[T]): BooleanColumn =
-      (column.elem, other.elem).mapN(_ =!= _).toDC
+      (column, other).mapNDC(_ =!= _)
 
     /**
       * Pipes the column with the provided transformation
@@ -222,11 +222,10 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
       * @see [[org.apache.spark.sql.functions.array_repeat(left* org.apache.spark.sql.functions.array_repeat]]
       */
     def repeatArray(times: IntegerColumn): ArrayColumn[T] =
-      (column.elem, times.elem)
-        .mapN((c1, c2) => {
+      (column, times)
+        .mapNDC((c1, c2) => {
           new Column(ArrayRepeat(c1.expr, c2.expr))
         })
-        .toDC
 
   }
 

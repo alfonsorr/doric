@@ -1,6 +1,6 @@
 package doric
 
-import cats.implicits._
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions.{ElementAt, Expression, LambdaFunction, UnresolvedNamedLambdaVariable}
@@ -23,11 +23,10 @@ package object syntax {
       dc: DoricColumn[T],
       key: DoricColumn[K]
   ): DoricColumn[V] = {
-    (dc.elem, key.elem)
-      .mapN((c, k) => {
+    (dc, key)
+      .mapNDC((c, k) => {
         new Column(ElementAt(c.expr, k.expr))
       })
-      .toDC
   }
 
   /**

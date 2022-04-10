@@ -1,8 +1,8 @@
 package doric
 package syntax
 
-import cats.implicits.{catsSyntaxTuple2Semigroupal, toTraverseOps}
 import doric.types.NumericType
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions.aggregate.Sum
@@ -174,7 +174,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.corr(column1:* org.apache.spark.sql.functions.corr]]
     */
   def correlation(col1: DoubleColumn, col2: DoubleColumn): DoubleColumn =
-    (col1.elem, col2.elem).mapN(f.corr).toDC
+    (col1, col2).mapNDC(f.corr)
 
   /**
     * Aggregate function: returns the number of distinct items in a group.
@@ -184,9 +184,7 @@ private[syntax] trait AggregationColumns {
     */
   def countDistinct(expr: DoricColumn[_], exprs: DoricColumn[_]*): LongColumn =
     (expr +: exprs).toList
-      .traverse(_.elem)
-      .map(x => f.countDistinct(x.head, x.tail: _*))
-      .toDC
+      .mapDC(x => f.countDistinct(x.head, x.tail: _*))
 
   /**
     * Aggregate function: returns the number of distinct items in a group.
@@ -207,7 +205,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.covar_pop(column1:* org.apache.spark.sql.functions.covar_pop]]
     */
   def covarPop(col1: DoubleColumn, col2: DoubleColumn): DoubleColumn =
-    (col1.elem, col2.elem).mapN(f.covar_pop).toDC
+    (col1, col2).mapNDC(f.covar_pop)
 
   /**
     * Aggregate function: returns the sample covariance for two columns.
@@ -216,7 +214,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.covar_samp(column1:* org.apache.spark.sql.functions.covar_samp]]
     */
   def covarSamp(col1: DoubleColumn, col2: DoubleColumn): DoubleColumn =
-    (col1.elem, col2.elem).mapN(f.covar_samp).toDC
+    (col1, col2).mapNDC(f.covar_samp)
 
   /**
     * Aggregate function: returns the kurtosis of the values in a group.
@@ -299,11 +297,9 @@ private[syntax] trait AggregationColumns {
   def sumDistinct[T](col: DoricColumn[T])(implicit
       nt: NumericType[T]
   ): DoricColumn[nt.Sum] =
-    col.elem
-      .map(e =>
-        new Column(Sum(e.expr).toAggregateExpression(isDistinct = true))
-      )
-      .toDC
+    col.mapDC(e =>
+      new Column(Sum(e.expr).toAggregateExpression(isDistinct = true))
+    )
 
   /**
     * Aggregate function: alias for `var_samp`.
@@ -365,7 +361,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.grouping_id(cols:* org.apache.spark.sql.functions.grouping_id]]
     */
   def groupingId(col: DoricColumn[_], cols: DoricColumn[_]*): LongColumn =
-    (col +: cols).toList.traverse(_.elem).map(f.grouping_id(_: _*)).toDC
+    (col +: cols).toList.mapDC(f.grouping_id(_: _*))
 
   /**
     * Aggregate function: returns the level of grouping, equals to

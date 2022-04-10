@@ -1,8 +1,8 @@
 package doric
 package syntax
 
-import cats.implicits.catsSyntaxTuple2Semigroupal
 import doric.types.{BinaryType, SparkType}
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.Column
 import org.apache.spark.sql.catalyst.expressions.StringDecode
@@ -22,11 +22,9 @@ private[syntax] trait BinaryColumns32 {
       * @see [[org.apache.spark.sql.functions.decode]]
       */
     def decode(charset: StringColumn): StringColumn =
-      (column.elem, charset.elem)
-        .mapN((col, char) => {
-          new Column(StringDecode(col.expr, char.expr))
-        })
-        .toDC
+      (column, charset).mapNDC((col, char) => {
+        new Column(StringDecode(col.expr, char.expr))
+      })
   }
 
 }

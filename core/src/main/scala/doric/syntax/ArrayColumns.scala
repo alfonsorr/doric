@@ -1,8 +1,8 @@
 package doric
 package syntax
 
-import cats.implicits._
 import doric.types.CollectionType
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions._
@@ -25,7 +25,7 @@ private[syntax] trait ArrayColumns {
   def concatArrays[T, F[_]: CollectionType](
       cols: DoricColumn[F[T]]*
   ): DoricColumn[F[T]] =
-    cols.toList.traverse(_.elem).map(f.concat(_: _*)).toDC
+    cols.toList.mapDC(f.concat(_: _*))
 
   /**
     * Creates a new array column. The input columns must all have the same data type.
@@ -35,7 +35,7 @@ private[syntax] trait ArrayColumns {
     * @todo scaladoc link (issue #135)
     */
   def array[T](cols: DoricColumn[T]*): ArrayColumn[T] =
-    cols.toList.traverse(_.elem).map(f.array(_: _*)).toDC
+    cols.toList.mapDC(f.array(_: _*))
 
   /**
     * Creates a new list column. The input columns must all have the same data type.
@@ -45,7 +45,7 @@ private[syntax] trait ArrayColumns {
     * @todo scaladoc link (issue #135)
     */
   def list[T](cols: DoricColumn[T]*): DoricColumn[List[T]] =
-    cols.toList.traverse(_.elem).map(f.array(_: _*)).toDC
+    cols.toList.mapDC(f.array(_: _*))
 
   /**
     * Extension methods for arrays
@@ -76,18 +76,17 @@ private[syntax] trait ArrayColumns {
       * @param fun
       *   lambda with the transformation to apply.
       * @tparam A
-      *   the type of the array elements to return.
+      * the type of the array elements to return.
       * @return
-      *   the column reference with the applied transformation.
+      * the column reference with the applied transformation.
       * @see org.apache.spark.sql.functions.transform
       * @todo scaladoc link (issue #135)
       */
     def transform[A](
         fun: DoricColumn[T] => DoricColumn[A]
     ): DoricColumn[F[A]] =
-      (col.elem, fun(x).elem)
-        .mapN((a, f) => new Column(ArrayTransform(a.expr, lam1(f.expr))))
-        .toDC
+      (col, fun(x))
+        .mapNDC((a, f) => new Column(ArrayTransform(a.expr, lam1(f.expr))))
 
     /**
       * Transform each element of the array with the provided function that
@@ -107,9 +106,9 @@ private[syntax] trait ArrayColumns {
     def transformWithIndex[A](
         fun: (DoricColumn[T], IntegerColumn) => DoricColumn[A]
     ): DoricColumn[F[A]] =
-      (col.elem, fun(x, y).elem).mapN { (a, f) =>
+      (col, fun(x, y)).mapNDC { (a, f) =>
         new Column(ArrayTransform(a.expr, lam2(f.expr)))
-      }.toDC
+      }
 
     /**
       * Aggregates (reduce) the array with the provided functions, similar to
@@ -123,11 +122,11 @@ private[syntax] trait ArrayColumns {
       * @param finish
       *   the final transformation
       * @tparam A
-      *   type of the intermediate values
+      * type of the intermediate values
       * @tparam B
-      *   type of the final value to return
+      * type of the final value to return
       * @return
-      *   the column reference with the applied transformation.
+      * the column reference with the applied transformation.
       * @see org.apache.spark.sql.functions.aggregate
       * @todo scaladoc link (issue #135)
       */
@@ -135,10 +134,9 @@ private[syntax] trait ArrayColumns {
         merge: (DoricColumn[A], DoricColumn[T]) => DoricColumn[A],
         finish: DoricColumn[A] => DoricColumn[B]
     ): DoricColumn[B] =
-      (col.elem, zero.elem, merge(x, y).elem, finish(x).elem).mapN {
-        (a, z, m, f) =>
-          new Column(ArrayAggregate(a.expr, z.expr, lam2(m.expr), lam1(f.expr)))
-      }.toDC
+      (col, zero, merge(x, y), finish(x)).mapNDC { (a, z, m, f) =>
+        new Column(ArrayAggregate(a.expr, z.expr, lam2(m.expr), lam1(f.expr)))
+      }
 
     /**
       * Aggregates (reduce) the array with the provided functions, similar to
@@ -161,25 +159,24 @@ private[syntax] trait ArrayColumns {
     )(
         merge: (DoricColumn[A], DoricColumn[T]) => DoricColumn[A]
     ): DoricColumn[A] =
-      (col.elem, zero.elem, merge(x, y).elem).mapN { (a, z, m) =>
+      (col, zero, merge(x, y)).mapNDC { (a, z, m) =>
         new Column(ArrayAggregate(a.expr, z.expr, lam2(m.expr), identity))
-      }.toDC
+      }
 
     /**
       * Filters the array elements using the provided condition.
       *
       * @group Array Type
       * @param p
-      *   the condition to filter.
+      * the condition to filter.
       * @return
-      *   the column reference with the filter applied.
+      * the column reference with the filter applied.
       * @see org.apache.spark.sql.functions.filter
       * @todo scaladoc link (issue #135)
       */
     def filter(p: DoricColumn[T] => BooleanColumn): DoricColumn[F[T]] =
-      (col.elem, p(x).elem)
-        .mapN((a, f) => new Column(ArrayFilter(a.expr, lam1(f.expr))))
-        .toDC
+      (col, p(x))
+        .mapNDC((a, f) => new Column(ArrayFilter(a.expr, lam1(f.expr))))
 
     /**
       * Returns an array of elements for which a predicate holds in a given array.
@@ -197,9 +194,9 @@ private[syntax] trait ArrayColumns {
     def filterWIndex(
         function: (DoricColumn[T], IntegerColumn) => BooleanColumn
     ): ArrayColumn[T] = {
-      (col.elem, function(x, y).elem).mapN { (a, f) =>
+      (col, function(x, y)).mapNDC { (a, f) =>
         new Column(ArrayFilter(a.expr, lam2(f.expr)))
-      }.toDC
+      }
     }
 
     /**
@@ -209,11 +206,10 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.array_contains]]
       */
     def contains[A](value: DoricColumn[A]): BooleanColumn =
-      (col.elem, value.elem)
-        .mapN((c, v) => {
+      (col, value)
+        .mapNDC((c, v) => {
           new Column(ArrayContains(c.expr, v.expr))
         })
-        .toDC
 
     /**
       * Removes duplicate values from the array.
@@ -231,7 +227,7 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.array_except]]
       */
     def except(col2: ArrayColumn[T]): ArrayColumn[T] =
-      (col.elem, col2.elem).mapN(f.array_except).toDC
+      (col, col2).mapNDC(f.array_except)
 
     /**
       * Returns an array of the elements in the intersection of the given two arrays,
@@ -241,7 +237,7 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.array_intersect]]
       */
     def intersect(col2: ArrayColumn[T]): ArrayColumn[T] =
-      (col.elem, col2.elem).mapN(f.array_intersect).toDC
+      (col, col2).mapNDC(f.array_intersect)
 
     /**
       * Concatenates the elements of `column` using the `delimiter`. Null values are replaced with
@@ -255,11 +251,10 @@ private[syntax] trait ArrayColumns {
         delimiter: StringColumn,
         nullReplacement: StringColumn
     ): StringColumn =
-      (col.elem, delimiter.elem, nullReplacement.elem)
-        .mapN((c, d, n) => {
+      (col, delimiter, nullReplacement)
+        .mapNDC((c, d, n) => {
           new Column(ArrayJoin(c.expr, d.expr, Some(n.expr)))
         })
-        .toDC
 
     /**
       * Concatenates the elements of `column` using the `delimiter`. Nulls are deleted
@@ -269,11 +264,10 @@ private[syntax] trait ArrayColumns {
       * @todo scaladoc link (issue #135)
       */
     def join(delimiter: StringColumn): StringColumn =
-      (col.elem, delimiter.elem)
-        .mapN((c, d) => {
+      (col, delimiter)
+        .mapNDC((c, d) => {
           new Column(ArrayJoin(c.expr, d.expr, None))
         })
-        .toDC
 
     /**
       * Returns the maximum value in the array.
@@ -296,16 +290,15 @@ private[syntax] trait ArrayColumns {
       * Returns null if either of the arguments are null.
       *
       * @note
-      *   The position is not zero based, but 1 based index. Returns 0 if value could not be found in array.
+      * The position is not zero based, but 1 based index. Returns 0 if value could not be found in array.
       * @group Array Type
       * @see [[org.apache.spark.sql.functions.array_position]]
       */
     def positionOf[B](col2: DoricColumn[B]): LongColumn =
-      (col.elem, col2.elem)
-        .mapN((c1, c2) => {
+      (col, col2)
+        .mapNDC((c1, c2) => {
           new Column(ArrayPosition(c1.expr, c2.expr))
         })
-        .toDC
 
     /**
       * Remove all elements that equal to element from the given array.
@@ -314,11 +307,10 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.array_remove]]
       */
     def remove[B](col2: DoricColumn[B]): ArrayColumn[T] =
-      (col.elem, col2.elem)
-        .mapN((c1, c2) => {
+      (col, col2)
+        .mapNDC((c1, c2) => {
           new Column(ArrayRemove(c1.expr, c2.expr))
         })
-        .toDC
 
     /**
       * Sorts the input array in ascending order. The elements of the input array must be orderable.
@@ -349,11 +341,10 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.sort_array(e:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.sort_array]]
       */
     def sort(asc: BooleanColumn): ArrayColumn[T] =
-      (col.elem, asc.elem)
-        .mapN((c, a) => {
+      (col, asc)
+        .mapNDC((c, a) => {
           new Column(SortArray(c.expr, a.expr))
         })
-        .toDC
 
     /**
       * Returns an array of the elements in the union of the given N arrays, without duplicates.
@@ -363,7 +354,7 @@ private[syntax] trait ArrayColumns {
       */
     def union(cols: DoricColumn[F[T]]*): DoricColumn[F[T]] =
       (col +: cols).reduce((a, b) => {
-        (a.elem, b.elem).mapN(f.array_union).toDC
+        (a, b).mapNDC(f.array_union)
       })
 
     /**
@@ -375,7 +366,7 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.arrays_overlap]]
       */
     def overlaps[B](col2: ArrayColumn[T]): BooleanColumn =
-      (col.elem, col2.elem).mapN(f.arrays_overlap).toDC
+      (col, col2).mapNDC(f.arrays_overlap)
 
     /**
       * Returns element of array at given index in value.
@@ -388,6 +379,7 @@ private[syntax] trait ArrayColumns {
 
     /**
       * Returns whether a predicate holds for one or more elements in the array.
+      *
       * @example {{{
       *   df.select(colArray("i").exists(_ % 2 === 0))
       * }}}
@@ -396,11 +388,10 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.exists]]
       */
     def exists(fun: DoricColumn[T] => BooleanColumn): BooleanColumn =
-      (col.elem, fun(x).elem)
-        .mapN((c, f) => {
+      (col, fun(x))
+        .mapNDC((c, f) => {
           new Column(ArrayExists(c.expr, lam1(f.expr)))
         })
-        .toDC
 
     /**
       * Creates a new row for each element in the given array column.
@@ -421,6 +412,7 @@ private[syntax] trait ArrayColumns {
 
     /**
       * Returns whether a predicate holds for every element in the array.
+      *
       * @example {{{
       *   df.select(colArray("i").forAll(x => x % 2 === 0))
       * }}}
@@ -429,11 +421,10 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.forall]]
       */
     def forAll(fun: DoricColumn[T] => BooleanColumn): BooleanColumn =
-      (col.elem, fun(x).elem)
-        .mapN((c, f) => {
+      (col, fun(x))
+        .mapNDC((c, f) => {
           new Column(ArrayForAll(c.expr, lam1(f.expr)))
         })
-        .toDC
 
     /**
       * Returns an array with reverse order of elements.
@@ -475,9 +466,8 @@ private[syntax] trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.slice(x:org\.apache\.spark\.sql\.Column,start:org\.apache\.spark\.sql\.Column,length* org.apache.spark.sql.functions.slice]]
       */
     def slice(start: IntegerColumn, length: IntegerColumn): ArrayColumn[T] =
-      (col.elem, start.elem, length.elem)
-        .mapN((a, b, c) => new Column(Slice(a.expr, b.expr, c.expr)))
-        .toDC
+      (col, start, length)
+        .mapNDC((a, b, c) => new Column(Slice(a.expr, b.expr, c.expr)))
 
     /**
       * Merge two given arrays, element-wise, into a single array using a function.
@@ -494,9 +484,9 @@ private[syntax] trait ArrayColumns {
         col2: ArrayColumn[T],
         function: (DoricColumn[T], DoricColumn[T]) => DoricColumn[T]
     ): ArrayColumn[T] = {
-      (col.elem, col2.elem, function(x, y).elem).mapN { (a, b, f) =>
+      (col, col2, function(x, y)).mapNDC { (a, b, f) =>
         new Column(ZipWith(a.expr, b.expr, lam2(f.expr)))
-      }.toDC
+      }
     }
   }
 }

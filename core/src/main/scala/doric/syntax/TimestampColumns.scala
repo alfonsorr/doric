@@ -1,8 +1,8 @@
 package doric
 package syntax
 
-import cats.implicits.catsSyntaxTuple2Semigroupal
 import doric.types.TimestampType
+import doric.DoricColumnPrivateAPI._
 import java.sql.Timestamp
 
 import org.apache.spark.sql.{Column, functions => f}
@@ -35,11 +35,10 @@ private[syntax] trait TimestampColumns {
       * @todo scaladoc link (issue #135)
       */
     def fromUtc(timeZone: StringColumn): TimestampColumn =
-      (column.elem, timeZone.elem)
-        .mapN((c, tz) => {
+      (column, timeZone)
+        .mapNDC((c, tz) => {
           new Column(FromUTCTimestamp(c.expr, tz.expr))
         })
-        .toDC
 
     /**
       * Given a timestamp like '2017-07-14 02:40:00.0', interprets it as a time in the given time
@@ -52,11 +51,10 @@ private[syntax] trait TimestampColumns {
       * @todo scaladoc link (issue #135)
       */
     def toUtc(timeZone: StringColumn): TimestampColumn =
-      (column.elem, timeZone.elem)
-        .mapN((c, tz) => {
+      (column, timeZone)
+        .mapNDC((c, tz) => {
           new Column(ToUTCTimestamp(c.expr, tz.expr))
         })
-        .toDC
 
     /**
       * Extracts the seconds as an integer from a given timestamp.

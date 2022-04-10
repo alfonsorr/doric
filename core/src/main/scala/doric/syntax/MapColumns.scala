@@ -1,7 +1,7 @@
 package doric
 package syntax
 
-import cats.implicits._
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions.{MapFilter, MapZipWith, TransformKeys, TransformValues}
@@ -19,7 +19,7 @@ private[syntax] trait MapColumns {
       col: MapColumn[K, V],
       cols: MapColumn[K, V]*
   ): MapColumn[K, V] =
-    (col +: cols).toList.traverse(_.elem).map(f.map_concat(_: _*)).toDC
+    (col +: cols).toList.mapDC(f.map_concat(_: _*))
 
   /**
     * Creates a new map column. The array in the first column is used for keys.
@@ -43,7 +43,7 @@ private[syntax] trait MapColumns {
       keys: DoricColumn[Array[K]],
       values: DoricColumn[Array[V]]
   ): MapColumn[K, V] = {
-    (keys.elem, values.elem).mapN((k, v) => f.map_from_arrays(k, v)).toDC
+    (keys, values).mapNDC((k, v) => f.map_from_arrays(k, v))
   }
 
   /**
@@ -68,9 +68,7 @@ private[syntax] trait MapColumns {
       rest: (DoricColumn[K], DoricColumn[V])*
   ): MapColumn[K, V] = {
     (List(first._1, first._2) ++ rest.flatMap(x => List(x._1, x._2)))
-      .traverse(_.elem)
-      .map(x => f.map(x: _*))
-      .toDC
+      .mapDC(x => f.map(x: _*))
   }
 
   /**
@@ -92,7 +90,7 @@ private[syntax] trait MapColumns {
       *   exist.
       */
     def get(key: DoricColumn[K]): DoricColumn[V] =
-      (map.elem, key.elem).mapN(_(_)).toDC
+      (map, key).mapNDC(_(_))
 
     /**
       * Returns an unordered array containing the keys of the map.
@@ -149,9 +147,9 @@ private[syntax] trait MapColumns {
     def filter(
         function: (DoricColumn[K], DoricColumn[V]) => BooleanColumn
     ): MapColumn[K, V] = {
-      (map.elem, function(x, y).elem).mapN { (a, f) =>
+      (map, function(x, y)).mapNDC((a, f) =>
         new Column(MapFilter(a.expr, lam2(f.expr)))
-      }.toDC
+      )
     }
 
     /**
@@ -171,9 +169,9 @@ private[syntax] trait MapColumns {
             DoricColumn[V2]
         ) => DoricColumn[R]
     ): MapColumn[K, R] = {
-      (map.elem, map2.elem, function(x, y, z).elem).mapN { (a, b, f) =>
+      (map, map2, function(x, y, z)).mapNDC((a, b, f) =>
         new Column(MapZipWith(a.expr, b.expr, lam3(f.expr)))
-      }.toDC
+      )
     }
 
     /**
@@ -189,9 +187,9 @@ private[syntax] trait MapColumns {
     def transformKeys[K2](
         function: (DoricColumn[K], DoricColumn[V]) => DoricColumn[K2]
     ): MapColumn[K2, V] = {
-      (map.elem, function(x, y).elem).mapN { (a, f) =>
+      (map, function(x, y)).mapNDC((a, f) =>
         new Column(TransformKeys(a.expr, lam2(f.expr)))
-      }.toDC
+      )
     }
 
     /**
@@ -207,9 +205,9 @@ private[syntax] trait MapColumns {
     def transformValues[V2](
         function: (DoricColumn[K], DoricColumn[V]) => DoricColumn[V2]
     ): MapColumn[K, V2] = {
-      (map.elem, function(x, y).elem).mapN { (a, f) =>
+      (map, function(x, y)).mapNDC((a, f) =>
         new Column(TransformValues(a.expr, lam2(f.expr)))
-      }.toDC
+      )
     }
 
   }

@@ -1,9 +1,9 @@
 package doric
 package syntax
 
-import cats.implicits._
 import doric.DoricColumn.sparkFunction
 import doric.types.NumericType
+import doric.DoricColumnPrivateAPI._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions.{FormatNumber, FromUnixTime, Rand, Randn}
@@ -164,11 +164,10 @@ private[syntax] trait NumericColumns {
       * @see [[org.apache.spark.sql.functions.format_number]]
       */
     def formatNumber(decimals: IntegerColumn): StringColumn =
-      (column.elem, decimals.elem)
-        .mapN((c, d) => {
+      (column, decimals)
+        .mapNDC((c, d) => {
           new Column(FormatNumber(c.expr, d.expr))
         })
-        .toDC
 
     /**
       * Checks if the value of the column is not a number
@@ -206,11 +205,10 @@ private[syntax] trait NumericColumns {
       * @see [[org.apache.spark.sql.functions.from_unixtime(ut:org\.apache\.spark\.sql\.Column,f* org.apache.spark.sql.functions.from_unixtime]]
       */
     def fromUnixTime(format: StringColumn): StringColumn =
-      (column.elem, format.elem)
-        .mapN((c, f) => {
+      (column, format)
+        .mapNDC((c, f) => {
           new Column(FromUnixTime(c.expr, f.expr))
         })
-        .toDC
 
   }
 
@@ -225,7 +223,7 @@ private[syntax] trait NumericColumns {
       * @see [[org.apache.spark.sql.functions.sequence(start:org\.apache\.spark\.sql\.Column,stop:org\.apache\.spark\.sql\.Column,step* org.apache.spark.sql.functions.sequence]]
       */
     def sequence(to: IntegerColumn, step: IntegerColumn): ArrayColumn[Int] =
-      (column.elem, to.elem, step.elem).mapN(f.sequence).toDC
+      (column, to, step).mapNDC(f.sequence)
 
     /**
       * Generate a sequence of integers from start to stop, incrementing by 1
@@ -235,7 +233,7 @@ private[syntax] trait NumericColumns {
       * @see [[org.apache.spark.sql.functions.sequence(start:org\.apache\.spark\.sql\.Column,stop:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.sequence]]
       */
     def sequence(to: IntegerColumn): ArrayColumn[Int] =
-      (column.elem, to.elem).mapN(f.sequence).toDC
+      (column, to).mapNDC(f.sequence)
   }
 
 }

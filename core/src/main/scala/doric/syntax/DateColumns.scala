@@ -1,8 +1,8 @@
 package doric
 package syntax
 
-import cats.implicits._
 import doric.types.{DateType, SparkType}
+import doric.DoricColumnPrivateAPI._
 import java.sql.Date
 
 import org.apache.spark.sql.{Column, functions => f}
@@ -36,7 +36,7 @@ private[syntax] trait DateColumns {
       * @see [[org.apache.spark.sql.functions.add_months(startDate:org\.apache\.spark\.sql\.Column,numMonths:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.add_months]]
       */
     def addMonths(nMonths: IntegerColumn): DateColumn =
-      (column.elem, nMonths.elem).mapN(f.add_months).toDC
+      (column, nMonths).mapNDC(f.add_months)
 
     /**
       * Returns the date that is `days` days after date column
@@ -49,27 +49,26 @@ private[syntax] trait DateColumns {
       * @see [[org.apache.spark.sql.functions.date_add(start:org\.apache\.spark\.sql\.Column,days:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.date_add]]
       */
     def addDays(days: IntegerColumn): DateColumn =
-      (column.elem, days.elem).mapN(f.date_add).toDC
+      (column, days).mapNDC(f.date_add)
 
     /**
       * Converts a date to a value of string in the format specified by the date
       * format given by the second argument.
       *
       * @param format
-      *   A pattern `dd.MM.yyyy` would return a string like `18.03.1993`
+      * A pattern `dd.MM.yyyy` would return a string like `18.03.1993`
       * @throws java.lang.IllegalArgumentException if malformed format
       * @note
-      *   Use specialized functions like 'year' whenever possible as they benefit from a
-      *   specialized implementation.
+      * Use specialized functions like 'year' whenever possible as they benefit from a
+      * specialized implementation.
       * @group Date & Timestamp Type
       * @see [[org.apache.spark.sql.functions.date_format]]
       */
     def format(format: StringColumn): StringColumn =
-      (column.elem, format.elem)
-        .mapN((c, fmt) => {
+      (column, format)
+        .mapNDC((c, fmt) => {
           new Column(DateFormatClass(c.expr, fmt.expr))
         })
-        .toDC
 
     /**
       * Returns the date that is `days` days before date column
@@ -82,20 +81,19 @@ private[syntax] trait DateColumns {
       * @see [[org.apache.spark.sql.functions.date_sub(start:org\.apache\.spark\.sql\.Column,days:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.date_sub]]
       */
     def subDays(days: IntegerColumn): DateColumn =
-      (column.elem, days.elem).mapN(f.date_sub).toDC
+      (column, days).mapNDC(f.date_sub)
 
     /**
       * Returns the number of days from date column to `dateCol`.
       *
       * @param dateCol
-      *   A Date or Timestamp column
+      * A Date or Timestamp column
       * @group Date & Timestamp Type
       * @see [[org.apache.spark.sql.functions.datediff]]
       */
     def diff(dateCol: DoricColumn[T]): IntegerColumn =
-      (column.elem, dateCol.elem)
-        .mapN((end, start) => f.datediff(end, start))
-        .toDC
+      (column, dateCol)
+        .mapNDC((end, start) => f.datediff(end, start))
 
     /**
       * Extracts the day of the month as an integer from a given date.
@@ -167,7 +165,7 @@ private[syntax] trait DateColumns {
       * @see [[org.apache.spark.sql.functions.months_between(end:org\.apache\.spark\.sql\.Column,start:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.months_between]]
       */
     def monthsBetween(dateCol: DoricColumn[T]): DoubleColumn =
-      (column.elem, dateCol.elem).mapN(f.months_between).toDC
+      (column, dateCol).mapNDC(f.months_between)
 
     /**
       * Returns number of months between dates `dateCol` and date column.
@@ -184,11 +182,10 @@ private[syntax] trait DateColumns {
         dateCol: DoricColumn[T],
         roundOff: BooleanColumn
     ): DoubleColumn =
-      (column.elem, dateCol.elem, roundOff.elem)
-        .mapN((c, d, r) => {
+      (column, dateCol, roundOff)
+        .mapNDC((c, d, r) => {
           new Column(new MonthsBetween(c.expr, d.expr, r.expr))
         })
-        .toDC
 
     /**
       * Returns the first date which is later than the value of the `date` column that is on the
@@ -198,19 +195,18 @@ private[syntax] trait DateColumns {
       * because that is the first Sunday after 2015-07-27.
       *
       * @param dayOfWeek
-      *   Case insensitive, and accepts: "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+      * Case insensitive, and accepts: "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
       * @note
-      *   Timestamp columns will be truncated to Date column
+      * Timestamp columns will be truncated to Date column
       * @group Date & Timestamp Type
       * @see org.apache.spark.sql.functions.next_day
       * @todo scaladoc link (issue #135)
       */
     def nextDay(dayOfWeek: StringColumn): DateColumn =
-      (column.elem, dayOfWeek.elem)
-        .mapN((c, dow) => {
+      (column, dayOfWeek)
+        .mapNDC((c, dow) => {
           new Column(NextDay(c.expr, dow.expr))
         })
-        .toDC
 
     /**
       * Extracts the quarter as an integer from a given date.
@@ -236,14 +232,14 @@ private[syntax] trait DateColumns {
       *     - 'day', 'dd' to truncate by day,
       *     - __Other options are__:  'microsecond', 'millisecond', 'second', 'minute', 'hour', 'week', 'quarter'
       * @note
-      *   Timestamp columns will be truncated to Date column
+      * Timestamp columns will be truncated to Date column
       * @group Date & Timestamp Type
       * @see [[org.apache.spark.sql.functions.trunc]]
       * @see [[org.apache.spark.sql.functions.date_trunc]]
       */
     def truncate(format: StringColumn): DoricColumn[T] =
-      (column.elem, format.elem)
-        .mapN((c, fmt) => {
+      (column, format)
+        .mapNDC((c, fmt) => {
           new Column(SparkType[T].dataType match {
             case org.apache.spark.sql.types.DateType =>
               TruncDate(c.expr, fmt.expr)
@@ -251,7 +247,6 @@ private[syntax] trait DateColumns {
               TruncTimestamp(fmt.expr, c.expr)
           })
         })
-        .toDC
 
     /**
       * Converts date/timestamp to Unix timestamp (in seconds),
