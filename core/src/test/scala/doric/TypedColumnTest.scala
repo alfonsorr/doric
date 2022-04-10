@@ -371,7 +371,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
     def validateColumnType[T: SparkType](
         column: DoricColumn[T],
         show: Boolean = false
-    ): DataFrame = {
+    )(implicit position: source.Position): DataFrame = {
       val colName          = "result"
       val df2              = df.withColumn(colName, column)
       val providedDatatype = df2(colName).expr.dataType

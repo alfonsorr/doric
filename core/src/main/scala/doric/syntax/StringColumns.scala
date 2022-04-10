@@ -1,7 +1,7 @@
 package doric
 package syntax
 
-import cats.implicits.{catsSyntaxTuple2Semigroupal, catsSyntaxTuple3Semigroupal, catsSyntaxTuple4Semigroupal, toTraverseOps}
+import cats.implicits._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions._
@@ -20,7 +20,7 @@ private[syntax] trait StringColumns {
     * @see [[org.apache.spark.sql.functions.concat]]
     */
   def concat(cols: StringColumn*): StringColumn =
-    cols.map(_.elem).toList.sequence.map(f.concat(_: _*)).toDC
+    cols.toList.traverse(_.elem).map(f.concat(_: _*)).toDC
 
   /**
     * Concatenates multiple input string columns together into a single string column,
@@ -43,10 +43,8 @@ private[syntax] trait StringColumns {
     * @see [[org.apache.spark.sql.functions.concat_ws]]
     */
   def concatWs(sep: StringColumn, cols: StringColumn*): StringColumn =
-    (sep +: cols)
-      .map(_.elem)
-      .toList
-      .sequence
+    (sep +: cols).toList
+      .traverse(_.elem)
       .map(l => {
         new Column(ConcatWs(l.map(_.expr)))
       })

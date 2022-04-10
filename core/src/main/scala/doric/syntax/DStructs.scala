@@ -32,7 +32,7 @@ private[syntax] trait DStructs {
     *   A DStruct DoricColumn.
     */
   def struct(cols: DoricColumn[_]*): RowColumn =
-    cols.map(_.elem).toList.sequence.map(c => sparkStruct(c: _*)).toDC
+    cols.toList.traverse(_.elem).map(c => sparkStruct(c: _*)).toDC
 
   implicit class DStructOps(private val col: RowColumn) {
 

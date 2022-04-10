@@ -365,7 +365,7 @@ private[syntax] trait AggregationColumns {
     * @see [[org.apache.spark.sql.functions.grouping_id(cols:* org.apache.spark.sql.functions.grouping_id]]
     */
   def groupingId(col: DoricColumn[_], cols: DoricColumn[_]*): LongColumn =
-    (col +: cols).map(_.elem).toList.sequence.map(f.grouping_id(_: _*)).toDC
+    (col +: cols).toList.traverse(_.elem).map(f.grouping_id(_: _*)).toDC
 
   /**
     * Aggregate function: returns the level of grouping, equals to

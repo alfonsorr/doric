@@ -25,7 +25,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.coalesce]]
     */
   def coalesce[T](cols: DoricColumn[T]*): DoricColumn[T] =
-    cols.map(_.elem).toList.sequence.map(f.coalesce(_: _*)).toDC
+    cols.toList.traverse(_.elem).map(f.coalesce(_: _*)).toDC
 
   /**
     * Calculates the hash code of given columns, and returns the result as an integer column.
@@ -34,7 +34,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.hash]]
     */
   def hash(cols: DoricColumn[_]*): IntegerColumn =
-    cols.map(_.elem).toList.sequence.map(f.hash(_: _*)).toDC
+    cols.toList.traverse(_.elem).map(f.hash(_: _*)).toDC
 
   /**
     * Calculates the hash code of given columns using the 64-bit
@@ -44,7 +44,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.xxhash64]]
     */
   def xxhash64(cols: DoricColumn[_]*): LongColumn =
-    cols.map(_.elem).toList.sequence.map(f.xxhash64(_: _*)).toDC
+    cols.toList.traverse(_.elem).map(f.xxhash64(_: _*)).toDC
 
   /**
     * Returns the least value of the list of values, skipping null values.
@@ -55,7 +55,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.least(exprs* org.apache.spark.sql.functions.least]]
     */
   def least[T](col: DoricColumn[T], cols: DoricColumn[T]*): DoricColumn[T] =
-    (col +: cols).map(_.elem).toList.sequence.map(f.least(_: _*)).toDC
+    (col +: cols).toList.traverse(_.elem).map(f.least(_: _*)).toDC
 
   /**
     * Returns the greatest value of the list of values, skipping null values.
@@ -66,7 +66,7 @@ private[syntax] trait CommonColumns extends ColGetters[NamedDoricColumn] {
     * @see [[org.apache.spark.sql.functions.greatest(exprs* org.apache.spark.sql.functions.greatest]]
     */
   def greatest[T](col: DoricColumn[T], cols: DoricColumn[T]*): DoricColumn[T] =
-    (col +: cols).map(_.elem).toList.sequence.map(f.greatest(_: _*)).toDC
+    (col +: cols).toList.traverse(_.elem).map(f.greatest(_: _*)).toDC
 
   override protected def constructSide[T](
       column: Doric[Column],
