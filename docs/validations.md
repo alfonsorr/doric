@@ -15,7 +15,7 @@ raising a run-time exception:
 // Spark
 List(1,2,3).toDF.select(f.col("id")+1)
 // org.apache.spark.sql.AnalysisException: cannot resolve 'id' given input columns: [value];
-// 'Project [unresolvedalias(('id + 1), Some(org.apache.spark.sql.Column$$Lambda$4066/0x0000000101769040@b4eafcb))]
+// 'Project [unresolvedalias(('id + 1), Some(org.apache.spark.sql.Column$$Lambda$4067/0x000000010176a040@3bc3b48f))]
 // +- LocalRelation [value#292]
 // 
 // 	at org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.failAnalysis(package.scala:54)
@@ -88,7 +88,7 @@ Using doric we can prevent the creation of the DataFrame, since column expressio
 ```scala
 val df = List("1","2","three").toDF.select(colInt("value") + 1.lit)
 // doric.sem.DoricMultiError: Found 1 error in select
-//   The column with name 'value' is of type StringType and it was expected to be IntegerType
+//   The column with name 'value' was expected to be IntegerType but is of type StringType
 //   	located at . (validations.md:59)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
