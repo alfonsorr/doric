@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>DoricSingleError - doric.sem.DoricSingleError</title>
-          <meta name="description" content="DoricSingleError - doric.sem.DoricSingleError" />
-          <meta name="keywords" content="DoricSingleError doric.sem.DoricSingleError" />
+          <title>ChildColumnNotFound - doric.sem.ChildColumnNotFound</title>
+          <meta name="description" content="ChildColumnNotFound - doric.sem.ChildColumnNotFound" />
+          <meta name="keywords" content="ChildColumnNotFound doric.sem.ChildColumnNotFound" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../index.html';
-            var hash = 'doric.sem.DoricSingleError';
+            var hash = 'doric.sem.ChildColumnNotFound';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -28,14 +28,12 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a href="DoricSingleError$.html" title="See companion object"><img alt="Class/Object" src="../../lib/class_to_object_big.png" /></a>
+        <img alt="Class" src="../../lib/class_big.png" />
         <p id="owner"><a href="../package.html" class="extype" name="doric">doric</a>.<a href="package.html" class="extype" name="doric.sem">sem</a></p>
-        <h1><a href="DoricSingleError$.html" title="See companion object">DoricSingleError</a></h1><h3><span class="morelinks"><div>
-            Related Docs:
-            <a href="DoricSingleError$.html" title="See companion object">object DoricSingleError</a>
-            | <a href="package.html" class="extype" name="doric.sem">package sem</a>
+        <h1>ChildColumnNotFound</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="doric.sem">package sem</a>
           </div></span></h3><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -43,21 +41,18 @@
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier">sealed abstract </span>
-        <span class="kind">class</span>
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">DoricSingleError</span><span class="result"> extends <span class="extype" name="scala.Throwable">Throwable</span></span>
+        <span class="name">ChildColumnNotFound</span><span class="params">(<span name="columnName">columnName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="validColumns">validColumns: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span><span class="result"> extends <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> with <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.io.Serializable" class="extype" target="_top">Serializable</a>, <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></div>
-        </div><div class="toggleContainer block">
-            <span class="toggle">Known Subclasses</span>
-            <div class="subClasses hiddenContent"><a href="ChildColumnNotFound.html" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>, <a href="ColumnMultiTypeError.html" class="extype" name="doric.sem.ColumnMultiTypeError">ColumnMultiTypeError</a>, <a href="ColumnTypeError.html" class="extype" name="doric.sem.ColumnTypeError">ColumnTypeError</a>, <a href="JoinDoricSingleError.html" class="extype" name="doric.sem.JoinDoricSingleError">JoinDoricSingleError</a>, <a href="SparkErrorWrapper.html" class="extype" name="doric.sem.SparkErrorWrapper">SparkErrorWrapper</a></div>
-          </div></div>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Serializable" class="extype" target="_top">Serializable</a>, <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Product" class="extype" target="_top">Product</a>, <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Equals" class="extype" target="_top">Equals</a>, <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>, <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.io.Serializable" class="extype" target="_top">Serializable</a>, <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></div>
+        </div></div>
         
 
       <div id="mbrsel">
@@ -74,7 +69,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="doric.sem.DoricSingleError"><span>DoricSingleError</span></li><li class="in" name="java.lang.Throwable"><span>Throwable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="doric.sem.ChildColumnNotFound"><span>ChildColumnNotFound</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="doric.sem.DoricSingleError"><span>DoricSingleError</span></li><li class="in" name="java.lang.Throwable"><span>Throwable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
                 <span class="filtertype">Implicitly<br />
@@ -96,42 +91,21 @@
 
       <div id="template">
         <div id="allMembers">
-        
-
-        
-
-        <div id="values" class="values members">
-              <h3>Abstract Value Members</h3>
-              <ol><li name="doric.sem.DoricSingleError#location" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="location:doric.sem.Location"></a>
-      <a id="location:Location"></a>
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="doric.sem.ChildColumnNotFound#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(columnName:String,validColumns:Seq[String])(implicitlocation:doric.sem.Location):doric.sem.ChildColumnNotFound"></a>
+      <a id="&lt;init&gt;:ChildColumnNotFound"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
+        <span class="modifier"></span>
+        <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">location</span><span class="result">: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>
+        <span class="name">ChildColumnNotFound</span><span class="params">(<span name="columnName">columnName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="validColumns">validColumns: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="location">location: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@location:doric.sem.Location" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="doric.sem.DoricSingleError#message" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="message:String"></a>
-      <a id="message:String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">message</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@message:String" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@&lt;init&gt;(columnName:String,validColumns:Seq[String])(implicitlocation:doric.sem.Location):doric.sem.ChildColumnNotFound" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -139,8 +113,12 @@
     </li></ol>
             </div>
 
+        
+
+        
+
         <div id="values" class="values members">
-              <h3>Concrete Value Members</h3>
+              <h3>Value Members</h3>
               <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a>
       <a id="!=(Any):Boolean"></a>
@@ -153,7 +131,7 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -170,7 +148,7 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Int" class="extype" target="_top">Int</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@##():Int" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@##():Int" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -187,34 +165,34 @@
         <span title="gt4s: $plus" class="implicit">+</span><span class="params">(<span name="other">other: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@+(other:String):String" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@+(other:String):String" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.any2stringadd">any2stringadd</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method any2stringadd in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.any2stringadd">any2stringadd</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method any2stringadd in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>any2stringadd</dd></dl></div>
     </li><li name="scala.Predef.ArrowAssoc#-&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="-&gt;[B](y:B):(A,B)"></a>
-      <a id="-&gt;[B](B):(DoricSingleError,B)"></a>
+      <a id="-&gt;[B](B):(ChildColumnNotFound,B)"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $minus$greater" class="implicit">-&gt;</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="y">y: <span class="extype" name="scala.Predef.ArrowAssoc.-&gt;.B">B</span></span>)</span><span class="result">: (<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>, <span class="extype" name="scala.Predef.ArrowAssoc.-&gt;.B">B</span>)</span>
+        <span title="gt4s: $minus$greater" class="implicit">-&gt;</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="y">y: <span class="extype" name="scala.Predef.ArrowAssoc.-&gt;.B">B</span></span>)</span><span class="result">: (<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>, <span class="extype" name="scala.Predef.ArrowAssoc.-&gt;.B">B</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@-&gt;[B](y:B):(A,B)" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@-&gt;[B](y:B):(A,B)" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method ArrowAssoc in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method ArrowAssoc in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>ArrowAssoc</dd><dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
@@ -232,7 +210,7 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -249,7 +227,7 @@
         <span class="name">addSuppressed</span><span class="params">(<span name="arg0">arg0: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@addSuppressed(x$1:Throwable):Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@addSuppressed(x$1:Throwable):Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -266,12 +244,12 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="doric.sem.DoricSingleError#cause" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="doric.sem.DoricSingleError#cause" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="cause:Option[Throwable]"></a>
       <a id="cause:Option[Throwable]"></a>
       <h4 class="signature">
@@ -283,11 +261,11 @@
         <span class="name">cause</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Option" class="extype" target="_top">Option</a>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@cause:Option[Throwable]" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@cause:Option[Throwable]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -300,7 +278,7 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@clone():Object" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@clone():Object" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -311,88 +289,105 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="doric.sem.ChildColumnNotFound#columnName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="columnName:String"></a>
+      <a id="columnName:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">columnName</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@columnName:String" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.Predef.Ensuring#ensuring" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ensuring(cond:A=&gt;Boolean,msg:=&gt;Any):A"></a>
-      <a id="ensuring((DoricSingleError)⇒Boolean,⇒Any):DoricSingleError"></a>
+      <a id="ensuring((ChildColumnNotFound)⇒Boolean,⇒Any):ChildColumnNotFound"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: (<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>) ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>, <span name="msg">msg: ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></span>
+        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: (<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>) ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>, <span name="msg">msg: ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@ensuring(cond:A=&gt;Boolean,msg:=&gt;Any):A" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@ensuring(cond:A=&gt;Boolean,msg:=&gt;Any):A" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method Ensuring in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method Ensuring in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>Ensuring</dd></dl></div>
     </li><li name="scala.Predef.Ensuring#ensuring" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ensuring(cond:A=&gt;Boolean):A"></a>
-      <a id="ensuring((DoricSingleError)⇒Boolean):DoricSingleError"></a>
+      <a id="ensuring((ChildColumnNotFound)⇒Boolean):ChildColumnNotFound"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: (<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>) ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></span>
+        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: (<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>) ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@ensuring(cond:A=&gt;Boolean):A" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@ensuring(cond:A=&gt;Boolean):A" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method Ensuring in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method Ensuring in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>Ensuring</dd></dl></div>
     </li><li name="scala.Predef.Ensuring#ensuring" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ensuring(cond:Boolean,msg:=&gt;Any):A"></a>
-      <a id="ensuring(Boolean,⇒Any):DoricSingleError"></a>
+      <a id="ensuring(Boolean,⇒Any):ChildColumnNotFound"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>, <span name="msg">msg: ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></span>
+        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>, <span name="msg">msg: ⇒ <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@ensuring(cond:Boolean,msg:=&gt;Any):A" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@ensuring(cond:Boolean,msg:=&gt;Any):A" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method Ensuring in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method Ensuring in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>Ensuring</dd></dl></div>
     </li><li name="scala.Predef.Ensuring#ensuring" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ensuring(cond:Boolean):A"></a>
-      <a id="ensuring(Boolean):DoricSingleError"></a>
+      <a id="ensuring(Boolean):ChildColumnNotFound"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></span>
+        <span class="implicit">ensuring</span><span class="params">(<span name="cond">cond: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>)</span><span class="result">: <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@ensuring(cond:Boolean):A" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@ensuring(cond:Boolean):A" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method Ensuring in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method Ensuring in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>Ensuring</dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -407,28 +402,11 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="equals(x$1:Any):Boolean"></a>
-      <a id="equals(Any):Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@equals(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="java.lang.Throwable#fillInStackTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="fillInStackTrace():Throwable"></a>
       <a id="fillInStackTrace():Throwable"></a>
@@ -441,7 +419,7 @@
         <span class="name">fillInStackTrace</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@fillInStackTrace():Throwable" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@fillInStackTrace():Throwable" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -458,7 +436,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@finalize():Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -481,13 +459,13 @@
         <span class="implicit">formatted</span><span class="params">(<span name="fmtstr">fmtstr: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@formatted(fmtstr:String):String" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@formatted(fmtstr:String):String" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.StringFormat">StringFormat</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method StringFormat in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.StringFormat">StringFormat</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method StringFormat in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>StringFormat</dd><dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
@@ -505,7 +483,7 @@
         <span class="name">getCause</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@getCause():Throwable" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@getCause():Throwable" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -522,7 +500,7 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Class" class="extype" target="_top">Class</a>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -539,7 +517,7 @@
         <span class="name">getLocalizedMessage</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.String" class="extype" target="_top">String</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@getLocalizedMessage():String" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@getLocalizedMessage():String" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -556,11 +534,11 @@
         <span class="name">getMessage</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@getMessage():String" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@getMessage():String" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> → Throwable</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> → Throwable</dd></dl></div>
     </li><li name="java.lang.Throwable#getStackTrace" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getStackTrace():Array[StackTraceElement]"></a>
       <a id="getStackTrace():Array[StackTraceElement]"></a>
@@ -573,7 +551,7 @@
         <span class="name">getStackTrace</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Array" class="extype" target="_top">Array</a>[<a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.StackTraceElement" class="extype" target="_top">StackTraceElement</a>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@getStackTrace():Array[StackTraceElement]" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@getStackTrace():Array[StackTraceElement]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -590,28 +568,11 @@
         <span class="name">getSuppressed</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Array" class="extype" target="_top">Array</a>[<a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@getSuppressed():Array[Throwable]" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@getSuppressed():Array[Throwable]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
-    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="hashCode():Int"></a>
-      <a id="hashCode():Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Int" class="extype" target="_top">Int</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@hashCode():Int" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="java.lang.Throwable#initCause" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="initCause(x$1:Throwable):Throwable"></a>
       <a id="initCause(Throwable):Throwable"></a>
@@ -624,7 +585,7 @@
         <span class="name">initCause</span><span class="params">(<span name="arg0">arg0: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a></span>)</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@initCause(x$1:Throwable):Throwable" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@initCause(x$1:Throwable):Throwable" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -641,11 +602,45 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doric.sem.ChildColumnNotFound#location" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="location:doric.sem.Location"></a>
+      <a id="location:Location"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">location</span><span class="result">: <a href="Location.html" class="extype" name="doric.sem.Location">Location</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@location:doric.sem.Location" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> → <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></dd></dl></div>
+    </li><li name="doric.sem.ChildColumnNotFound#message" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="message:String"></a>
+      <a id="message:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">message</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@message:String" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> → <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -658,7 +653,7 @@
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -675,7 +670,7 @@
         <span class="name">notify</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@notify():Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@notify():Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -692,7 +687,7 @@
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -709,7 +704,7 @@
         <span class="name">printStackTrace</span><span class="params">(<span name="arg0">arg0: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.io.PrintWriter" class="extype" target="_top">PrintWriter</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@printStackTrace(x$1:java.io.PrintWriter):Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@printStackTrace(x$1:java.io.PrintWriter):Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -726,7 +721,7 @@
         <span class="name">printStackTrace</span><span class="params">(<span name="arg0">arg0: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.io.PrintStream" class="extype" target="_top">PrintStream</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@printStackTrace(x$1:java.io.PrintStream):Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@printStackTrace(x$1:java.io.PrintStream):Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -743,7 +738,7 @@
         <span class="name">printStackTrace</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@printStackTrace():Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@printStackTrace():Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -760,7 +755,7 @@
         <span class="name">setStackTrace</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Array" class="extype" target="_top">Array</a>[<a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.StackTraceElement" class="extype" target="_top">StackTraceElement</a>]</span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@setStackTrace(x$1:Array[StackTraceElement]):Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@setStackTrace(x$1:Array[StackTraceElement]):Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -777,7 +772,7 @@
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -794,11 +789,28 @@
         <span class="name">toString</span><span class="params">()</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.String" class="extype" target="_top">String</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@toString():String" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@toString():String" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable → AnyRef → Any</dd></dl></div>
+    </li><li name="doric.sem.ChildColumnNotFound#validColumns" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="validColumns:Seq[String]"></a>
+      <a id="validColumns:Seq[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validColumns</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@validColumns:Seq[String]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
@@ -811,7 +823,7 @@
         <span class="name">wait</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@wait():Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@wait():Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -834,7 +846,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Int" class="extype" target="_top">Int</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -857,7 +869,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Long" class="extype" target="_top">Long</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -870,23 +882,23 @@
         </dd></dl></div>
     </li><li name="scala.Predef.ArrowAssoc#→" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="→[B](y:B):(A,B)"></a>
-      <a id="→[B](B):(DoricSingleError,B)"></a>
+      <a id="→[B](B):(ChildColumnNotFound,B)"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $u2192" class="implicit">→</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="y">y: <span class="extype" name="scala.Predef.ArrowAssoc.→.B">B</span></span>)</span><span class="result">: (<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>, <span class="extype" name="scala.Predef.ArrowAssoc.→.B">B</span>)</span>
+        <span title="gt4s: $u2192" class="implicit">→</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="y">y: <span class="extype" name="scala.Predef.ArrowAssoc.→.B">B</span></span>)</span><span class="result">: (<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>, <span class="extype" name="scala.Predef.ArrowAssoc.→.B">B</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@→[B](y:B):(A,B)" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@→[B](y:B):(A,B)" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
-            <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>] performed by method ArrowAssoc in scala.Predef.
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
+            <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>] performed by method ArrowAssoc in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>ArrowAssoc</dd></dl></div>
     </li></ol>
@@ -908,12 +920,12 @@
         <span class="implicit deprecated" title="Deprecated: (Since version 2.11.0) Use Throwable#getStackTrace">getStackTraceString</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#doric.sem.DoricSingleError@getStackTraceString:String" title="Permalink" target="_top">
+      <a href="../../index.html#doric.sem.ChildColumnNotFound@getStackTraceString:String" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt class="implicit">Implicit information</dt><dd>
-            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to
+            This member is added by an implicit conversion from <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to
             <span class="extype" name="scala.Predef.RichException">RichException</span> performed by method RichException in scala.Predef.
             
           </dd><dt>Definition Classes</dt><dd>RichException</dd><dt>Annotations</dt><dd>
@@ -925,7 +937,15 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="java.lang.Throwable">
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></h3>
+            </div><div class="parent" name="scala.Product">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Product" class="extype" target="_top">Product</a></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.11.12/index.html#scala.Equals" class="extype" target="_top">Equals</a></h3>
+            </div><div class="parent" name="doric.sem.DoricSingleError">
+              <h3>Inherited from <a href="DoricSingleError.html" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a></h3>
+            </div><div class="parent" name="java.lang.Throwable">
               <h3>Inherited from <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.lang.Throwable" class="extype" target="_top">Throwable</a></h3>
             </div><div class="parent" name="java.io.Serializable">
               <h3>Inherited from <a href="https://docs.oracle.com/javase/8/docs/api/index.html#java.io.Serializable" class="extype" target="_top">Serializable</a></h3>
@@ -936,23 +956,23 @@
             </div>
         <div class="conversion" name="scala.Predef.RichException">
               <h3>Inherited by implicit conversion RichException from
-                <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to <span class="extype" name="scala.Predef.RichException">RichException</span>
+                <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to <span class="extype" name="scala.Predef.RichException">RichException</span>
               </h3>
             </div><div class="conversion" name="scala.Predef.any2stringadd">
               <h3>Inherited by implicit conversion any2stringadd from
-                <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to <span class="extype" name="scala.Predef.any2stringadd">any2stringadd</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>]
+                <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to <span class="extype" name="scala.Predef.any2stringadd">any2stringadd</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>]
               </h3>
             </div><div class="conversion" name="scala.Predef.StringFormat">
               <h3>Inherited by implicit conversion StringFormat from
-                <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to <span class="extype" name="scala.Predef.StringFormat">StringFormat</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>]
+                <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to <span class="extype" name="scala.Predef.StringFormat">StringFormat</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>]
               </h3>
             </div><div class="conversion" name="scala.Predef.Ensuring">
               <h3>Inherited by implicit conversion Ensuring from
-                <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>]
+                <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to <span class="extype" name="scala.Predef.Ensuring">Ensuring</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>]
               </h3>
             </div><div class="conversion" name="scala.Predef.ArrowAssoc">
               <h3>Inherited by implicit conversion ArrowAssoc from
-                <a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a> to <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.sem.DoricSingleError">DoricSingleError</a>]
+                <a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a> to <span class="extype" name="scala.Predef.ArrowAssoc">ArrowAssoc</span>[<a href="" class="extype" name="doric.sem.ChildColumnNotFound">ChildColumnNotFound</a>]
               </h3>
             </div>
         </div>
