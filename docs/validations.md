@@ -15,7 +15,7 @@ raising a run-time exception:
 // Spark
 List(1,2,3).toDF().select(f.col("id")+1)
 // org.apache.spark.sql.AnalysisException: Column 'id' does not exist. Did you mean one of the following? [value];
-// 'Project [unresolvedalias(('id + 1), Some(org.apache.spark.sql.Column$$Lambda$4197/0x0000000101863040@59ef112e))]
+// 'Project [unresolvedalias(('id + 1), Some(org.apache.spark.sql.Column$$Lambda$4152/0x000000010184f040@642c8c7d))]
 // +- LocalRelation [value#291]
 // 
 // 	at org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.failAnalysis(package.scala:54)
@@ -41,8 +41,8 @@ List(1,2,3).toDF().select(colInt("id")+1)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
-// 	at repl.MdocSession$App$$anonfun$2.apply(validations.md:37)
-// 	at repl.MdocSession$App$$anonfun$2.apply(validations.md:37)
+// 	at repl.MdocSession$MdocApp$$anonfun$2.apply(validations.md:37)
+// 	at repl.MdocSession$MdocApp$$anonfun$2.apply(validations.md:37)
 // Caused by: org.apache.spark.sql.AnalysisException: Cannot resolve column name "id" among (value)
 // 	at org.apache.spark.sql.errors.QueryCompilationErrors$.cannotResolveColumnNameAmongFieldsError(QueryCompilationErrors.scala:2264)
 // 	at org.apache.spark.sql.Dataset.org$apache$spark$sql$Dataset$$resolveException(Dataset.scala:259)
@@ -95,9 +95,9 @@ val df = List("1","2","three").toDF().select(colInt("value") + 1.lit)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
-// 	at repl.MdocSession$App$$anonfun$3.apply$mcV$sp(validations.md:59)
-// 	at repl.MdocSession$App$$anonfun$3.apply(validations.md:58)
-// 	at repl.MdocSession$App$$anonfun$3.apply(validations.md:58)
+// 	at repl.MdocSession$MdocApp$$anonfun$3.apply$mcV$sp(validations.md:59)
+// 	at repl.MdocSession$MdocApp$$anonfun$3.apply(validations.md:58)
+// 	at repl.MdocSession$MdocApp$$anonfun$3.apply(validations.md:58)
 ```
 
 More on error reporting in our next [section](errors.md).
