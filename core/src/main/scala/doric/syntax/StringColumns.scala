@@ -1,10 +1,13 @@
 package doric
 package syntax
 
+import cats.data.Kleisli
 import cats.implicits._
 
 import org.apache.spark.sql.{Column, functions => f}
 import org.apache.spark.sql.catalyst.expressions._
+import org.apache.spark.sql.catalyst.util.TimestampFormatter
+import org.apache.spark.sql.internal.SQLConf
 
 private[syntax] trait StringColumns {
 
@@ -510,7 +513,19 @@ private[syntax] trait StringColumns {
       * @group String Type
       * @see [[org.apache.spark.sql.functions.unix_timestamp(s:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.unix_timestamp]]
       */
-    def unixTimestamp: LongColumn = s.elem.map(f.unix_timestamp).toDC
+    def unixTimestamp: LongColumn =
+      s.elem
+        .withConfig((x, conf) => {
+          val timezone = conf.get(SQLConf.SESSION_LOCAL_TIMEZONE.key)
+          new Column(
+            UnixTimestamp(
+              x.expr,
+              Literal(TimestampFormatter.defaultPattern),
+              timeZoneId = Some(timezone)
+            )
+          )
+        })
+        .toDC
 
     /**
       * Converts date/timestamp with given pattern to Unix timestamp (in seconds).

@@ -11,9 +11,10 @@ import doric.types.{Casting, LiteralSparkType, SparkType}
 
 import org.apache.spark.sql.catalyst.ScalaReflection
 import org.scalactic._
+import org.scalactic.source.Position
 import org.scalatest.matchers.should.Matchers
 
-import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
+import org.apache.spark.sql.catalyst.expressions.{GenericRowWithSchema, UnixTimestamp, WeekOfYear}
 import org.apache.spark.sql.{Column, DataFrame, Encoder, RelationalGroupedDataset, Row, SparkSession, functions => f}
 import org.apache.spark.sql.types._
 
@@ -203,7 +204,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
         aggDoricCol: DoricColumn[T],
         aggSparkCol: Column,
         expected: List[Option[T]] = List.empty
-    ): Unit = {
+    )(implicit position: Position): Unit = {
       val grouped = df.groupByCName(keyCol)
 
       val result = grouped
@@ -214,6 +215,10 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
         .selectCName(doricCol, sparkCol)
 
       compareDifferences(result, expected)
+      assert(
+        aggDoricCol.elem.run(df).map(_.expr.resolved).getOrElse(false),
+        "The doric column is not resolved"
+      )
     }
 
     /**
@@ -266,7 +271,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
         dcolumn: I1 => DoricColumn[T],
         scolumn: I1 => Column,
         expected: List[Option[T]] = List.empty
-    ): Unit = {
+    )(implicit position: Position): Unit = {
 
       val result = df.select(
         dcolumn(column1).as(doricCol),
@@ -274,6 +279,11 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
       )
 
       compareDifferences(result, expected)
+      val a = dcolumn(column1).elem.run(df).toOption.get.expr
+      assert(
+        a.resolved,
+        s"The doric column is not resolved ${a.childrenResolved} ${a.checkInputDataTypes().isSuccess}"
+      )
     }
 
     /**

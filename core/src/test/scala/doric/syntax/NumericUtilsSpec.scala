@@ -46,7 +46,8 @@ protected trait NumericUtilsSpec extends TypedColumnTest {
       sparkFun: Column => Column
   )(implicit
       spark: SparkSession,
-      funT: Int => T
+      funT: Int => T,
+      position: org.scalactic.source.Position
   ): Unit = {
     import spark.implicits._
     val df = input.map(_.map(funT)).toDF("col1")
@@ -94,7 +95,8 @@ protected trait NumericUtilsSpec extends TypedColumnTest {
       sparkFun: Column => Column
   )(implicit
       spark: SparkSession,
-      funT: FromFloat[T]
+      funT: FromFloat[T],
+      position: org.scalactic.source.Position
   ): Unit = {
     import spark.implicits._
     val df = input.map(_.map(funT)).toDF("col1")

@@ -4,8 +4,11 @@ package syntax
 import cats.implicits._
 import doric.DoricColumn.sparkFunction
 import doric.types.{CollectionType, NumericType}
-import org.apache.spark.sql.catalyst.expressions.{BRound, FormatNumber, FromUnixTime, Rand, Randn, Round, UnaryMinus}
+
+import org.apache.spark.sql.catalyst.expressions.{BRound, CurrentTimestamp, FormatNumber, FromUnixTime, Literal, Rand, Randn, Round, UnaryMinus, UnixTimestamp}
 import org.apache.spark.sql.{Column, functions => f}
+import org.apache.spark.sql.catalyst.util.TimestampFormatter
+import org.apache.spark.sql.internal.SQLConf
 
 private[syntax] trait NumericColumns {
 
@@ -19,7 +22,15 @@ private[syntax] trait NumericColumns {
     * @see [[org.apache.spark.sql.functions.unix_timestamp()* org.apache.spark.sql.functions.unix_timestamp]]
     */
   def unixTimestamp(): LongColumn = {
-    DoricColumn(f.unix_timestamp())
+    DoricColumn.withConfig(conf =>
+      new Column(
+        UnixTimestamp(
+          CurrentTimestamp(),
+          Literal(TimestampFormatter.defaultPattern),
+          Some(conf.get(SQLConf.SESSION_LOCAL_TIMEZONE.key))
+        )
+      )
+    )
   }
 
   /**
@@ -451,7 +462,17 @@ private[syntax] trait NumericColumns {
       * @group Numeric Type
       * @see [[org.apache.spark.sql.functions.from_unixtime(ut:org\.apache\.spark\.sql\.Column):* org.apache.spark.sql.functions.from_unixtime]]
       */
-    def fromUnixTime: StringColumn = column.elem.map(f.from_unixtime).toDC
+    def fromUnixTime: StringColumn = column.elem
+      .withConfig((x, conf) =>
+        new Column(
+          FromUnixTime(
+            x.expr,
+            Literal(TimestampFormatter.defaultPattern),
+            Some(conf.get(SQLConf.SESSION_LOCAL_TIMEZONE.key))
+          )
+        )
+      )
+      .toDC
 
     /**
       * Converts the number of seconds from unix epoch (1970-01-01 00:00:00 UTC) to a string

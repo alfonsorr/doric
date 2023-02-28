@@ -6,7 +6,11 @@ import doric.sem.DoricSingleError
 import java.sql.{Date, Timestamp}
 import java.time.{Instant, LocalDate}
 
-import org.apache.spark.sql.{Column, Dataset, Row}
+import org.apache.spark.sql.{Column, Dataset, Row, RuntimeConfig}
+import org.apache.spark.sql.catalyst.expressions.Cast
+import org.apache.spark.sql.catalyst.util.CharVarcharUtils
+import org.apache.spark.sql.internal.SQLConf
+import org.apache.spark.sql.types.DataType
 
 package object doric extends syntax.All with sem.All {
 
@@ -98,4 +102,28 @@ package object doric extends syntax.All with sem.All {
       )
   }
 
+  private[doric] implicit class DoricExtras(dc: Doric[Column]) {
+    def withConfig[O](f: (Column, RuntimeConfig) => O): Doric[O] =
+      (
+        dc,
+        Kleisli[DoricValidated, Dataset[_], RuntimeConfig](x =>
+          x.sparkSession.conf.valid
+        )
+      ).mapN(f)
+
+    def castTo(dataType: DataType): Doric[Column] =
+      dc.withConfig((x, conf) => {
+        if (Cast.needsTimeZone(x.expr.dataType, dataType)) {
+          val cast = Cast(
+            x.expr,
+            CharVarcharUtils.replaceCharVarcharWithStringForCast(
+              dataType
+            ),
+            Some(conf.get(SQLConf.SESSION_LOCAL_TIMEZONE.key))
+          )
+          cast.setTagValue(Cast.USER_SPECIFIED_CAST, true)
+          new Column(cast)
+        } else x.cast(dataType)
+      })
+  }
 }

@@ -1,10 +1,15 @@
 package doric
 
+import cats.data.Kleisli
 import cats.implicits._
+import doric.types.SparkType
 import java.util.concurrent.atomic.AtomicReference
 
-import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions.{ElementAt, Expression, ExprId, LambdaFunction, NamedExpression, NamedLambdaVariable}
+import org.apache.spark.sql.{Column, Dataset, RuntimeConfig, functions => f}
+import org.apache.spark.sql.catalyst.expressions.{Cast, ElementAt, Expression, ExprId, LambdaFunction, NamedExpression, NamedLambdaVariable}
+import org.apache.spark.sql.catalyst.util.CharVarcharUtils
+import org.apache.spark.sql.internal.SQLConf
+import org.apache.spark.sql.types.DataType
 
 package object syntax {
 
@@ -103,4 +108,5 @@ package object syntax {
         zarg.asInstanceOf[NamedLambdaVariable]
       )
     )
+
 }

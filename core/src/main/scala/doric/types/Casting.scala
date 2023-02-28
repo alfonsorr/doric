@@ -4,6 +4,11 @@ package types
 import java.sql.{Date, Timestamp}
 import java.time.{Instant, LocalDate}
 
+import org.apache.spark.sql.catalyst.expressions.Cast
+import org.apache.spark.sql.catalyst.util.CharVarcharUtils
+import org.apache.spark.sql.Column
+import org.apache.spark.sql.internal.SQLConf
+
 trait Casting[From, To] {
   def cast(column: DoricColumn[From])(implicit
       fromType: SparkType[From],
@@ -73,8 +78,22 @@ trait SparkCasting[From, To] extends Casting[From, To] {
   ): DoricColumn[To] =
     if (SparkType[From].dataType == SparkType[To].dataType)
       column.elem.toDC
-    else
-      column.elem.map(_.cast(SparkType[To].dataType)).toDC
+    else {
+      if (Cast.needsTimeZone(SparkType[From].dataType, SparkType[To].dataType))
+        column.elem.withConfig((x, conf) => {
+            val cast = Cast(
+              x.expr,
+              CharVarcharUtils.replaceCharVarcharWithStringForCast(
+                SparkType[To].dataType
+              ),
+              Some(conf.get(SQLConf.SESSION_LOCAL_TIMEZONE.key))
+            )
+            cast.setTagValue(Cast.USER_SPECIFIED_CAST, true)
+            new Column(cast)
+          })
+          .toDC
+      else column.elem.map(_.cast(SparkType[To].dataType)).toDC
+    }
 }
 
 object SparkCasting {

@@ -6,7 +6,7 @@ import doric.sem.{ColumnTypeError, DoricSingleError, Location, SparkErrorWrapper
 import doric.syntax.ColGetters
 import doric.types.{LiteralSparkType, SparkType}
 
-import org.apache.spark.sql.{Column, Dataset}
+import org.apache.spark.sql.{Column, Dataset, RuntimeConfig}
 import org.apache.spark.sql.catalyst.analysis.UnresolvedAttribute
 import org.apache.spark.sql.types.DataType
 
@@ -54,6 +54,32 @@ object LiteralDoricColumn {
 }
 
 object DoricColumn extends ColGetters[NamedDoricColumn] {
+
+  private[doric] def withConfig[T: SparkType](
+      f: RuntimeConfig => Column
+  ): DoricColumn[T] = {
+    Kleisli[DoricValidated, Dataset[_], Column](df => {
+      try {
+        val column = f(df.sparkSession.conf)
+        val dataType: DataType =
+          try {
+            column.expr.dataType
+          } catch {
+            case _: Throwable => df.select(column).schema.head.dataType
+          }
+        if (SparkType[T].isEqual(dataType))
+          Validated.valid(column)
+        else
+          ColumnTypeError(
+            df.select(column).schema.head.name,
+            SparkType[T].dataType,
+            dataType
+          ).invalidNec
+      } catch {
+        case e: Throwable => SparkErrorWrapper(e).invalidNec
+      }
+    }).toDC
+  }
 
   private[doric] def apply[T](dcolumn: Doric[Column]): DoricColumn[T] =
     TransformationDoricColumn(dcolumn)
