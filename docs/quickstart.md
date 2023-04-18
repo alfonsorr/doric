@@ -28,7 +28,7 @@ _Maven_
 Doric is committed to use the most modern APIs first.
 <!-- * Doric is compatible with Spark version 3.3.2. -->
 * The latest stable version of doric is 0.0.6.
-* The latest experimental version of doric is 0.0.0+1-cfbd3190-SNAPSHOT.
+* The latest experimental version of doric is 0.0.0+1-7ddfa954-SNAPSHOT.
 * Doric is compatible with the following Spark versions:
 
 | Spark | Scala | Tested |                                                                                  doric                                                                                  |
@@ -61,6 +61,8 @@ Doric is committed to use the most modern APIs first.
 | 3.3.1 | 2.13  |   ✅    |                                                                                    -                                                                                    |
 | 3.3.2 | 2.12  |   ✅    | [![Maven Central](https://img.shields.io/maven-central/v/org.hablapps/doric_3-3_2.12)](https://mvnrepository.com/artifact/org.hablapps/doric_3-3_2.12/0.0.6) |
 | 3.3.2 | 2.13  |   ✅    | [![Maven Central](https://img.shields.io/maven-central/v/org.hablapps/doric_3-3_2.13)](https://mvnrepository.com/artifact/org.hablapps/doric_3-3_2.13/0.0.6) |
+| 3.4.0 | 2.12  |   ✅    | [![Maven Central](https://img.shields.io/maven-central/v/org.hablapps/doric_3-4_2.12)](https://mvnrepository.com/artifact/org.hablapps/doric_3-4_2.12/0.0.6) |
+| 3.4.0 | 2.13  |   ✅    | [![Maven Central](https://img.shields.io/maven-central/v/org.hablapps/doric_3-4_2.13)](https://mvnrepository.com/artifact/org.hablapps/doric_3-4_2.13/0.0.6) |
 
 
 __Import statements__
@@ -90,7 +92,7 @@ It's only when we try to construct the DataFrame that an exception is raised at 
 ```scala
 df
 // org.apache.spark.sql.AnalysisException: cannot resolve '(value * true)' due to data type mismatch: differing types in '(value * true)' (int and boolean).;
-// 'Project [unresolvedalias((value#281 * true), Some(org.apache.spark.sql.Column$$Lambda$4417/0x0000000101966840@3f619f52))]
+// 'Project [unresolvedalias((value#281 * true), Some(org.apache.spark.sql.Column$$Lambda$4417/0x0000000101966840@32c742ce))]
 // +- LocalRelation [value#281]
 // 
 // 	at org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.failAnalysis(package.scala:42)
@@ -187,7 +189,7 @@ strDf.select(f.col("str").asDoric[String]).show()
 strDf.select((f.col("str") + f.lit(true)).asDoric[String]).show()
 // doric.sem.DoricMultiError: Found 1 error in select
 //   cannot resolve '(CAST(str AS DOUBLE) + true)' due to data type mismatch: differing types in '(CAST(str AS DOUBLE) + true)' (double and boolean).;
-//   'Project [unresolvedalias((cast(str#294 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$4417/0x0000000101966840@3f619f52))]
+//   'Project [unresolvedalias((cast(str#294 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$4417/0x0000000101966840@32c742ce))]
 //   +- Project [value#291 AS str#294]
 //      +- LocalRelation [value#291]
 //   
@@ -201,7 +203,7 @@ strDf.select((f.col("str") + f.lit(true)).asDoric[String]).show()
 // 	at repl.MdocSession$MdocApp$$anonfun$2.apply(quickstart.md:76)
 // 	at repl.MdocSession$MdocApp$$anonfun$2.apply(quickstart.md:76)
 // Caused by: org.apache.spark.sql.AnalysisException: cannot resolve '(CAST(str AS DOUBLE) + true)' due to data type mismatch: differing types in '(CAST(str AS DOUBLE) + true)' (double and boolean).;
-// 'Project [unresolvedalias((cast(str#294 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$4417/0x0000000101966840@3f619f52))]
+// 'Project [unresolvedalias((cast(str#294 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$4417/0x0000000101966840@32c742ce))]
 // +- Project [value#291 AS str#294]
 //    +- LocalRelation [value#291]
 // 
