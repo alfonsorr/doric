@@ -15,7 +15,7 @@ raising a run-time exception:
 // Spark
 List(1,2,3).toDF().select(f.col("id")+1)
 // org.apache.spark.sql.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `id` cannot be resolved. Did you mean one of the following? [`value`].;
-// 'Project [unresolvedalias(('id + 1), Some(org.apache.spark.sql.Column$$Lambda$5077/0x0000000101bb0840@2dafdfea))]
+// 'Project [unresolvedalias(('id + 1), Some(org.apache.spark.sql.Column$$Lambda$5046/0x0000000101b95040@1f0e0ccd))]
 // +- LocalRelation [value#399]
 // 
 // 	at org.apache.spark.sql.errors.QueryCompilationErrors$.unresolvedAttributeError(QueryCompilationErrors.scala:221)
@@ -40,7 +40,7 @@ List(1,2,3).toDF().select(colInt("id")+1)
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:140)
 // 	at repl.MdocSession$MdocApp$$anonfun$2.apply(validations.md:37)
 // 	at repl.MdocSession$MdocApp$$anonfun$2.apply(validations.md:37)
 // Caused by: org.apache.spark.sql.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `id` cannot be resolved. Did you mean one of the following? [`value`].
@@ -94,7 +94,7 @@ val df = List("1","2","three").toDF().select(colInt("value") + 1.lit)
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
 // 	at cats.data.Validated.fold(Validated.scala:29)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
-// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:139)
+// 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:140)
 // 	at repl.MdocSession$MdocApp$$anonfun$3.apply$mcV$sp(validations.md:59)
 // 	at repl.MdocSession$MdocApp$$anonfun$3.apply(validations.md:58)
 // 	at repl.MdocSession$MdocApp$$anonfun$3.apply(validations.md:58)
