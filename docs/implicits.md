@@ -85,7 +85,7 @@ val complexCol: DoricColumn[Int] =
       .transform(_ + 1.lit)
       .aggregate(0.lit)(_ + _)
 // complexCol: DoricColumn[Int] = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2946/0x0000000100b0a040@6ae5ead4)
+//   Kleisli(scala.Function1$$Lambda$3002/0x0000000801346040@366558a2)
 // )
   
 dfArrays.select(complexCol as "complexTransformation").show()
@@ -238,7 +238,7 @@ Last, note that we can also emulate the default Spark behaviour, enabling implic
 with an explicit import statement:
 
 ```scala
-import doric.implicitConversions.implicitSafeCast
+import doric.implicitConversions.implicitSafeCast
 
 dfEq.withColumn("eq", colString("str") === colInt("int") ).show()
 // +---+---+-----+
@@ -277,7 +277,7 @@ The default doric syntax is a little stricter and forces us to transform these v
 ```scala
 val colD = colInt("int") + 1.lit
 // colD: DoricColumn[Int] = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2946/0x0000000100b0a040@43aa64e9)
+//   Kleisli(scala.Function1$$Lambda$3002/0x0000000801346040@7bc0e96a)
 // )
 
 intDF.select(colD).show()
@@ -295,15 +295,15 @@ However, we can also profit from the same literal syntax with the help of implic
 we have to _explicitly_ add the following import statement:
 
 ```scala
-import doric.implicitConversions.literalConversion
+import doric.implicitConversions.literalConversion
 val colSugarD = colInt("int") + 1
 // colSugarD: DoricColumn[Int] = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2946/0x0000000100b0a040@4468aa66)
+//   Kleisli(scala.Function1$$Lambda$3002/0x0000000801346040@3368136a)
 // )
 val columConcatLiterals = concat("this", "is","doric") // concat expects DoricColumn[String] values, the conversion puts them as expected
 // columConcatLiterals: StringColumn = TransformationDoricColumn(
-//   Kleisli(cats.data.Kleisli$$Lambda$2946/0x0000000100b0a040@3bead9b5)
-// ) // concat expects DoricColumn[String] values, the conversion puts them as expected
+//   Kleisli(scala.Function1$$Lambda$3002/0x0000000801346040@21dcd0b5)
+// )
 
 intDF.select(colSugarD, columConcatLiterals).show()
 // +---------+-----------------------+

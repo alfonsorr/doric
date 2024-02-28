@@ -37,6 +37,7 @@ f.col("age_user")
 // res3: Column = age_user
 f.col("city_user")
 // res4: Column = city_user
+//and many more
 ```
 
 But we may also want to create a _reusable_ function which abstract away the common suffix and allows us to focus
@@ -77,7 +78,7 @@ Doric includes in the exception the exact line of the malformed column reference
 and this will be of great help in solving our problem. However, the following doric function doesn't really work:
 
 ```scala
-import doric.types.SparkType
+import doric.types.SparkType
 def user[T: SparkType](colName: String): DoricColumn[T] = {
   col[T](colName + "_user")
 }
@@ -96,7 +97,7 @@ userDF.select(age, team)
 //   	located at . (modularity.md:79)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
-// 	at cats.data.Validated.fold(Validated.scala:29)
+// 	at cats.data.Validated.fold(Validated.scala:50)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:140)
 // 	at repl.MdocSession$MdocApp$$anonfun$2.apply(modularity.md:89)
@@ -109,9 +110,9 @@ function:
 
 
 ```scala
-import doric._
-import doric.sem.Location
-import doric.types.SparkType
+import doric._
+import doric.sem.Location
+import doric.types.SparkType
 
 def user[T: SparkType](colName: String)(implicit location: Location): DoricColumn[T] = {
   col[T](colName + "_user")
@@ -131,7 +132,7 @@ userDF.select(age, team)
 //   	located at . (modularity.md:136)
 // 
 // 	at doric.sem.package$ErrorThrower.$anonfun$returnOrThrow$1(package.scala:9)
-// 	at cats.data.Validated.fold(Validated.scala:29)
+// 	at cats.data.Validated.fold(Validated.scala:50)
 // 	at doric.sem.package$ErrorThrower.returnOrThrow(package.scala:9)
 // 	at doric.sem.TransformOps$DataframeTransformationSyntax.select(TransformOps.scala:140)
 // 	at repl.MdocSession$MdocApp5$$anonfun$3.apply(modularity.md:137)
