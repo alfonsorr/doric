@@ -28,7 +28,7 @@ _Maven_
 Doric is committed to use the most modern APIs first.
 <!-- * Doric is compatible with Spark version 3.4.2. -->
 * The latest stable version of doric is 0.0.7.
-* The latest experimental version of doric is 0.0.0+1-0966ce45-SNAPSHOT.
+* The latest experimental version of doric is 0.0.0+1-84f965cc-SNAPSHOT.
 * Doric is compatible with the following Spark versions:
 
 |       Spark        | Scala | Tested |                                                                                        doric                                                                                        |
@@ -93,7 +93,7 @@ It's only when we try to construct the DataFrame that an exception is raised at 
 ```scala
 df
 // org.apache.spark.sql.AnalysisException: [DATATYPE_MISMATCH.BINARY_OP_DIFF_TYPES] Cannot resolve "(value * true)" due to data type mismatch: the left and right operands of the binary operator have incompatible types ("INT" and "BOOLEAN").;
-// 'Project [unresolvedalias((value#365 * true), Some(org.apache.spark.sql.Column$$Lambda$5133/0x0000000801bd1040@4b1e845f))]
+// 'Project [unresolvedalias((value#365 * true), Some(org.apache.spark.sql.Column$$Lambda$5135/0x0000000801bcf040@59295541))]
 // +- LocalRelation [value#365]
 // 
 // 	at org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.dataTypeMismatch(package.scala:73)
@@ -190,7 +190,7 @@ strDf.select(f.col("str").asDoric[String]).show()
 strDf.select((f.col("str") + f.lit(true)).asDoric[String]).show()
 // doric.sem.DoricMultiError: Found 1 error in select
 //   [DATATYPE_MISMATCH.BINARY_OP_DIFF_TYPES] Cannot resolve "(str + true)" due to data type mismatch: the left and right operands of the binary operator have incompatible types ("DOUBLE" and "BOOLEAN").;
-//   'Project [unresolvedalias((cast(str#378 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$5133/0x0000000801bd1040@4b1e845f))]
+//   'Project [unresolvedalias((cast(str#378 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$5135/0x0000000801bcf040@59295541))]
 //   +- Project [value#375 AS str#378]
 //      +- LocalRelation [value#375]
 //   
@@ -204,7 +204,7 @@ strDf.select((f.col("str") + f.lit(true)).asDoric[String]).show()
 // 	at repl.MdocSession$MdocApp$$anonfun$2.apply(quickstart.md:76)
 // 	at repl.MdocSession$MdocApp$$anonfun$2.apply(quickstart.md:76)
 // Caused by: org.apache.spark.sql.AnalysisException: [DATATYPE_MISMATCH.BINARY_OP_DIFF_TYPES] Cannot resolve "(str + true)" due to data type mismatch: the left and right operands of the binary operator have incompatible types ("DOUBLE" and "BOOLEAN").;
-// 'Project [unresolvedalias((cast(str#378 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$5133/0x0000000801bd1040@4b1e845f))]
+// 'Project [unresolvedalias((cast(str#378 as double) + true), Some(org.apache.spark.sql.Column$$Lambda$5135/0x0000000801bcf040@59295541))]
 // +- Project [value#375 AS str#378]
 //    +- LocalRelation [value#375]
 // 
