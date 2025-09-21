@@ -4,13 +4,9 @@ import scala.language.postfixOps
 
 val stableVersion = "0.0.8"
 
-val sparkDefaultShortVersion = "3.5"
-val spark30Version           = "3.0.3"
-val spark31Version           = "3.1.3"
-val spark32Version           = "3.2.4"
-val spark33Version           = "3.3.4"
-val spark34Version           = "3.4.4"
+val sparkDefaultShortVersion = "4.0.1"
 val spark35Version           = "3.5.5"
+val spark40Version           = "4.0.1"
 
 val versionRegex      = """^(.*)\.(.*)\.(.*)$""".r
 val versionRegexShort = """^(.*)\.(.*)$""".r
@@ -19,13 +15,9 @@ val scala212 = "2.12.20"
 val scala213 = "2.13.16"
 
 val parserSparkVersion: String => String = {
-  case versionRegexShort("3", "0") => spark30Version
-  case versionRegexShort("3", "1") => spark31Version
-  case versionRegexShort("3", "2") => spark32Version
-  case versionRegexShort("3", "3") => spark33Version
-  case versionRegexShort("3", "4") => spark34Version
   case versionRegexShort("3", "5") => spark35Version
-  case versionRegex("3", b, c)     => s"3.$b.$c"
+  case versionRegexShort("4", "0") => spark40Version
+  case versionRegex(a, b, c)     => s"$a.$b.$c"
 }
 
 val long2ShortVersion: String => String = { case versionRegex(a, b, _) =>
@@ -33,12 +25,8 @@ val long2ShortVersion: String => String = { case versionRegex(a, b, _) =>
 }
 
 val scalaVersionSelect: String => List[String] = {
-  case versionRegex("3", "0", _) => List(scala212)
-  case versionRegex("3", "1", _) => List(scala212)
-  case versionRegex("3", "2", _) => List(scala212, scala213)
-  case versionRegex("3", "3", _) => List(scala212, scala213)
-  case versionRegex("3", "4", _) => List(scala212, scala213)
   case versionRegex("3", "5", _) => List(scala212, scala213)
+  case versionRegex("4", _, _)   => List(scala213)
 }
 
 ThisBuild / organization := "org.hablapps"
