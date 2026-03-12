@@ -481,20 +481,12 @@ class StringColumnsSpec extends DoricTestElements {
       df.testColumns2("col1", "")(
         (str, pattern) => colString(str).split(pattern.lit),
         (str, pattern) => f.split(f.col(str), pattern),
-        if (
-          !(spark.version.startsWith("3.4") || spark.version.startsWith("3.5"))
-        )
-          List(
-            Array("h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", ""),
-            Array("1", "2", "3", "4", "5", ""),
-            null
-          ).map(Option(_))
-        else
-          List(
-            Array("h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"),
-            Array("1", "2", "3", "4", "5"),
-            null
-          ).map(Option(_))
+        // Spark 4.0 no longer adds empty string at the end
+        List(
+          Array("h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"),
+          Array("1", "2", "3", "4", "5"),
+          null
+        ).map(Option(_))
       )
     }
   }
@@ -846,13 +838,11 @@ class StringColumnsSpec extends DoricTestElements {
       )
     }
 
-    if (spark.version.take(3) > "3.0") {
-      it("should fail if malformed format") {
-        intercept[java.lang.IllegalArgumentException](
-          df.select(colString("dateCol").unixTimestamp("yabcd".lit))
-            .collect()
-        )
-      }
+    it("should fail if malformed format") {
+      intercept[java.lang.IllegalArgumentException](
+        df.select(colString("dateCol").unixTimestamp("yabcd".lit))
+          .collect()
+      )
     }
   }
 
@@ -904,12 +894,8 @@ class StringColumnsSpec extends DoricTestElements {
     val df = List("column not read").toDF("col1")
 
     it("should work as spark schema_of_json function") {
-      val expected =
-        if (spark.version < "3.1.0")
-          List(Some("array<struct<col:bigint>>"))
-        else if (spark.version >= "3.1.0" && spark.version < "3.3.0")
-          List(Some("ARRAY<STRUCT<`col`: BIGINT>>"))
-        else List(Some("ARRAY<STRUCT<col: BIGINT>>"))
+      // Spark 4.0 format
+      val expected = List(Some("ARRAY<STRUCT<col: BIGINT>>"))
 
       df.testColumns("[{'col':0}]")(
         c => c.lit.schemaOfJson(),

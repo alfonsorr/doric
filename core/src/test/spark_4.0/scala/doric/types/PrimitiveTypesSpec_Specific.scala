@@ -3,7 +3,7 @@ package types
 
 trait PrimitiveTypesSpec_Specific extends DoricTestElements {
 
-  describe("Simple Java/Scala types (since Spark 3.2)") {
+  describe("Simple Java/Scala types") {
 
     it("should match Atomic Spark SQL types") {
 

@@ -122,20 +122,11 @@ class TransformOpsSpec
             "b" -> colLong("id")
           )
       }
+      // Spark 4.0 error format
       error.getMessage should startWith(
-        if (
-          !(spark.version.startsWith("3.4") || spark.version.startsWith("3.5"))
-        )
-          "Found duplicate column(s) in given column names:"
-        else
-          "[COLUMN_ALREADY_EXISTS] The column `a` already exists. Consider to choose another name or rename the existing column."
+        "[COLUMN_ALREADY_EXISTS] The column `a` already exists."
       )
       error.getMessage should include("`a`")
-      if (
-        !(spark.version.startsWith("3.4") || spark.version.startsWith("3.5"))
-      ) {
-        error.getMessage should include("`b`")
-      }
     }
 
     it("should work with 'withNamedColumns' as with 'namedColumns'") {

@@ -60,6 +60,11 @@ javaOptions ++= Seq(
   "-XX:MaxPermSize=2048M",
   "-XX:+CMSClassUnloadingEnabled"
 )
+// Fix for IllegalAccessException with ZoneInfo in Spark 4.0 + Java 17+
+// This allows Spark to access internal Java classes needed for Date/Timestamp operations
+Test / javaOptions ++= Seq(
+  "--add-opens=java.base/sun.util.calendar=ALL-UNNAMED"
+)
 // Show runtime of tests
 Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oD")
 

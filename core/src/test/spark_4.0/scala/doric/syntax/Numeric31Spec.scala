@@ -104,8 +104,8 @@ class Numeric31Spec
         c => colInt(c).timestampSeconds,
         c => f.timestamp_seconds(f.col(c)),
         List(
-          Some(Timestamp.valueOf("1970-01-01 00:02:03")),
-          Some(Timestamp.valueOf("1970-01-01 00:00:01")),
+          Some(Timestamp.valueOf("1970-01-01T00:02:03Z")),
+          Some(Timestamp.valueOf("1970-01-01T00:00:01Z")),
           None
         )
       )
@@ -119,8 +119,8 @@ class Numeric31Spec
         c => colLong(c).timestampSeconds,
         c => f.timestamp_seconds(f.col(c)),
         List(
-          Some(Timestamp.valueOf("1970-01-01 00:02:03")),
-          Some(Timestamp.valueOf("1970-01-01 00:00:01")),
+          Some(Timestamp.valueOf("1970-01-01T00:02:03Z")),
+          Some(Timestamp.valueOf("1970-01-01T00:00:01Z")),
           None
         )
       )
@@ -134,8 +134,8 @@ class Numeric31Spec
         c => colDouble(c).timestampSeconds,
         c => f.timestamp_seconds(f.col(c)),
         List(
-          Some(Timestamp.valueOf("1970-01-01 00:02:03.2")),
-          Some(Timestamp.valueOf("1970-01-01 00:00:01.9")),
+          Some(Timestamp.valueOf("1970-01-01T00:02:03.2Z")),
+          Some(Timestamp.valueOf("1970-01-01T00:00:01.9Z")),
           None
         )
       )
