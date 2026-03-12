@@ -3,6 +3,7 @@ package syntax
 
 import cats.implicits._
 import doric.types.{BinaryType, SparkType}
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
 
 import org.apache.spark.sql.{functions => f}
 
@@ -76,6 +77,19 @@ protected trait BinaryColumns {
       * @see [[org.apache.spark.sql.functions.base64]]
       */
     def base64: StringColumn = column.elem.map(f.base64).toDC
+
+    /**
+      * Computes the first argument into a string from a binary using the provided character set
+      * (one of 'US-ASCII', 'ISO-8859-1', 'UTF-8', 'UTF-16BE', 'UTF-16LE', 'UTF-16').
+      * If either argument is null, the result will also be null.
+      *
+      * @group Binary Type
+      * @see [[org.apache.spark.sql.functions.decode]]
+      */
+    def decode(charset: StringColumn): StringColumn =
+      (column.elem, charset.elem)
+        .mapN(df.fn("decode", _, _))
+        .toDC
   }
 
 }

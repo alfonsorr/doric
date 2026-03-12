@@ -35,6 +35,16 @@ protected trait CommonColumns extends ColGetters[NamedDoricColumn] {
     cols.map(_.elem).toList.sequence.map(f.hash(_: _*)).toDC
 
   /**
+    * Calculates the hash code of given columns using the 64-bit
+    * variant of the xxHash algorithm, and returns the result as a long column.
+    *
+    * @group All Types
+    * @see [[org.apache.spark.sql.functions.xxhash64]]
+    */
+  def xxhash64(cols: DoricColumn[_]*): LongColumn =
+    cols.map(_.elem).toList.sequence.map(f.xxhash64(_: _*)).toDC
+
+  /**
     * Returns the least value of the list of values, skipping null values.
     * This function takes at least 2 parameters. It will return null iff all parameters are null.
     *

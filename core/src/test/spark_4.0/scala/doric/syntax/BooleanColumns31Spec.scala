@@ -47,7 +47,8 @@ class BooleanColumns31Spec
         ).collect()
       }
 
-      exception.getMessage shouldBe errorMessage
+      // Spark 4.0 adds [USER_RAISED_EXCEPTION] prefix and SQLSTATE suffix
+      exception.getMessage should include(errorMessage)
     }
   }
 

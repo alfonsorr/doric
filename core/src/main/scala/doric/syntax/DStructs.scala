@@ -82,6 +82,16 @@ protected trait DStructs {
       */
     def toJson(options: Map[String, String] = Map.empty): StringColumn =
       col.elem.map(x => f.to_json(x, options.asJava)).toDC
+
+    /**
+      * Converts a column containing a StructType into a CSV string with the specified schema.
+      * @throws java.lang.IllegalArgumentException in the case of an unsupported type.
+      *
+      * @group Struct Type
+      * @see [[org.apache.spark.sql.functions.to_csv(e:org\.apache\.spark\.sql\.Column,options:* org.apache.spark.sql.functions.to_csv]]
+      */
+    def toCsv(options: Map[String, String] = Map.empty): StringColumn =
+      col.elem.map(x => f.to_csv(x, options.asJava)).toDC
   }
 
   class DynamicFieldAccessor[T](dCol: DoricColumn[T])(implicit

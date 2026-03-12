@@ -103,6 +103,31 @@ protected trait NumericColumns {
   ) {
 
     /**
+      * Creates timestamp from the number of seconds since UTC epoch.
+      *
+      * @group Numeric Type
+      * @see [[org.apache.spark.sql.functions.timestamp_seconds]]
+      */
+    def timestampSeconds: TimestampColumn =
+      column.elem.map(f.timestamp_seconds).toDC
+
+    /**
+      * Returns inverse hyperbolic cosine of the column
+      *
+      * @group Numeric Type
+      * @see [[org.apache.spark.sql.functions.acosh(e:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.acosh]]
+      */
+    def acosh: DoubleColumn = column.elem.map(f.acosh).toDC
+
+    /**
+      * Inverse hyperbolic sine of the column
+      *
+      * @group Numeric Type
+      * @see [[org.apache.spark.sql.functions.asinh(e:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.asinh]]
+      */
+    def asinh: DoubleColumn = column.elem.map(f.asinh).toDC
+
+    /**
       * Unary minus, i.e. negate the expression.
       *
       * @group Numeric Type
@@ -476,6 +501,47 @@ protected trait NumericColumns {
   ) {
 
     /**
+      * Shift the given value numBits left.
+      *
+      * group Numeric Type
+      * @see [[org.apache.spark.sql.functions.shiftleft]]
+      */
+    def shiftLeft(numBits: IntegerColumn): DoricColumn[T] =
+      (column.elem, numBits.elem)
+        .mapN((c, n) => df.fn("shiftleft", c, n))
+        .toDC
+
+    /**
+      * (Signed) shift the given value numBits right.
+      *
+      * group Numeric Type
+      * @see [[org.apache.spark.sql.functions.shiftright]]
+      */
+    def shiftRight(numBits: IntegerColumn): DoricColumn[T] =
+      (column.elem, numBits.elem)
+        .mapN((c, n) => df.fn("shiftright", c, n))
+        .toDC
+
+    /**
+      * Unsigned shift the given value numBits right.
+      *
+      * group Numeric Type
+      * @see [[org.apache.spark.sql.functions.shiftrightunsigned]]
+      */
+    def shiftRightUnsigned(numBits: IntegerColumn): DoricColumn[T] =
+      (column.elem, numBits.elem)
+        .mapN((c, n) => df.fn("shiftrightunsigned", c, n))
+        .toDC
+
+    /**
+      * Computes bitwise NOT (~) of a number.
+      *
+      * @group Numeric Type
+      * @see [[org.apache.spark.sql.functions.bitwise_not]]
+      */
+    def bitwiseNot: DoricColumn[T] = column.elem.map(f.bitwise_not).toDC
+
+    /**
       * Generate a sequence of integers from start to stop, incrementing by 1
       * if start is less than or equal to stop, otherwise -1.
       *
@@ -532,6 +598,14 @@ protected trait NumericColumns {
   implicit class NumWithDecimalsOperationsSyntax[T: NumWithDecimalsType](
       column: DoricColumn[T]
   ) {
+
+    /**
+      * Returns inverse hyperbolic tangent of the column
+      *
+      * @group Numeric Type
+      * @see [[org.apache.spark.sql.functions.atanh(e:org\.apache\.spark\.sql\.Column)* org.apache.spark.sql.functions.atanh]]
+      */
+    def atanh: DoubleColumn = column.elem.map(f.atanh).toDC
 
     /**
       * Returns the value of the column rounded to 0 decimal places with HALF_EVEN round mode

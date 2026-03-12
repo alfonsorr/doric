@@ -649,6 +649,81 @@ protected trait ArrayColumns {
       */
     def toJson(options: Map[String, String] = Map.empty): StringColumn =
       col.elem.map(x => f.to_json(x, options.asJava)).toDC
+
+    // ===== Methods from ArrayColumns3x (commented out to avoid compilation errors) =====
+
+    /**
+      * Returns whether a predicate holds for every element in the array.
+      *
+      * @example {{{
+      *   df.select(colArray("i").forAll(x => x % 2 === 0))
+      * }}}
+      *
+      * @group Array Type
+      * @see [[org.apache.spark.sql.functions.forall]]
+      */
+    /*def forAll(fun: DoricColumn[T] => BooleanColumn): BooleanColumn = {
+      val xv = x[T]
+      (col.elem, fun(col.getIndex(0)).elem, fun(xv).elem, xv.elem)
+        .mapN((c, _, f, x) => df.fn("forall", c, createLambda(f, x)))
+        .toDC
+    }*/
+
+    /**
+      * Returns an array of elements for which a predicate holds in a given array.
+      * @example {{{
+      *   df.select(filter(col("s"), (x, i) => i % 2 === 0))
+      * }}}
+      *
+      * @param function
+      *   (col, index) => predicate, the Boolean predicate to filter the input column
+      *   given the index. Indices start at 0.
+      * @group Array Type
+      * @see org.apache.spark.sql.functions.filter
+      * @todo scaladoc link (issue #135)
+      */
+    /*def filterWIndex(
+        function: (DoricColumn[T], IntegerColumn) => BooleanColumn
+    ): ArrayColumn[T] = {
+      val xv = x[T]
+      val yv = y[Int]
+      (
+        col.elem,
+        function(col.getIndex(0), 1.lit).elem,
+        function(xv, yv).elem,
+        xv.elem,
+        yv.elem
+      ).mapN { (a, _, f, x, y) => df.fn("filter", a, createLambda(f, x, y))      }.toDC
+    }*/
+
+    /**
+      * Sorts the input array based on the given comparator function. The comparator will take two
+      * arguments representing two elements of the array. It returns a negative integer, 0, or a
+      * positive integer as the first element is less than, equal to, or greater than the second
+      * element.
+      *
+      * @example {{{
+      * colArrayString("myColumn").sortBy((l, r) => when[Int]
+      *    .caseW(l.length > r.length, 1.lit)
+      *    .caseW(l.length < r.length, (-1).lit)
+      *    .otherwise(0.lit)
+      * )
+      * }}}
+      *
+      * @note If the comparator function returns null, the function will fail and raise an error.
+      *
+      * @group Array Type
+      */
+    /*def sortBy(
+        fun: (DoricColumn[T], DoricColumn[T]) => IntegerColumn
+    ): ArrayColumn[T] = {
+      val xv = x[T]
+      val yv = y[T]
+
+      (col.elem, fun(col.getIndex(0), col.getIndex(1)).elem, fun(xv, yv).elem, xv.elem, yv.elem)
+        .mapN((c, _, f, x, y) => { df.fn("array_sort", c, createLambda(f, x, y))        })
+        .toDC
+    }*/
   }
 
   /**
