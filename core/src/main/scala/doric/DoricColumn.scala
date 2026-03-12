@@ -5,9 +5,6 @@ import cats.implicits._
 import doric.sem.{ColumnTypeError, DoricSingleError, Location, SparkErrorWrapper}
 import doric.syntax.ColGetters
 import doric.types.{LiteralSparkType, SparkType}
-
-import org.apache.spark.sql.{Column, Dataset}
-import org.apache.spark.sql.catalyst.analysis.UnresolvedAttribute
 import org.apache.spark.sql.types.DataType
 import org.apache.spark.sql.{Column, Dataset}
 
@@ -70,20 +67,15 @@ object DoricColumn extends ColGetters[NamedDoricColumn] {
   def apply[T: SparkType](
       column: Column
   )(implicit location: Location): DoricColumn[T] = {
-    column.expr match {
-      case UnresolvedAttribute(nameParts) =>
+    column.node match {
+      /*case DoricUnresolvedFunction(nameParts) =>
         col(
           nameParts.map(x => if (x.contains(".")) s"`$x`" else x).mkString(".")
-        )
+        )*/
       case _ =>
         Kleisli[DoricValidated, Dataset[_], Column](df => {
           try {
-            val dataType: DataType =
-              try {
-                column.expr.dataType
-              } catch {
-                case _: Throwable => df.select(column).schema.head.dataType
-              }
+            val dataType: DataType = df.select(column).schema.head.dataType
             if (SparkType[T].isEqual(dataType))
               Validated.valid(column)
             else

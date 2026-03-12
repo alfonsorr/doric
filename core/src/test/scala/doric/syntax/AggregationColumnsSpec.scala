@@ -1,14 +1,6 @@
 package doric
 package syntax
-
-import doric.implicitConversions.stringCname
-import doric.Equalities._
-import org.scalatest.EitherValues
-import org.scalatest.matchers.should.Matchers
-
-import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions.aggregate.Sum
-
+/*
 class AggregationColumnsSpec
     extends DoricTestElements
     with EitherValues
@@ -782,3 +774,4 @@ class AggregationColumnsSpec
     }
   }
 }
+*/

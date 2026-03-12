@@ -4,8 +4,8 @@ package syntax
 import cats.implicits._
 import doric.DoricColumn.sparkFunction
 import doric.types.{CollectionType, NumericType}
-import org.apache.spark.sql.catalyst.expressions.{BRound, FormatNumber, FromUnixTime, Rand, Randn, Round, UnaryMinus}
-import org.apache.spark.sql.{Column, functions => f}
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
+import org.apache.spark.sql.{functions => f}
 
 protected trait NumericColumns {
 
@@ -41,7 +41,7 @@ protected trait NumericColumns {
     * @see [[org.apache.spark.sql.functions.rand(seed* org.apache.spark.sql.functions.rand]]
     */
   def random(seed: LongColumn): DoubleColumn =
-    seed.elem.map(s => new Column(Rand(s.expr))).toDC
+    seed.elem.map(s => df.fn("rand", s)).toDC
 
   /**
     * Generate a column with independent and identically distributed (i.i.d.) samples from
@@ -62,7 +62,8 @@ protected trait NumericColumns {
     * @see [[org.apache.spark.sql.functions.randn(seed* org.apache.spark.sql.functions.randn]]
     */
   def randomN(seed: LongColumn): DoubleColumn =
-    seed.elem.map(s => new Column(Randn(s.expr))).toDC
+    seed.elem.map(df.fn("randn", _)).toDC
+
 
   /**
     * Partition ID.
@@ -107,7 +108,7 @@ protected trait NumericColumns {
       * @group Numeric Type
       */
     def unary_- : DoricColumn[T] =
-      column.elem.map(x => new Column(UnaryMinus(x.expr))).toDC
+      column.elem.map(x => df.fn("negative", x)).toDC
 
     /**
       * @group Numeric Type
@@ -175,9 +176,7 @@ protected trait NumericColumns {
       */
     def formatNumber(decimals: IntegerColumn): StringColumn =
       (column.elem, decimals.elem)
-        .mapN((c, d) => {
-          new Column(FormatNumber(c.expr, d.expr))
-        })
+        .mapN((c, d) => df.fn("format_number", c, d))
         .toDC
 
     /**
@@ -465,9 +464,7 @@ protected trait NumericColumns {
       */
     def fromUnixTime(format: StringColumn): StringColumn =
       (column.elem, format.elem)
-        .mapN((c, f) => {
-          new Column(FromUnixTime(c.expr, f.expr))
-        })
+        .mapN((c, format) => df.fn("from_unixtime", c, format))
         .toDC
   }
 
@@ -555,7 +552,7 @@ protected trait NumericColumns {
       */
     def bRound(scale: IntegerColumn): DoricColumn[T] =
       (column.elem, scale.elem)
-        .mapN((c, s) => new Column(BRound(c.expr, s.expr)))
+        .mapN((c, s) => f.bround(c, s))
         .toDC
 
     /**
@@ -593,7 +590,7 @@ protected trait NumericColumns {
       * @see [[org.apache.spark.sql.functions.round(e:org\.apache\.spark\.sql\.Column,scale:* org.apache.spark.sql.functions.round]]
       */
     def round(scale: IntegerColumn): DoricColumn[T] = (column.elem, scale.elem)
-      .mapN((c, s) => new Column(Round(c.expr, s.expr)))
+      .mapN((c, s) => f.round(c, s))
       .toDC
 
     /**

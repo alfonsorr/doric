@@ -1,11 +1,6 @@
 package doric
 package syntax
-
-import cats.implicits._
-import doric.types.SparkType
-import org.apache.spark.sql.catalyst.expressions.{MapFilter, MapZipWith, TransformKeys, TransformValues}
-import org.apache.spark.sql.{Column, Row, functions => f}
-
+/*
 trait MapColumns3x {
 
   /**
@@ -27,20 +22,19 @@ trait MapColumns3x {
       * @group Map Type
       * @see [[org.apache.spark.sql.functions.map_filter]]
       */
-    def filter(
+    /*def filter(
         function: (DoricColumn[K], DoricColumn[V]) => BooleanColumn
     ): MapColumn[K, V] = {
-      val xv: DoricColumn[K] = x(map.keys.getIndex(0))
-      val yv: DoricColumn[V] = y(map.values.getIndex(0))
+      val xv: DoricColumn[K] = x[MapColumn[K, V]]
       (
         map.elem,
-        function(xv, yv).elem,
-        xv.elem,
-        yv.elem
-      ).mapN { (a, f, x, y) =>
-        new Column(MapFilter(a.expr, lam2(f.expr, x.expr, y.expr)))
+        function(map.keys.getIndex(0), map.values.getIndex(0)).elem,
+        function(xv).elem,
+        xv.elem
+      ).mapN { (a, func, x) =>
+        df.fn("filter", a, createLambda(func, x))
       }.toDC
-    }
+    }*/
 
     /**
       * Merge two given maps, key-wise into a single map using a function.
@@ -60,21 +54,22 @@ trait MapColumns3x {
             DoricColumn[V2]
         ) => DoricColumn[R]
     ): MapColumn[K, R] = {
-      val xv: DoricColumn[K]  = x(map.keys.getIndex(0))
-      val yv: DoricColumn[V]  = y(map.values.getIndex(0))
-      val zv: DoricColumn[V2] = z(map2.values.getIndex(0))
+      val xv: DoricColumn[K]  = x[K]
+      val yv: DoricColumn[V]  = y[V]
+      val zv: DoricColumn[V2] = z[V2]
       (
         map.elem,
         map2.elem,
-        function(xv, yv, zv).elem,
+        function(
+          map.keys.getIndex(0),
+          map.values.getIndex(0),
+          map2.values.getIndex(0)
+        ).elem,
         xv.elem,
         yv.elem,
         zv.elem
-      ).mapN { (a, b, f, x, y, z) =>
-        new Column(
-          MapZipWith(a.expr, b.expr, lam3(f.expr, x.expr, y.expr, z.expr))
-        )
-      }.toDC
+      ).mapN ( (a, b, func, x, y, z) => df.fn("zip_with", a, b, createLambda(func, x, y, z)))
+      .toDC
     }
 
     /**
@@ -91,16 +86,15 @@ trait MapColumns3x {
     def transformKeys[K2](
         function: (DoricColumn[K], DoricColumn[V]) => DoricColumn[K2]
     ): MapColumn[K2, V] = {
-      val xv: DoricColumn[K] = x(map.keys.getIndex(0))
-      val yv: DoricColumn[V] = y(map.values.getIndex(0))
+      val xv: DoricColumn[K] = x[K]
+      val yv: DoricColumn[V] = y[V]
       (
         map.elem,
+        function(map.keys.getIndex(0), map.values.getIndex(0)).elem,
         function(xv, yv).elem,
         xv.elem,
         yv.elem
-      ).mapN { (a, f, x, y) =>
-        new Column(TransformKeys(a.expr, lam2(f.expr, x.expr, y.expr)))
-      }.toDC
+      ).mapN ( (a, _, f, x, y) => df.fn("transform_keys", a, createLambda(f, x, y))).toDC
     }
 
     /**
@@ -117,16 +111,16 @@ trait MapColumns3x {
     def transformValues[V2](
         function: (DoricColumn[K], DoricColumn[V]) => DoricColumn[V2]
     ): MapColumn[K, V2] = {
-      val xv: DoricColumn[K] = x(map.keys.getIndex(0))
-      val yv: DoricColumn[V] = y(map.values.getIndex(0))
+      val xv: DoricColumn[K] = x[K]
+      val yv: DoricColumn[V] = y[V]
       (
         map.elem,
+        function(map.keys.getIndex(0), map.values.getIndex(0)).elem,
         function(xv, yv).elem,
         xv.elem,
         yv.elem
-      ).mapN { (a, f, x, y) =>
-        new Column(TransformValues(a.expr, lam2(f.expr, x.expr, y.expr)))
-      }.toDC
+      ).mapN( (a, _, f, x, y) => df.fn("transform_values", a, createLambda(f, x, y)))
+        .toDC
     }
 
     /**
@@ -139,3 +133,4 @@ trait MapColumns3x {
 
   }
 }
+*/

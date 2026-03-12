@@ -2,8 +2,8 @@ package doric
 package syntax
 
 import cats.implicits._
-import org.apache.spark.sql.catalyst.expressions.{ShiftLeft, ShiftRight, ShiftRightUnsigned}
-import org.apache.spark.sql.{Column, functions => f}
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
+import org.apache.spark.sql.{functions => f}
 
 protected trait NumericColumns32 {
 
@@ -22,7 +22,7 @@ protected trait NumericColumns32 {
       */
     def shiftLeft(numBits: IntegerColumn): DoricColumn[T] =
       (column.elem, numBits.elem)
-        .mapN((c, n) => new Column(ShiftLeft(c.expr, n.expr)))
+        .mapN((c, n) => df.fn("shiftleft", c, n))
         .toDC
 
     /**
@@ -33,7 +33,7 @@ protected trait NumericColumns32 {
       */
     def shiftRight(numBits: IntegerColumn): DoricColumn[T] =
       (column.elem, numBits.elem)
-        .mapN((c, n) => new Column(ShiftRight(c.expr, n.expr)))
+        .mapN((c, n) => df.fn("shiftright", c, n))
         .toDC
 
     /**
@@ -44,7 +44,7 @@ protected trait NumericColumns32 {
       */
     def shiftRightUnsigned(numBits: IntegerColumn): DoricColumn[T] =
       (column.elem, numBits.elem)
-        .mapN((c, n) => new Column(ShiftRightUnsigned(c.expr, n.expr)))
+        .mapN((c, n) => df.fn("shiftrightunsigned", c, n))
         .toDC
 
     /**

@@ -1,8 +1,8 @@
 package doric.syntax
 
 private[doric] trait All
-  extends ArrayColumns
-    with TypeMatcher
+//    extends ArrayColumns
+    extends TypeMatcher
     with CommonColumns
     with DStructs
     with LiteralConversions
@@ -23,9 +23,9 @@ private[doric] trait All
     with NumericColumns32
     with StringColumns31
     with BinaryColumns32
-    with ArrayColumns3x
+    //with ArrayColumns3x
     with CommonColumns3x
-    with MapColumns3x
+    //with MapColumns3x
     with StringColumn3x
-    with AggregationColumns32
+    //with AggregationColumns32
     with DStructs3x

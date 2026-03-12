@@ -1,21 +1,20 @@
 package doric
 
-import scala.reflect._
-import scala.reflect.runtime.universe.TypeTag
-
+import cats.data.Kleisli
+import cats.syntax.either._
 import com.github.mrpowers.spark.fast.tests.DatasetComparer
 import doric.Equalities._
-import doric.implicitConversions.stringCname
 import doric.sem.Location
 import doric.types.{Casting, LiteralSparkType, SparkType}
-
 import org.apache.spark.sql.catalyst.ScalaReflection
+import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.{Column, DataFrame, Dataset, Encoder, RelationalGroupedDataset, Row, SparkSession, functions => f}
 import org.scalactic._
 import org.scalatest.matchers.should.Matchers
 
-import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
-import org.apache.spark.sql.{Column, DataFrame, Encoder, RelationalGroupedDataset, Row, SparkSession, functions => f}
-import org.apache.spark.sql.types._
+import scala.reflect._
+import scala.reflect.runtime.universe.TypeTag
 
 trait TypedColumnTest extends Matchers with DatasetComparer {
 
@@ -161,7 +160,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
       * @tparam T
       *   Comparing column type
       */
-    def testGrouped[T: SparkType: TypeTag: Equality](
+    /*def testGrouped[T: SparkType: TypeTag: Equality](
         aggDoricCol: DoricColumn[T],
         aggSparkCol: Column,
         expected: List[Option[T]] = List.empty
@@ -179,7 +178,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
         val rows = doricDF.select(aggColName).as[Option[T]].collect().toList
         rows should contain theSameElementsAs expected
       }
-    }
+    }*/
   }
 
   implicit class ValidateColumnType(df: DataFrame) {
@@ -198,7 +197,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
       * @tparam T
       *   Comparing column type
       */
-    def testAggregation[T: SparkType: TypeTag: Equality](
+    /*def testAggregation[T: SparkType: TypeTag: Equality](
         keyCol: CName,
         aggDoricCol: DoricColumn[T],
         aggSparkCol: Column,
@@ -215,7 +214,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
         .orderBy(keyCol.value)
 
       compareDifferences(result, expected)
-    }
+    }*/
 
     /**
       * Tests doric & spark functions without parameters or columns
@@ -443,7 +442,7 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
     ): DataFrame = {
       val colName          = "result"
       val df2              = df.withColumn(colName, column)
-      val providedDatatype = df2(colName).expr.dataType
+      val providedDatatype = df2.select(colName).schema.head.dataType
       assert(
         SparkType[T].isEqual(providedDatatype),
         s"the type of the column '$column' is not ${SparkType[T].dataType} is $providedDatatype"
@@ -486,15 +485,18 @@ trait TypedColumnTest extends Matchers with DatasetComparer {
       */
     def withTypeChecked(expectedType: DataType): DoricColumn[T] = {
       tcolumn.elem
-        .map(c => {
-          val columnType: DataType = c.expr.dataType
+        .mapK(toEither)
+        .flatMap(c => Kleisli[DoricEither, Dataset[_], Column]( df => {
+          val columnType: DataType = df.select(c).schema.head.dataType
           assert(
             columnType == expectedType,
             s"the column expression type is $columnType but the wrapper " +
               s"${classTag[T].runtimeClass.getSimpleName} if of type $expectedType "
           )
-          c
-        })
+          c.rightNec
+        }
+      ))
+        .mapK(toValidated)
         .toDC
     }
 

@@ -1,12 +1,6 @@
 package doric
 package syntax
-
-import cats.implicits._
-import doric.sqlExpressions.CustomAgg
-import doric.types.SparkType
-import org.apache.spark.sql.catalyst.expressions.Expression
-import org.apache.spark.sql.{Column, Dataset}
-
+/*
 trait AggregationColumns32 {
   def customAgg[T, A: SparkType, E](
       column: DoricColumn[T],
@@ -63,3 +57,4 @@ trait AggregationColumns32 {
     }.toDC
   }
 }
+*/

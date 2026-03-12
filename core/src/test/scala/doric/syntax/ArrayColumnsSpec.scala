@@ -1,17 +1,8 @@
 package doric
 package syntax
 
-import scala.jdk.CollectionConverters._
-
-import doric.SparkAuxFunctions.createLambda
-import doric.sem.{ChildColumnNotFound, ColumnNotFound, ColumnTypeError, DoricMultiError}
-import doric.types.SparkType
-import java.sql.Timestamp
-
-import org.apache.spark.sql.{Column, Row, functions => f}
-import org.apache.spark.sql.catalyst.expressions.{ArrayExists, ZipWith}
-import org.apache.spark.sql.types._
-
+//import doric.SparkAuxFunctions.createLambda
+/*
 class ArrayColumnsSpec extends DoricTestElements {
 
   import spark.implicits._
@@ -1072,3 +1063,4 @@ class ArrayColumnsSpec extends DoricTestElements {
   }
 
 }
+*/

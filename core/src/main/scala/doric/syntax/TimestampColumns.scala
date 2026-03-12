@@ -3,9 +3,7 @@ package syntax
 
 import cats.implicits._
 import doric.types.{SparkType, TimestampType}
-
-import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions.{FromUTCTimestamp, ToUTCTimestamp}
+import org.apache.spark.sql.{functions => f}
 
 protected trait TimestampColumns {
 
@@ -45,9 +43,7 @@ protected trait TimestampColumns {
       */
     def fromUtc(timeZone: StringColumn): TimestampColumn =
       (column.elem, timeZone.elem)
-        .mapN((c, tz) => {
-          new Column(FromUTCTimestamp(c.expr, tz.expr))
-        })
+        .mapN(f.from_utc_timestamp)
         .toDC
 
     /**
@@ -62,9 +58,7 @@ protected trait TimestampColumns {
       */
     def toUtc(timeZone: StringColumn): TimestampColumn =
       (column.elem, timeZone.elem)
-        .mapN((c, tz) => {
-          new Column(ToUTCTimestamp(c.expr, tz.expr))
-        })
+        .mapN(f.to_utc_timestamp)
         .toDC
 
     /**

@@ -4,10 +4,10 @@ package syntax
 import cats.implicits._
 import doric.DoricColumn.sparkFunction
 import doric.types.{DateType, SparkType}
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
+import org.apache.spark.sql.{functions => f}
 
 import java.sql.Date
-import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions.{AddMonths, CurrentDate, DateAdd, DateFormatClass, DateSub, MonthsBetween, NextDay, TruncDate, TruncTimestamp}
 
 protected trait DateColumns {
 
@@ -28,11 +28,7 @@ protected trait DateColumns {
     * @see [[org.apache.spark.sql.functions.current_date]]
     */
   def currentDateT[T: DateType: SparkType](): DoricColumn[T] =
-    DoricColumn({ df =>
-      new Column(
-        CurrentDate(df.sparkSession.sessionState.conf.sessionLocalTimeZone.some)
-      )
-    })
+    DoricColumn( df => f.current_date())
 
   implicit class DateColumnLikeSyntax[T: DateType: SparkType](
       column: DoricColumn[T]
@@ -75,7 +71,7 @@ protected trait DateColumns {
       */
     def addMonths(nMonths: IntegerColumn): DateColumn =
       (column.elem, nMonths.elem)
-        .mapN((x, y) => new Column(AddMonths(x.expr, y.expr)))
+        .mapN((x, y) => f.add_months(x, y))
         .toDC
 
     /**
@@ -89,7 +85,7 @@ protected trait DateColumns {
       */
     def addDays(days: IntegerColumn): DateColumn =
       (column.elem, days.elem)
-        .mapN((x, y) => new Column(DateAdd(x.expr, y.expr)))
+        .mapN((x, y) => f.date_add(x, y))
         .toDC
 
     /**
@@ -107,9 +103,7 @@ protected trait DateColumns {
       */
     def format(format: StringColumn): StringColumn =
       (column.elem, format.elem)
-        .mapN((c, fmt) => {
-          new Column(DateFormatClass(c.expr, fmt.expr))
-        })
+        .mapN(df.fn("date_format", _, _))
         .toDC
 
     /**
@@ -123,7 +117,7 @@ protected trait DateColumns {
       */
     def subDays(days: IntegerColumn): DateColumn =
       (column.elem, days.elem)
-        .mapN((x, y) => new Column(DateSub(x.expr, y.expr)))
+        .mapN((x, y) => f.date_sub(x, y))
         .toDC
 
     /**
@@ -227,9 +221,7 @@ protected trait DateColumns {
         roundOff: BooleanColumn
     ): DoubleColumn =
       (column.elem, dateCol.elem, roundOff.elem)
-        .mapN((c, d, r) => {
-          new Column(new MonthsBetween(c.expr, d.expr, r.expr))
-        })
+        .mapN(df.fn("months_between", _, _, _))
         .toDC
 
     /**
@@ -249,9 +241,7 @@ protected trait DateColumns {
       */
     def nextDay(dayOfWeek: StringColumn): DateColumn =
       (column.elem, dayOfWeek.elem)
-        .mapN((c, dow) => {
-          new Column(NextDay(c.expr, dow.expr))
-        })
+        .mapN((c, dow) => f.next_day(c, dow))
         .toDC
 
     /**
@@ -286,12 +276,12 @@ protected trait DateColumns {
     def truncate(format: StringColumn): DoricColumn[T] =
       (column.elem, format.elem)
         .mapN((c, fmt) => {
-          new Column(SparkType[T].dataType match {
+          SparkType[T].dataType match {
             case org.apache.spark.sql.types.DateType =>
-              TruncDate(c.expr, fmt.expr)
+              df.fn("trunc", c, fmt)
             case org.apache.spark.sql.types.TimestampType =>
-              TruncTimestamp(fmt.expr, c.expr)
-          })
+              df.fn("date_trunc", fmt, c)
+          }
         })
         .toDC
 

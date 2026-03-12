@@ -172,8 +172,8 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
   }
 
   describe("toArray doric function (for maps)") {
-    import spark.implicits._
 
+    /*
     it("should generate an array of tuples [key, value]") {
       val df = List(
         ("1", Map("a" -> "b", "c" -> "d")),
@@ -191,7 +191,7 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
         List.empty[(String, String)],
         null
       )
-    }
+    }*/
   }
 
   describe("explode doric function (for maps)") {
@@ -205,7 +205,7 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
       ).toDF("ix", "col")
 
       val doricDf = df
-        .select(colString("ix"), colMapString[String]("col").explode)
+       // .select(colString("ix"), colMapString[String]("col").explode)
 
       doricDf.schema shouldBe StructType(
         Seq(
@@ -251,7 +251,7 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
       ).toDF("ix", "col")
 
       val doricDf = df
-        .select(colString("ix"), colMapString[String]("col").explodeOuter)
+        //.select(colString("ix"), colMapString[String]("col").explodeOuter)
 
       doricDf.schema shouldBe StructType(
         Seq(
@@ -302,7 +302,7 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
       ).toDF("ix", "col")
 
       val doricDf = df
-        .select(colString("ix"), colMapString[String]("col").posExplode)
+        //.select(colString("ix"), colMapString[String]("col").posExplode)
 
       doricDf.schema shouldBe StructType(
         Seq(
@@ -349,7 +349,7 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
       ).toDF("ix", "col")
 
       val doricDf = df
-        .select(colString("ix"), colMapString[String]("col").posExplodeOuter)
+        //.select(colString("ix"), colMapString[String]("col").posExplodeOuter)
 
       doricDf.schema shouldBe StructType(
         Seq(

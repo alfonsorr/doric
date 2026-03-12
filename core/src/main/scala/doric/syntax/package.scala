@@ -1,10 +1,12 @@
 package doric
 
 import cats.implicits._
-import java.util.concurrent.atomic.AtomicReference
+import doric.types.SparkType
+import org.apache.spark.sql.catalyst.expressions.{ExprId, Expression, LambdaFunction, NamedExpression, NamedLambdaVariable}
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
+import org.apache.spark.sql.{Column, internal, functions => f}
 
-import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions.{ElementAt, Expression, ExprId, LambdaFunction, NamedExpression, NamedLambdaVariable}
+import java.util.concurrent.atomic.AtomicReference
 
 package object syntax {
 
@@ -25,9 +27,7 @@ package object syntax {
       key: DoricColumn[K]
   ): DoricColumn[V] = {
     (dc.elem, key.elem)
-      .mapN((c, k) => {
-        new Column(ElementAt(c.expr, k.expr))
-      })
+      .mapN((c, k) => df.fn("element_at", c, k))
       .toDC
   }
 
@@ -44,33 +44,28 @@ package object syntax {
   ): DoricColumn[T] =
     dc.elem.map(f.reverse).toDC
 
-  @inline private[syntax] def value[A](
-      name: String,
-      dc: DoricColumn[A]
+  @inline private[syntax] def value[A: SparkType](
+      name: String
   ): DoricColumn[A] = {
     val exprId: ExprId              = NamedExpression.newExprId
     val value: AtomicReference[Any] = new AtomicReference()
-    dc.elem
-      .map(c =>
-        new Column(
-          NamedLambdaVariable(
-            name,
-            c.expr.dataType,
-            c.expr.nullable,
-            exprId,
-            value
-          )
-        )
+    DoricColumn(
+      new Column(
+        internal.UnresolvedNamedLambdaVariable(name)
       )
-      .toDC
+    )
   }
 
-  @inline private[syntax] def x[A](dc: DoricColumn[A]): DoricColumn[A] =
-    value("x", dc)
-  @inline private[syntax] def y[A](dc: DoricColumn[A]): DoricColumn[A] =
-    value("y", dc)
-  @inline private[syntax] def z[A](dc: DoricColumn[A]): DoricColumn[A] =
-    value("z", dc)
+  /*private[syntax] def createLambda(function: Column, x: Column*): Column = {
+    Column(internal.LambdaFunction(function.node, x.map(_.node.asInstanceOf[UnresolvedNamedLambdaVariable])))
+  }*/
+
+  @inline private[syntax] def x[A: SparkType]: DoricColumn[A] =
+    value("x")
+  @inline private[syntax] def y[A: SparkType]: DoricColumn[A] =
+    value("y")
+  @inline private[syntax] def z[A: SparkType]: DoricColumn[A] =
+    value("z")
 
   @inline private[syntax] def lam1(
       e: Expression,

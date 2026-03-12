@@ -4,9 +4,7 @@ package syntax
 import cats.implicits._
 import doric.sem.Location
 import doric.types.{Casting, SparkType, UnsafeCasting}
-
 import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions.ArrayRepeat
 
 protected trait CommonColumns extends ColGetters[NamedDoricColumn] {
 
@@ -229,9 +227,7 @@ protected trait CommonColumns extends ColGetters[NamedDoricColumn] {
       */
     def repeatArray(times: IntegerColumn): ArrayColumn[T] =
       (column.elem, times.elem)
-        .mapN((c1, c2) => {
-          new Column(ArrayRepeat(c1.expr, c2.expr))
-        })
+        .mapN(f.array_repeat)
         .toDC
 
     /**

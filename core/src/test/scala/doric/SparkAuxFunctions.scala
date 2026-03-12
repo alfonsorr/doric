@@ -1,7 +1,6 @@
 package doric
 
-import org.apache.spark.sql.Column
-import org.apache.spark.sql.catalyst.expressions.{LambdaFunction, UnresolvedNamedLambdaVariable}
+import org.apache.spark.sql.catalyst.expressions.UnresolvedNamedLambdaVariable
 
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -25,7 +24,7 @@ object SparkAuxFunctions {
       UnresolvedNamedLambdaVariable(
         Seq(UnresolvedNamedLambdaVariable_Aux.freshVarName(name))
       )
-
+/*
   def createLambda(f: Column => Column): LambdaFunction = {
     val x        = getVariable("x")
     val function = f(new Column(x)).expr
@@ -45,6 +44,6 @@ object SparkAuxFunctions {
     val z        = getVariable("z")
     val function = f(new Column(x), new Column(y), new Column(z)).expr
     LambdaFunction(function, Seq(x, y, z))
-  }
+  }*/
 
 }

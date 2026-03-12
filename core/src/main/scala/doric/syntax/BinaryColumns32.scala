@@ -3,8 +3,7 @@ package syntax
 
 import cats.implicits._
 import doric.types.{BinaryType, SparkType}
-import org.apache.spark.sql.Column
-import org.apache.spark.sql.catalyst.expressions.StringDecode
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
 
 protected trait BinaryColumns32 {
 
@@ -22,9 +21,7 @@ protected trait BinaryColumns32 {
       */
     def decode(charset: StringColumn): StringColumn =
       (column.elem, charset.elem)
-        .mapN((col, char) => {
-          new Column(StringDecode(col.expr, char.expr))
-        })
+        .mapN(df.fn("decode", _, _))
         .toDC
   }
 

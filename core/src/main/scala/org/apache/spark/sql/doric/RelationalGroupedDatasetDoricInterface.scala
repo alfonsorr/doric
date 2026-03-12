@@ -1,9 +1,10 @@
-package org.apache.spark.sql.doric
+/*package org.apache.spark.sql.doric
 
 import cats.implicits._
 import doric.{DoricColumn, DoricValidated}
-import org.apache.spark.sql.RelationalGroupedDataset.GroupType
-import org.apache.spark.sql.{DataFrame, RelationalGroupedDataset}
+import org.apache.spark.sql.classic.{ColumnConversions, RelationalGroupedDataset}
+import org.apache.spark.sql.classic.RelationalGroupedDataset.GroupType
+import org.apache.spark.sql.classic.DataFrame
 
 /**
   * Interface to allow doric to access to some privet sql elements
@@ -67,3 +68,4 @@ trait RelationalGroupedDatasetDoricInterface {
   }
 
 }
+*/

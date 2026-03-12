@@ -1,36 +1,27 @@
 package doric
 package syntax
 
-import scala.jdk.CollectionConverters._
 import scala.language.higherKinds
-import scala.reflect.ClassTag
-
-import cats.data.Kleisli
-import cats.implicits._
-import doric.types.{CollectionType, LiteralSparkType, SparkType}
-
-import org.apache.spark.sql.{Column, Dataset, Row, functions => f}
-import org.apache.spark.sql.catalyst.expressions._
-import org.apache.spark.sql.catalyst.expressions.LambdaFunction.identity
-
-protected final case class Zipper[T1, T2, F[_]: CollectionType](
+/*
+protected final case class Zipper[T1: SparkType, T2: SparkType, F[_]: CollectionType](
     col: DoricColumn[F[T1]],
     col2: DoricColumn[F[T2]]
 ) {
   def apply[O](
       f: (DoricColumn[T1], DoricColumn[T2]) => DoricColumn[O]
   ): DoricColumn[F[O]] = {
-    val xv = x(col.getIndex(0))
-    val yv = y(col2.getIndex(0))
+    ArrayColumnSyntax(col).getIndex(0)
+    val xv = x[T1]
+    val yv = y[T2]
     (
       col.elem,
       col2.elem,
+      f(col.getIndex(0), col2.getIndex(0)).elem,
       f(xv, yv).elem,
       xv.elem,
       yv.elem
-    ).mapN { (a, b, f, x, y) =>
-      new Column(ZipWith(a.expr, b.expr, lam2(f.expr, x.expr, y.expr)))
-    }.toDC
+    ).mapN { (a, b, _, f, x, y) => df.fn("zip_with", a, b, createLambda(f, x, y))    }
+      .toDC
   }
 }
 
@@ -83,7 +74,7 @@ protected trait ArrayColumns {
     *
     * @group Array Type
     */
-  implicit class ArrayColumnSyntax[T, F[_]: CollectionType](
+  implicit class ArrayColumnSyntax[T: SparkType, F[_]: CollectionType](
       private val col: DoricColumn[F[T]]
   ) {
 
@@ -99,20 +90,7 @@ protected trait ArrayColumns {
       */
     def getIndex(n: Int): DoricColumn[T] =
       (col.elem, n.lit.elem)
-        .mapN((a, b) => (a, b))
-        .mapK(toEither)
-        .flatMap { case (a, b) =>
-          Kleisli[DoricEither, Dataset[_], Column]((df: Dataset[_]) => {
-            new Column(
-              ExtractValue(
-                a.expr,
-                b.expr,
-                df.sparkSession.sessionState.analyzer.resolver
-              )
-            ).asRight
-          })
-        }
-        .mapK(toValidated)
+        .mapN(df.fn("element_at", _, _))
         .toDC
 
     /**
@@ -131,11 +109,9 @@ protected trait ArrayColumns {
     def transform[A](
         fun: DoricColumn[T] => DoricColumn[A]
     ): DoricColumn[F[A]] = {
-      val xv = x(col.getIndex(0))
-      (col.elem, fun(xv).elem, xv.elem)
-        .mapN((a, f, x) =>
-          new Column(ArrayTransform(a.expr, lam1(f.expr, x.expr)))
-        )
+      val xv = x[T]
+      (col.elem, fun(col.getIndex(0)).elem, fun(xv).elem,  xv.elem)
+        .mapN((a, _, f, x) => df.fn("transform", a, createLambda(f, x)))
         .toDC
     }
 
@@ -157,16 +133,16 @@ protected trait ArrayColumns {
     def transformWithIndex[A](
         fun: (DoricColumn[T], IntegerColumn) => DoricColumn[A]
     ): DoricColumn[F[A]] = {
-      val xv = x(col.getIndex(0))
-      val yv = y(1.lit)
+      val xv = x[T]
+      val yv = y[Int]
       (
         col.elem,
+        fun(col.getIndex(0), 1.lit).elem,
         fun(xv, yv).elem,
         xv.elem,
         yv.elem
-      ).mapN { (a, f, x, y) =>
-        new Column(ArrayTransform(a.expr, lam2(f.expr, x.expr, y.expr)))
-      }.toDC
+      ).mapN { (a, _, f, x, y) => df.fn("transform", a, createLambda(f, x, y))      }
+        .toDC
     }
 
     /**
@@ -198,11 +174,13 @@ protected trait ArrayColumns {
       (
         col.elem,
         zero.elem,
+        merge(zero, col.getIndex(0)).elem,
+        finish(zero).elem,
         merge(xv, yv).elem,
         finish(xv).elem,
         xv.elem,
         yv.elem
-      ).mapN { (a, z, m, f, x, y) =>
+      ).mapN { (a, z, _, _, m, f, x, y) =>
         new Column(
           ArrayAggregate(
             a.expr,
@@ -370,9 +348,7 @@ protected trait ArrayColumns {
       */
     def positionOf[B](col2: DoricColumn[B]): LongColumn =
       (col.elem, col2.elem)
-        .mapN((c1, c2) => {
-          new Column(ArrayPosition(c1.expr, c2.expr))
-        })
+        .mapN((c1, c2) => df.fn("array_position", c1, c2))
         .toDC
 
     /**
@@ -383,9 +359,7 @@ protected trait ArrayColumns {
       */
     def remove[B](col2: DoricColumn[B]): ArrayColumn[T] =
       (col.elem, col2.elem)
-        .mapN((c1, c2) => {
-          new Column(ArrayRemove(c1.expr, c2.expr))
-        })
+        .mapN((c1, c2) => df.fn("array_remove", c1, c2))
         .toDC
 
     /**
@@ -418,9 +392,7 @@ protected trait ArrayColumns {
       */
     def sort(asc: BooleanColumn): DoricColumn[F[T]] =
       (col.elem, asc.elem)
-        .mapN((c, a) => {
-          new Column(SortArray(c.expr, a.expr))
-        })
+        .mapN((c, a) => df.fn("sort_array", c, a))
         .toDC
 
     /**
@@ -464,14 +436,15 @@ protected trait ArrayColumns {
       * @see org.apache.spark.sql.functions.exists
       * @todo scaladoc link not available for spark 2.4
       */
-    def exists(fun: DoricColumn[T] => BooleanColumn): BooleanColumn = {
+    // todo: implement lambdas
+    /*def exists(fun: DoricColumn[T] => BooleanColumn): BooleanColumn = {
       val xv = x(col.getIndex(0))
       (col.elem, fun(xv).elem, xv.elem)
-        .mapN((c, f, x) => {
-          new Column(ArrayExists(c.expr, lam1(f.expr, x.expr)))
+        .mapN((c, func, x) => {f.exists()
+          new Column(ArrayExists(c.expr, lam1(func.expr, x.expr)))
         })
         .toDC
-    }
+    }*/
 
     /**
       * Creates a new row for each element in the given array column.
@@ -587,7 +560,7 @@ protected trait ArrayColumns {
       */
     def slice(start: IntegerColumn, length: IntegerColumn): DoricColumn[F[T]] =
       (col.elem, start.elem, length.elem)
-        .mapN((a, b, c) => new Column(Slice(a.expr, b.expr, c.expr)))
+        .mapN((a, b, c) => f.slice(a, b, c))
         .toDC
 
     /**
@@ -715,3 +688,4 @@ protected trait ArrayColumns {
       col.elem.map(f.flatten).toDC
   }
 }
+*/

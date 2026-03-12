@@ -12,9 +12,7 @@ import shapeless._
 import shapeless.labelled._
 
 import scala.annotation.implicitNotFound
-import scala.collection.generic.CanBuildFrom
-import scala.collection.mutable
-import scala.reflect.{ClassTag, classTag}
+import scala.reflect.ClassTag
 import scala.reflect.runtime.universe.TypeTag
 
 /**
@@ -58,11 +56,11 @@ sealed trait SparkType[T] {
   def validate(colName: String)(implicit location: Location): Doric[Column] = {
     Kleisli[DoricValidated, Dataset[_], Column](df => {
       try {
-        val column = df(colName)
-        if (isEqual(column.expr.dataType))
-          Validated.valid(column)
+        val columnType = df.select(colName).schema.head.dataType
+        if (isEqual(columnType))
+          Validated.valid(df(colName))
         else
-          ColumnTypeError(colName, dataType, column.expr.dataType).invalidNec
+          ColumnTypeError(colName, dataType, columnType).invalidNec
       } catch {
         case e: Throwable => SparkErrorWrapper(e).invalidNec
       }

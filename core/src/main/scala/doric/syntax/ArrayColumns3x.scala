@@ -1,14 +1,10 @@
 package doric
 package syntax
-
-import cats.implicits._
-import doric.types.CollectionType
-import org.apache.spark.sql.catalyst.expressions._
-import org.apache.spark.sql.{Column, Row, functions => f}
-
+/*
 trait ArrayColumns3x {
 
-  implicit class ArrayColumnSyntax3x[T, F[_]: CollectionType](
+
+  implicit class ArrayColumnSyntax3x[T: SparkType, F[_]: CollectionType](
       private val col: DoricColumn[F[T]]
   ) {
 
@@ -23,11 +19,9 @@ trait ArrayColumns3x {
       * @see [[org.apache.spark.sql.functions.forall]]
       */
     def forAll(fun: DoricColumn[T] => BooleanColumn): BooleanColumn = {
-      val xv = x(col.getIndex(0))
-      (col.elem, fun(xv).elem, xv.elem)
-        .mapN((c, f, x) => {
-          new Column(ArrayForAll(c.expr, lam1(f.expr, x.expr)))
-        })
+      val xv = x[T]
+      (col.elem, fun(col.getIndex(0)).elem, fun(xv).elem, xv.elem)
+        .mapN((c, _, f, x) => df.fn("forall", c, createLambda(f, x)))
         .toDC
     }
 
@@ -47,16 +41,15 @@ trait ArrayColumns3x {
     def filterWIndex(
         function: (DoricColumn[T], IntegerColumn) => BooleanColumn
     ): ArrayColumn[T] = {
-      val xv = x(col.getIndex(0))
-      val yv = y(1.lit)
+      val xv = x[T]
+      val yv = y[Int]
       (
         col.elem,
+        function(col.getIndex(0), 1.lit).elem,
         function(xv, yv).elem,
         xv.elem,
         yv.elem
-      ).mapN { (a, f, x, y) =>
-        new Column(ArrayFilter(a.expr, lam2(f.expr, x.expr, y.expr)))
-      }.toDC
+      ).mapN { (a, _, f, x, y) => df.fn("filter", a, createLambda(f, x, y))      }.toDC
     }
 
     /**
@@ -80,13 +73,11 @@ trait ArrayColumns3x {
     def sortBy(
         fun: (DoricColumn[T], DoricColumn[T]) => IntegerColumn
     ): ArrayColumn[T] = {
-      val xv = x(col.getIndex(0))
-      val yv = y(col.getIndex(1))
+      val xv = x[T]
+      val yv = y[T]
 
-      (col.elem, fun(xv, yv).elem, xv.elem, yv.elem)
-        .mapN((c, f, x, y) => {
-          new Column(ArraySort(c.expr, lam2(f.expr, x.expr, y.expr)))
-        })
+      (col.elem, fun(col.getIndex(0), col.getIndex(1)).elem, fun(xv, yv).elem, xv.elem, yv.elem)
+        .mapN((c, _, f, x, y) => { df.fn("array_sort", c, createLambda(f, x, y))        })
         .toDC
     }
 
@@ -104,7 +95,7 @@ trait ArrayColumns3x {
       *
       * @group Array Type
       */
-    def sortBy[A](fun: DoricColumn[T] => DoricColumn[A]): ArrayColumn[T] = {
+    /*def sortBy[A](fun: DoricColumn[T] => DoricColumn[A]): ArrayColumn[T] = {
       val xv = x(col.getIndex(0))
       val yv = y(col.getIndex(1))
 
@@ -118,7 +109,7 @@ trait ArrayColumns3x {
           )
         )
         .toDC
-    }
+    }*/
   }
 
   implicit class ArrayStructColumnSyntax3x[F[_]: CollectionType](
@@ -144,7 +135,7 @@ trait ArrayColumns3x {
       *
       * @group Array Type
       */
-    def sortBy(
+    /*def sortBy(
         ordCol: CNameOrd,
         ordCols: CNameOrd*
     ): ArrayColumn[Row] = {
@@ -204,7 +195,7 @@ trait ArrayColumns3x {
             })
             .otherwise(areEq)
 
-          new Column(
+          Column(
             ArraySort(
               c.expr,
               lam2(allColsComparator.expr, x.expr, y.expr)
@@ -212,6 +203,7 @@ trait ArrayColumns3x {
           )
         })
         .toDC
-    }
+    }*/
   }
 }
+*/

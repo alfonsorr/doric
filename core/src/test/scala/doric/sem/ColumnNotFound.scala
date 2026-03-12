@@ -10,15 +10,8 @@ object ColumnNotFound {
 
     SparkErrorWrapper(
       new Throwable(
-        if (
-          !(sparkSession.version.startsWith("3.4") || sparkSession.version
-            .startsWith("3.5"))
-        )
-          s"""Cannot resolve column name "$expectedCol" among (${foundCols
-              .mkString(", ")})"""
-        else
-          s"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `$expectedCol` cannot be resolved. Did you mean one of the following? [${foundCols
-              .mkString("`", "`, `", "`")}]."
+          s"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `$expectedCol` cannot be resolved. Did you mean one of the following? [${foundCols
+              .mkString("`", "`, `", "`")}]. SQLSTATE: 42703"
       )
     )
   }

@@ -1,18 +1,16 @@
 package doric
 package syntax
 
-import scala.jdk.CollectionConverters._
-import scala.language.dynamics
-
 import cats.data.Kleisli
 import cats.implicits._
 import doric.sem.{ColumnTypeError, Location, SparkErrorWrapper}
 import doric.types.SparkType
-import shapeless.{::, HList, LabelledGeneric, Witness}
-import shapeless.labelled.FieldType
-
 import org.apache.spark.sql.{Column, Dataset, Row, functions => f}
-import org.apache.spark.sql.catalyst.expressions.ExtractValue
+import shapeless.labelled.FieldType
+import shapeless.{::, HList, LabelledGeneric, Witness}
+
+import scala.jdk.CollectionConverters._
+import scala.language.dynamics
 
 protected trait DStructs {
 
@@ -27,7 +25,7 @@ protected trait DStructs {
   def struct(cols: DoricColumn[_]*): RowColumn =
     cols.map(_.elem).toList.sequence.map(c => f.struct(c: _*)).toDC
 
-  implicit class DStructOps[T](private val col: DoricColumn[T])(implicit
+  implicit class DStructOps[T: SparkType](private val col: DoricColumn[T])(implicit
       st: SparkType.Custom[T, Row]
   ) {
 
@@ -53,29 +51,15 @@ protected trait DStructs {
         .flatMap { case (vcolumn, litVal) =>
           Kleisli[DoricEither, Dataset[_], Column]((df: Dataset[_]) => {
             try {
-              if (SparkType[Row].isEqual(vcolumn.expr.dataType)) {
-                val subColumn = new Column(
-                  ExtractValue(
-                    vcolumn.expr,
-                    litVal.expr,
-                    df.sparkSession.sessionState.analyzer.resolver
-                  )
-                )
-                if (SparkType[T2].isEqual(subColumn.expr.dataType))
-                  subColumn.asRight
+              val subColumnDataType = df.select(vcolumn(subColumnName)).schema.head.dataType
+              if (SparkType[T2].isEqual(subColumnDataType))
+                  Right(vcolumn(subColumnName))
                 else
                   ColumnTypeError(
                     subColumnName,
                     SparkType[T2].dataType,
-                    subColumn.expr.dataType
+                    subColumnDataType
                   ).leftNec
-              } else {
-                ColumnTypeError(
-                  "",
-                  SparkType[Row].dataType,
-                  vcolumn.expr.dataType
-                ).leftNec
-              }
             } catch {
               case e: Throwable =>
                 SparkErrorWrapper(e).leftNec

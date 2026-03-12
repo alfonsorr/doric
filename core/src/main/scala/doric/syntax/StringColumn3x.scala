@@ -2,9 +2,8 @@ package doric
 package syntax
 
 import cats.implicits._
-import org.apache.spark.sql.catalyst.expressions.StringSplit
 import org.apache.spark.sql.types.StructType
-import org.apache.spark.sql.{Column, functions => f}
+import org.apache.spark.sql.{functions => f}
 
 import scala.jdk.CollectionConverters._
 
@@ -47,7 +46,7 @@ trait StringColumn3x {
         limit: IntegerColumn = (-1).lit
     ): ArrayColumn[String] =
       (s.elem, pattern.elem, limit.elem)
-        .mapN((str, p, l) => new Column(StringSplit(str.expr, p.expr, l.expr)))
+        .mapN(f.split)
         .toDC
 
     /**

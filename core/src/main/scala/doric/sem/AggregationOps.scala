@@ -1,8 +1,6 @@
 package doric
 package sem
-
-import org.apache.spark.sql.{DataFrame, Dataset, RelationalGroupedDataset}
-import org.apache.spark.sql.doric.RelationalGroupedDatasetDoricInterface
+/*import org.apache.spark.sql.doric.RelationalGroupedDatasetDoricInterface
 
 private[sem] trait AggregationOps
     extends RelationalGroupedDatasetDoricInterface {
@@ -132,3 +130,4 @@ private[sem] trait AggregationOps
   }
 
 }
+*/

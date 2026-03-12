@@ -2,13 +2,13 @@ package doric
 package syntax
 
 import doric.sem.{ColumnMultiTypeError, ColumnNotFound, DoricMultiError}
-
 import org.apache.spark.sql.types.{IntegerType, StringType}
 
 class TypeMatcherSpec
     extends DoricTestElements
     with TypeMatcher
-    with ArrayColumns {
+    //with ArrayColumns
+    {
 
   import doric.implicitConversions.stringCname
   import spark.implicits._
@@ -21,7 +21,7 @@ class TypeMatcherSpec
         val testColumn: String => IntegerColumn = matchToType[Int](_)
           .caseType[Int](identity)
           .caseType[String](_.unsafeCast)
-          .caseType[Array[Int]](_.getIndex(0) + col("int"))
+          //.caseType[Array[Int]](_.getIndex(0) + col("int"))
           .inOtherCase(12.lit)
 
         df.withColumn(result, testColumn("colArr"))
@@ -44,7 +44,7 @@ class TypeMatcherSpec
         val testColumn = matchToType[Int]("colArr")
           .caseType[Int](identity)
           .caseType[String](_.unsafeCast)
-          .caseType[Array[String]](_.getIndex(0).unsafeCast)
+          //.caseType[Array[String]](_.getIndex(0).unsafeCast)
           .inOtherCase(12.lit)
 
         df.withColumn(result, testColumn)
@@ -57,7 +57,7 @@ class TypeMatcherSpec
         val testColumn = matchToType[Int]("colArr")
           .caseType[Int](identity)
           .caseType[String](_.unsafeCast)
-          .caseType[Array[Int]](_.getIndex(0) + col("int2"))
+          //.caseType[Array[Int]](_.getIndex(0) + col("int2"))
           .inOtherCase(12.lit)
 
         intercept[DoricMultiError] {

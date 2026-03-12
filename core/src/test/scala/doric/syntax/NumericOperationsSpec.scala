@@ -1,10 +1,9 @@
 package doric
 package syntax
 
-import Equalities._
+import doric.Equalities._
 import doric.types.SparkType.Primitive
 import doric.types.{NumericType, SparkType}
-import org.apache.spark.sql.catalyst.expressions.{BitwiseNot, ShiftLeft, ShiftRight, ShiftRightUnsigned}
 import org.apache.spark.sql.{Column, DataFrame, SparkSession, functions => f}
 import org.scalactic.Equality
 import org.scalatest.funspec.AnyFunSpecLike
@@ -417,48 +416,40 @@ trait NumericOperationsSpec
       }
 
       it(s"shiftLeft function $numTypeStr") {
-        // Aux function as it is deprecated since 3.2, otherwise specs would get complicated
-        val shiftLeftBefore32: (Column, Column) => Column =
-          (col, int) => new Column(ShiftLeft(col.expr, int.expr))
         val numBits = 2
         testDoricSpark[T, T](
           List(Some(0), Some(1), Some(10), None),
           List(Some(0), Some(4), Some(40), None),
           _.shiftLeft(numBits.lit),
-          shiftLeftBefore32(_, f.lit(numBits))
+          f.shiftleft(_, numBits)
         )
       }
 
       it(s"shiftRight function $numTypeStr") {
-        // Aux function as it is deprecated since 3.2, otherwise specs would get complicated
-        val shiftRightBefore32: (Column, Column) => Column =
-          (col, int) => new Column(ShiftRight(col.expr, int.expr))
         val numBits = 2
         testDoricSpark[T, T](
           List(Some(0), Some(4), Some(-10), None),
           List(Some(0), Some(1), Some(-3), None),
           _.shiftRight(numBits.lit),
-          shiftRightBefore32(_, f.lit(numBits))
+          f.shiftright(_, numBits)
         )
       }
 
       it(s"shiftRightUnsigned function $numTypeStr") {
-        // Aux function as it is deprecated since 3.2, otherwise specs would get complicated
-        val shiftRightUnsignedBefore32: (Column, Column) => Column =
-          (col, int) => new Column(ShiftRightUnsigned(col.expr, int.expr))
+
         val numBits = 2
         testDoricSpark[T, T](
           List(Some(0), Some(4), Some(20), None),
           List(Some(0), Some(1), Some(5), None),
           _.shiftRightUnsigned(numBits.lit),
-          shiftRightUnsignedBefore32(_, f.lit(numBits))
+          f.shiftrightunsigned(_, numBits)
         )
       }
 
       it(s"bitwiseNot function $numTypeStr") {
         // Aux function as it is deprecated since 3.2, otherwise specs would get complicated
         val bitwiseNotBefore32: Column => Column =
-          col => new Column(BitwiseNot(col.expr))
+          col => f.bitwise_not(col)
 
         testDoricSpark[T, T](
           List(Some(0), Some(4), Some(-20), None),
@@ -694,7 +685,7 @@ class NumericSpec extends NumericOperationsSpec with SparkSessionTestWrapper {
     it("should work as spark randn function") {
       val df = List(Some(123.567), None)
         .toDF("col1")
-
+df.show()
       df.validateColumnType(randomN())
 
       val res = df.select(randomN()).as[Double].collect().toList

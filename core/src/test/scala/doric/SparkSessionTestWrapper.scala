@@ -1,9 +1,9 @@
 package doric
 
-import java.util.TimeZone
 import org.apache.log4j.{Level, Logger}
-
 import org.apache.spark.sql.SparkSession
+
+import java.util.TimeZone
 
 trait SparkSessionTestWrapper {
 
@@ -16,13 +16,13 @@ trait SparkSessionTestWrapper {
     val ss = SparkSession
       .builder()
       .master("local")
-      .config("spark.driver.bindAddress", "127.0.0.1")
+      //.config("spark.driver.bindAddress", "127.0.0.1")
       .config("spark.sql.session.timeZone", timeZone)
-      .config("spark.sql.datetime.java8API.enabled", value = false)
+      .config("spark.sql.datetime.java8API.enabled", value = true)
       .appName("spark session")
       .getOrCreate()
 
-    ss.sparkContext.setLogLevel("ERROR")
+    //ss.sparkContext.setLogLevel("ERROR")
     ss
   }
 

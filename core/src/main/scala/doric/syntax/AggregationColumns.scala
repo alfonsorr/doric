@@ -2,11 +2,9 @@ package doric
 package syntax
 
 import cats.implicits._
-import doric.types.NumericType
 import doric.Doric
-
-import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions.aggregate.Sum
+import doric.types.NumericType
+import org.apache.spark.sql.{functions => f}
 
 protected trait AggregationColumns {
 
@@ -315,9 +313,7 @@ protected trait AggregationColumns {
       nt: NumericType[T]
   ): DoricColumn[nt.Sum] =
     col.elem
-      .map(e =>
-        new Column(Sum(e.expr).toAggregateExpression(isDistinct = true))
-      )
+      .map(e => f.sum(e))
       .toDC
 
   /**

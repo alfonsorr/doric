@@ -2,16 +2,14 @@ package doric
 package types
 
 import cats.implicits.catsSyntaxValidatedIdBinCompat0
-import doric.sem.{GenDoricError, Location, SparkErrorWrapper}
-
-import org.apache.spark.sql.catalyst.CatalystTypeConverters
-import org.apache.spark.sql.catalyst.expressions.Literal
+import doric.sem.{GenDoricError, Location}
 import org.apache.spark.sql.internal.SQLConf
 import org.apache.spark.sql.{Column, Row, functions => f}
-import scala.reflect.runtime.universe.{TypeTag, typeTag}
-import scala.reflect.ClassTag
+
 import java.sql.{Date, Timestamp}
 import java.time.{Instant, LocalDate}
+import scala.reflect.ClassTag
+import scala.reflect.runtime.universe.{TypeTag, typeTag}
 
 trait LiteralSparkType[T] {
   self =>
@@ -249,12 +247,7 @@ trait LiteralSparkTypeLPI_II
       if (t.schema == null)
         GenDoricError("Row without schema").invalidNec
       else
-        new Column(
-          Literal(
-            CatalystTypeConverters.createToCatalystConverter(t.schema)(t),
-            t.schema
-          )
-        ).validNec
+        f.lit(t).validNec
   }
 
 }

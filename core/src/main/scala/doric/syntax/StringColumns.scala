@@ -1,14 +1,13 @@
 package doric
 package syntax
 
-import scala.jdk.CollectionConverters._
-
 import cats.implicits._
 import doric.DoricColumn.sparkFunction
-
-import org.apache.spark.sql.{Column, functions => f}
-import org.apache.spark.sql.catalyst.expressions._
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
 import org.apache.spark.sql.types.{DataType, StructType}
+import org.apache.spark.sql.{functions => f}
+
+import scala.jdk.CollectionConverters._
 
 protected trait StringColumns {
 
@@ -51,9 +50,7 @@ protected trait StringColumns {
       .map(_.elem)
       .toList
       .sequence
-      .map(l => {
-        new Column(ConcatWs(l.map(_.expr)))
-      })
+      .map(df.fn("concat_ws", _:_*))
       .toDC
 
   /**
@@ -75,9 +72,7 @@ protected trait StringColumns {
       arguments: DoricColumn[_]*
   ): StringColumn =
     (format.elem, arguments.toList.traverse(_.elem))
-      .mapN((f, args) => {
-        new Column(FormatString((f +: args).map(_.expr): _*))
-      })
+      .mapN((f, args) => df.fn("format_string", f +: args:_*))
       .toDC
 
   /**
@@ -136,9 +131,7 @@ protected trait StringColumns {
       */
     def inStr(substring: StringColumn): IntegerColumn =
       (s.elem, substring.elem)
-        .mapN((str, substr) => {
-          new Column(StringInstr(str.expr, substr.expr))
-        })
+        .mapN(f.instr)
         .toDC
 
     /**
@@ -176,9 +169,9 @@ protected trait StringColumns {
         pos: IntegerColumn = 1.lit
     ): IntegerColumn =
       (substr.elem, s.elem, pos.elem)
-        .mapN((substring, str, position) => {
-          new Column(StringLocate(substring.expr, str.expr, position.expr))
-        })
+        .mapN((substring, str, position) =>
+          df.fn("locate", substring, str, position)
+        )
         .toDC
 
     /**
@@ -200,9 +193,7 @@ protected trait StringColumns {
       */
     def lpad(len: IntegerColumn, pad: StringColumn): StringColumn =
       (s.elem, len.elem, pad.elem)
-        .mapN((str, lenCol, lpad) => {
-          new Column(StringLPad(str.expr, lenCol.expr, lpad.expr))
-        })
+        .mapN(f.lpad)
         .toDC
 
     /**
@@ -222,9 +213,7 @@ protected trait StringColumns {
       */
     def ltrim(trimString: StringColumn): StringColumn =
       (s.elem, trimString.elem)
-        .mapN((str, trimStr) => {
-          new Column(StringTrimLeft(str.expr, trimStr.expr))
-        })
+        .mapN(f.ltrim)
         .toDC
 
     /**
@@ -243,9 +232,7 @@ protected trait StringColumns {
         groupIdx: IntegerColumn
     ): StringColumn =
       (s.elem, exp.elem, groupIdx.elem)
-        .mapN((str, regexp, gIdx) =>
-          new Column(RegExpExtract(str.expr, regexp.expr, gIdx.expr))
-        )
+        .mapN((str, regexp, gIdx) => df.fn("regexp_extract", str, regexp, gIdx))
         .toDC
 
     /**
@@ -268,7 +255,7 @@ protected trait StringColumns {
       * @see [[org.apache.spark.sql.functions.repeat]]
       */
     def repeat(n: IntegerColumn): StringColumn = (s.elem, n.elem)
-      .mapN((str, times) => new Column(StringRepeat(str.expr, times.expr)))
+      .mapN(f.repeat)
       .toDC
 
     /**
@@ -282,7 +269,7 @@ protected trait StringColumns {
       */
     def rpad(len: IntegerColumn, pad: StringColumn): StringColumn =
       (s.elem, len.elem, pad.elem)
-        .mapN((str, l, p) => new Column(StringRPad(str.expr, l.expr, p.expr)))
+        .mapN(f.rpad)
         .toDC
 
     /**
@@ -302,7 +289,7 @@ protected trait StringColumns {
       */
     def rtrim(trimString: StringColumn): StringColumn =
       (s.elem, trimString.elem)
-        .mapN((str, t) => new Column(StringTrimRight(str.expr, t.expr)))
+        .mapN(f.rtrim)
         .toDC
 
     /**
@@ -325,7 +312,7 @@ protected trait StringColumns {
       */
     def substring(pos: IntegerColumn, len: IntegerColumn): StringColumn =
       (s.elem, pos.elem, len.elem)
-        .mapN((str, p, l) => new Column(Substring(str.expr, p.expr, l.expr)))
+        .mapN(f.substring)
         .toDC
 
     /**
@@ -344,9 +331,7 @@ protected trait StringColumns {
         count: IntegerColumn
     ): StringColumn =
       (s.elem, delim.elem, count.elem)
-        .mapN((str, d, c) =>
-          new Column(SubstringIndex(str.expr, d.expr, c.expr))
-        )
+        .mapN((str, d, c) => df.fn("substring_index", str, d, c))
         .toDC
 
     /**
@@ -363,9 +348,7 @@ protected trait StringColumns {
         replaceString: StringColumn
     ): StringColumn =
       (s.elem, matchingString.elem, replaceString.elem)
-        .mapN((str, m, r) =>
-          new Column(StringTranslate(str.expr, m.expr, r.expr))
-        )
+        .mapN((str, m, r) => df.fn("translate", str, m, r))
         .toDC
 
     /**
@@ -385,9 +368,7 @@ protected trait StringColumns {
       */
     def trim(trimString: StringColumn): StringColumn =
       (s.elem, trimString.elem)
-        .mapN((str, trimStr) => {
-          new Column(StringTrim(str.expr, trimStr.expr))
-        })
+        .mapN(f.trim)
         .toDC
 
     /**
@@ -439,7 +420,7 @@ protected trait StringColumns {
       */
     def like(literal: StringColumn): BooleanColumn =
       (s.elem, literal.elem)
-        .mapN((str, l) => new Column(new Like(str.expr, l.expr)))
+        .mapN(f.like)
         .toDC
 
     /**
@@ -451,7 +432,7 @@ protected trait StringColumns {
       */
     def rLike(literal: StringColumn): BooleanColumn =
       (s.elem, literal.elem)
-        .mapN((str, regex) => new Column(RLike(str.expr, regex.expr)))
+        .mapN(f.rlike)
         .toDC
 
     /**
@@ -484,9 +465,7 @@ protected trait StringColumns {
       */
     def encode(charset: StringColumn): BinaryColumn =
       (s.elem, charset.elem)
-        .mapN((col, char) => {
-          new Column(Encode(col.expr, char.expr))
-        })
+        .mapN((col, char) => df.fn("encode", col, char))
         .toDC
 
     /**
@@ -522,9 +501,7 @@ protected trait StringColumns {
       */
     def unixTimestamp(pattern: StringColumn): LongColumn =
       (s.elem, pattern.elem)
-        .mapN((c, p) => {
-          new Column(UnixTimestamp(c.expr, p.expr))
-        })
+        .mapN((c, p) => df.fn("unix_timestamp", c, p))
         .toDC
 
     /**
@@ -552,9 +529,7 @@ protected trait StringColumns {
       */
     def toDate(format: StringColumn): LocalDateColumn =
       (s.elem, format.elem)
-        .mapN((str, dateFormat) =>
-          new Column(new ParseToDate(str.expr, dateFormat.expr))
-        )
+        .mapN((str, dateFormat) => df.fn("to_date", str, dateFormat))
         .toDC
 
     /**
@@ -574,9 +549,7 @@ protected trait StringColumns {
       */
     def toTimestamp(format: StringColumn): InstantColumn =
       (s.elem, format.elem)
-        .mapN((str, tsFormat) =>
-          new Column(new ParseToTimestamp(str.expr, tsFormat.expr))
-        )
+        .mapN((str, tsFormat) => df.fn("to_timestamp", str, tsFormat))
         .toDC
 
     /**
@@ -589,11 +562,7 @@ protected trait StringColumns {
       */
     def conv(fromBase: IntegerColumn, toBase: IntegerColumn): StringColumn =
       (s.elem, fromBase.elem, toBase.elem)
-        .mapN((str, f, t) =>
-          new Column(
-            Conv(str.expr, f.expr, t.expr)
-          )
-        )
+        .mapN((str, f, t) => df.fn("conv", str, f, t))
         .toDC
 
     /**
@@ -674,7 +643,7 @@ protected trait StringColumns {
     def getJsonObject(path: StringColumn): StringColumn = {
       path.getValueIfLiteral.foreach(str => require(str.startsWith("$.")))
       (s.elem, path.elem)
-        .mapN((x, y) => new Column(GetJsonObject(x.expr, y.expr)))
+        .mapN((x, y) => df.fn("get_json_object", x, y))
         .toDC
     }
 
@@ -688,7 +657,7 @@ protected trait StringColumns {
     def jsonTuple(name: StringColumn, names: StringColumn*): StringColumn = {
       (s +: name +: names).toList
         .traverse(_.elem)
-        .map(x => new Column(JsonTuple(x.map(_.expr))))
+        .map(x => df.fn("json_tuple", x: _*))
         .toDC
     }
 

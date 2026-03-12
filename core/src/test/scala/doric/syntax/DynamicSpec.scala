@@ -2,9 +2,9 @@ package doric
 package syntax
 
 import doric.testUtilities.data.User
+import org.apache.spark.sql.Row
 import org.scalatest.EitherValues
 import org.scalatest.matchers.should.Matchers
-import org.apache.spark.sql.Row
 
 class DynamicSpec extends DoricTestElements with EitherValues with Matchers {
 
@@ -36,9 +36,9 @@ class DynamicSpec extends DoricTestElements with EitherValues with Matchers {
         .validateColumnType(row._1[Row].child._2[Int])
     }
 
-    if (minorScalaVersion >= 12)
-      it("should not compile if the parent column is not a row") {
-        """val c: DoricColumn[String] = col[Int]("id").child.name[String]""" shouldNot compile
-      }
+
+    it("should not compile if the parent column is not a row") {
+      """val c: DoricColumn[String] = col[Int]("id").child.name[String]""" shouldNot compile
+    }
   }
 }

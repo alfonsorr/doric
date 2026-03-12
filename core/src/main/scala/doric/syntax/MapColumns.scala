@@ -2,9 +2,9 @@ package doric
 package syntax
 
 import cats.implicits._
-import doric.types.{SparkType}
+import doric.types.SparkType
 import org.apache.spark.sql.functions.{map_keys, map_values}
-import org.apache.spark.sql.{Column, Row, functions => f}
+import org.apache.spark.sql.{Column, functions => f}
 
 import scala.jdk.CollectionConverters._
 
@@ -142,8 +142,8 @@ protected trait MapColumns {
     /**
       * DORIC EXCLUSIVE! Map to array conversion
       */
-    def toArray: DoricColumn[Array[Row]] =
-      map.keys.zipWith(map.values)((a, b) => struct(a.as("key"), b.as("value")))
+    //def toArray: DoricColumn[Array[Row]] =
+    //  map.keys.zipWith(map.values)((a, b) => struct(a.as("key"), b.as("value")))
 
     /**
       * Creates a new row for each element in the given map column.
@@ -163,7 +163,7 @@ protected trait MapColumns {
       * @group Map Type
       * @see [[org.apache.spark.sql.functions.explode]]
       */
-    def explode: DoricColumn[Row] = map.toArray.elem.map(f.explode).toDC
+    //def explode: DoricColumn[Row] = map.toArray.elem.map(f.explode).toDC
 
     /**
       * Creates a new row for each element in the given map column.
@@ -184,7 +184,7 @@ protected trait MapColumns {
       * @group Map Type
       * @see [[org.apache.spark.sql.functions.explode_outer]]
       */
-    def explodeOuter: DoricColumn[Row] =
+    /*def explodeOuter: DoricColumn[Row] =
       map.toArray.elem.map(f.explode_outer).toDC
 
     private def mapToArrayZipped: DoricColumn[Array[Row]] =
@@ -195,7 +195,7 @@ protected trait MapColumns {
           value.getChild[V]("value").asCName("value".cname)
         )
       )
-
+*/
     /**
       * Creates a new row for each element with position in the given map column.
       *
@@ -215,7 +215,7 @@ protected trait MapColumns {
       * @group Map Type
       * @see [[org.apache.spark.sql.functions.posexplode]]
       */
-    def posExplode: DoricColumn[Row] = mapToArrayZipped.explode
+    //def posExplode: DoricColumn[Row] = mapToArrayZipped.explode
 
     /**
       * Creates a new row for each element with position in the given map column.
@@ -238,7 +238,7 @@ protected trait MapColumns {
       * @group Map Type
       * @see [[org.apache.spark.sql.functions.posexplode_outer]]
       */
-    def posExplodeOuter: RowColumn = mapToArrayZipped.explodeOuter
+    //def posExplodeOuter: RowColumn = mapToArrayZipped.explodeOuter
 
     /**
       * Converts a column containing a StructType into a JSON string with the specified schema.
