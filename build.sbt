@@ -4,29 +4,26 @@ import scala.language.postfixOps
 
 val stableVersion = "0.0.8"
 
-val sparkDefaultShortVersion = "4.0.1"
-val spark35Version           = "3.5.5"
-val spark40Version           = "4.0.1"
+// Spark 4.x only (dropped support for Spark 2.x and 3.x)
+val sparkDefaultVersion = "4.0.1"
+val scalaVersion213     = "2.13.16"
 
-val versionRegex      = """^(.*)\.(.*)\.(.*)$""".r
-val versionRegexShort = """^(.*)\.(.*)$""".r
+val versionRegex = """^(.*)\.(.*)\.(.*)$""".r
 
-val scala212 = "2.12.20"
-val scala213 = "2.13.16"
+// Parse Spark version from system property or use default
+val sparkVersion = settingKey[String]("Spark version")
+Global / sparkVersion := sys.props.getOrElse("sparkVersion", sparkDefaultVersion)
 
-val parserSparkVersion: String => String = {
-  case versionRegexShort("3", "5") => spark35Version
-  case versionRegexShort("4", "0") => spark40Version
-  case versionRegex(a, b, c)     => s"$a.$b.$c"
+// Scala version selection based on Spark version
+val scalaVersionSelect: String => String = {
+  case versionRegex("4", _, _) => scalaVersion213  // Spark 4.x uses Scala 2.13
+  case v => throw new IllegalArgumentException(
+    s"Unsupported Spark version: $v. Only Spark 4.x is supported."
+  )
 }
 
 val long2ShortVersion: String => String = { case versionRegex(a, b, _) =>
   s"$a.$b"
-}
-
-val scalaVersionSelect: String => List[String] = {
-  case versionRegex("3", "5", _) => List(scala212, scala213)
-  case versionRegex("4", _, _)   => List(scala213)
 }
 
 ThisBuild / organization := "org.hablapps"
@@ -48,12 +45,7 @@ ThisBuild / developers := List(
     url("https://github.com/eruizalo")
   )
 )
-val sparkVersion = settingKey[String]("Spark version")
-Global / sparkVersion :=
-  parserSparkVersion(
-    System.getProperty("sparkVersion", sparkDefaultShortVersion)
-  )
-Global / scalaVersion    := scalaVersionSelect(sparkVersion.value).head
+Global / scalaVersion    := scalaVersionSelect(sparkVersion.value)
 Global / publish / skip  := true
 Global / publishArtifact := false
 
@@ -80,12 +72,6 @@ scmInfo := Some(
 
 updateOptions := updateOptions.value.withLatestSnapshots(false)
 
-val configSpark = Seq(
-  sparkVersion := parserSparkVersion(
-    System.getProperty("sparkVersion", sparkDefaultShortVersion)
-  )
-)
-
 val scalaOptionsCommon = Seq(
   "-encoding",
   "utf8",             // Option and arguments on same line
@@ -101,15 +87,14 @@ val scalaOptionsCommon = Seq(
 lazy val core = project
   .in(file("core"))
   .settings(
-    configSpark,
     name               := "doric_" + long2ShortVersion(sparkVersion.value),
     run / fork         := true,
     publish / skip     := false,
     publishArtifact    := true,
-    scalaVersion       := scalaVersionSelect(sparkVersion.value).head,
-    crossScalaVersions := scalaVersionSelect(sparkVersion.value),
+    scalaVersion       := scalaVersionSelect(sparkVersion.value),
+    crossScalaVersions := Seq(scalaVersionSelect(sparkVersion.value)),
     libraryDependencies ++= Seq(
-      "org.apache.spark" %% "spark-sql" % sparkVersion.value % "provided", // scala-steward:off
+      "org.apache.spark" %% "spark-sql" % sparkVersion.value % "provided",
       "org.typelevel"          %% "cats-core"               % "2.13.0",
       "com.lihaoyi"            %% "sourcecode"              % "0.4.2",
       "com.chuusai"            %% "shapeless"               % "2.3.13",
@@ -127,52 +112,32 @@ lazy val core = project
       "org.apache.spark"
     ),
     Compile / unmanagedSourceDirectories ++= {
-      (sparkVersion.value match {
-        case versionRegex(mayor, minor, _) =>
-          (Compile / sourceDirectory).value ** s"*spark_*$mayor.$minor*" / "scala" get
-      }) ++
-        (scalaVersion.value match {
-          case versionRegex(mayor, minor, _) =>
-            (Compile / sourceDirectory).value ** s"*scala_*$mayor.$minor*" / "scala" get
-        })
+      sparkVersion.value match {
+        case versionRegex(major, minor, _) =>
+          Seq((Compile / sourceDirectory).value / s"spark_$major.$minor" / "scala")
+      }
     },
     Test / unmanagedSourceDirectories ++= {
-      (sparkVersion.value match {
-        case versionRegex(mayor, minor, _) =>
-          (Test / sourceDirectory).value ** s"*spark_*$mayor.$minor*" / "scala" get
-      }) ++
-        (scalaVersion.value match {
-          case versionRegex(mayor, minor, _) =>
-            (Test / sourceDirectory).value ** s"*scala_*$mayor.$minor*" / "scala" get
-        })
-    },
-    scalacOptions ++= {
-      scalaOptionsCommon ++ {
-        if (scalaVersion.value.startsWith("2.13"))
-          Seq.empty
-        else
-          Seq("-Ypartial-unification")
+      sparkVersion.value match {
+        case versionRegex(major, minor, _) =>
+          Seq((Test / sourceDirectory).value / s"spark_$major.$minor" / "scala")
       }
-    }
+    },
+    scalacOptions ++= scalaOptionsCommon
   )
 
-val plugins = parserSparkVersion(
-  System.getProperty("sparkVersion", sparkDefaultShortVersion)
-) match {
-  case versionRegex("2", "4", _) => List.empty[Plugins]
-  case _                         => List(MdocPlugin)
-}
+// Spark 4.x uses mdoc
+val plugins = List(MdocPlugin)
 
 lazy val docs = project
   .in(file("docs"))
   .dependsOn(core)
   .settings(
-    configSpark,
     run / fork      := true,
     publish / skip  := true,
     publishArtifact := false,
     run / javaOptions += "-XX:MaxJavaStackTraceDepth=10",
-    scalaVersion := scalaVersionSelect(sparkVersion.value).head,
+    scalaVersion := scalaVersionSelect(sparkVersion.value),
     mdocIn       := baseDirectory.value / "docs",
     libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-sql" % sparkVersion.value
@@ -188,14 +153,7 @@ lazy val docs = project
     mdocExtraArguments := Seq(
       "--clean-target"
     ),
-    scalacOptions ++= {
-      scalaOptionsCommon ++ {
-        if (scalaVersion.value.startsWith("2.13"))
-          Seq.empty
-        else
-          Seq("-Ypartial-unification")
-      }
-    }
+    scalacOptions ++= scalaOptionsCommon
   )
   .enablePlugins(plugins *)
 
