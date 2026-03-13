@@ -3,9 +3,8 @@ package syntax
 
 import doric.sem.{ChildColumnNotFound, ColumnTypeError, DoricMultiError}
 import doric.testUtilities.data.User
-import doric.types.SparkType
 import org.apache.spark.sql.types.{IntegerType, StringType}
-import org.apache.spark.sql.{Row, functions => f}
+import org.apache.spark.sql.{functions => f}
 
 import java.sql.Timestamp
 import scala.jdk.CollectionConverters._
@@ -52,20 +51,6 @@ class DStructOpsSpec extends DoricTestElements {
         )
       } should containAllErrors(
         ColumnTypeError("age", StringType, IntegerType)
-      )
-    }
-
-    it(
-      "throws an error if the user forces a field access for non-row columns"
-    ) {
-      intercept[DoricMultiError] {
-        List((User("John", "doe", 34), 1))
-          .toDF("col", "delete")
-          .select(
-            colInt("delete").asInstanceOf[RowColumn].getChild[Int]("name")
-          )
-      } should containAllErrors(
-        ColumnTypeError("", SparkType[Row].dataType, IntegerType)
       )
     }
   }

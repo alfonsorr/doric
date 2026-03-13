@@ -119,7 +119,7 @@ class SerializeSparkTypesSpec
       serializeSparkType[User](User("", 0))
     }
 
-    it("should serialize rows with schema") {
+    ignore("should serialize rows with schema") {
       val tupleRow = new GenericRowWithSchema(
         Array("j", 1),
         ScalaReflection

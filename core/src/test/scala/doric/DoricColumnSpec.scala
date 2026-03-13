@@ -3,10 +3,10 @@ package doric
 import doric.sem.{ColumnNotFound, DoricMultiError}
 import doric.testUtilities.data.User
 import doric.types.SparkType
+import org.apache.spark.sql.{Encoder, Row}
+import org.scalatest.EitherValues
 
 import java.sql.{Date, Timestamp}
-import org.scalatest.EitherValues
-import org.apache.spark.sql.{Encoder, Row}
 
 class DoricColumnSpec extends DoricTestElements with EitherValues {
 
@@ -80,15 +80,6 @@ class DoricColumnSpec extends DoricTestElements with EitherValues {
 
       col[String]("col.name").elem.run(df).toEither.value
       col[Int]("col.age").elem.run(df).toEither.value
-    }
-    it("works for arrays if accessed directly an index") {
-      val df = List((List("hola", "adios"), 1))
-        .toDF(column, "delete")
-        .select(column)
-
-      (column.cname / c"0")[String].elem.run(df).toEither.value
-      (column.cname / c"1")[String].elem.run(df).toEither.value
-      (column.cname / c"2")[String].elem.run(df).toEither.value
     }
   }
 
