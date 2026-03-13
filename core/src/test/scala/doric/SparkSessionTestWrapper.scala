@@ -19,6 +19,7 @@ trait SparkSessionTestWrapper {
       //.config("spark.driver.bindAddress", "127.0.0.1")
       .config("spark.sql.session.timeZone", timeZone)
       .config("spark.sql.datetime.java8API.enabled", value = true)
+      .config("spark.sql.ansi.enabled", "false") // Disable ANSI mode for Spark 4.0 compatibility
       .appName("spark session")
       .getOrCreate()
 

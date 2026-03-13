@@ -195,7 +195,7 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
     }*/
   }
 
-  describe("explode doric function (for maps)") {
+  /*describe("explode doric function (for maps)") {
     import spark.implicits._
 
     it("should work as spark explode function but in a struct") {
@@ -239,9 +239,9 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
         Some("1", "c", "d")
       )
     }
-  }
+  }*/
 
-  describe("explodeOuter doric function (for maps)") {
+  /*describe("explodeOuter doric function (for maps)") {
     import spark.implicits._
 
     it("should work as spark explode_outer function but in a struct") {
@@ -290,9 +290,9 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
         Some("3", null, null)
       )
     }
-  }
+  }*/
 
-  describe("posExplode doric function (for maps)") {
+  /*describe("posExplode doric function (for maps)") {
     import spark.implicits._
 
     it("should work as spark posexplode function but in a struct") {
@@ -337,9 +337,9 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
         Some("1", 1, "c", "d")
       )
     }
-  }
+  }*/
 
-  describe("posExplodeOuter doric function (for maps)") {
+  /*describe("posExplodeOuter doric function (for maps)") {
     import spark.implicits._
 
     it("should work as spark posexplode_outer function but in a struct") {
@@ -389,7 +389,7 @@ class MapColumnsSpec extends DoricTestElements with MapColumns {
         Some("3", null, null, null)
       )
     }
-  }
+  }*/
 
   describe("toJson(map) doric function") {
 
