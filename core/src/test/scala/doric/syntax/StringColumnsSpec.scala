@@ -8,7 +8,8 @@ import java.time.{Instant, LocalDate, ZoneId}
 import java.time.format.DateTimeFormatter
 
 import org.apache.spark.sql.{Row, functions => f}
-import org.apache.spark.sql.types.{DataType, StructType}
+import org.apache.spark.sql.types.{DataType, NullType, StructType}
+import org.scalatest.Assertion
 
 class StringColumnsSpec extends DoricTestElements {
 
@@ -1248,6 +1249,56 @@ class StringColumnsSpec extends DoricTestElements {
         (c, schema, options) => f.from_csv(f.col(c), schema, options),
         List(Some(Row(1, "a", Instant.parse("2015-08-26T00:00:00Z"))))
       )
+    }
+  }
+
+  describe("raiseError doric function") {
+    import spark.implicits._
+
+    lazy val errorMsg = "this is an error"
+    lazy val df       = List(errorMsg).toDF("errorMsg")
+
+    def validateExceptions(
+        doricExc: RuntimeException,
+        sparkExc: RuntimeException
+    ): Assertion = {
+      // Spark 4.0 formats error messages differently, so we just check they both contain the error
+      doricExc.getMessage should include(errorMsg)
+      sparkExc.getMessage should include(errorMsg)
+      doricExc.getMessage should include("USER_RAISED_EXCEPTION")
+      sparkExc.getMessage should include("USER_RAISED_EXCEPTION")
+    }
+
+    it("should work as spark raise_error function") {
+      import java.lang.{RuntimeException => exception}
+
+      val doricErr = intercept[exception] {
+        val res = df.select(colString("errorMsg").raiseError)
+
+        res.schema.head.dataType shouldBe NullType
+        res.collect()
+      }
+      val sparkErr = intercept[exception] {
+        df.select(f.raise_error(f.col("errorMsg"))).collect()
+      }
+
+      validateExceptions(doricErr, sparkErr)
+    }
+
+    it("should be available for strings") {
+      import java.lang.{RuntimeException => exception}
+
+      val doricErr = intercept[exception] {
+        val res = df.select(raiseError(errorMsg))
+
+        res.schema.head.dataType shouldBe NullType
+        res.collect()
+      }
+      val sparkErr = intercept[exception] {
+        df.select(f.raise_error(f.col("errorMsg"))).collect()
+      }
+
+      validateExceptions(doricErr, sparkErr)
     }
   }
 
