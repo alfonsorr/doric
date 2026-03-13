@@ -60,11 +60,6 @@ javaOptions ++= Seq(
   "-XX:MaxPermSize=2048M",
   "-XX:+CMSClassUnloadingEnabled"
 )
-// Fix for IllegalAccessException with ZoneInfo in Spark 4.0 + Java 17+
-// This allows Spark to access internal Java classes needed for Date/Timestamp operations
-Test / javaOptions ++= Seq(
-  "--add-opens=java.base/sun.util.calendar=ALL-UNNAMED"
-)
 // Show runtime of tests
 Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oD")
 
@@ -106,6 +101,11 @@ lazy val core = project
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.13.0",
       "com.github.mrpowers"    %% "spark-fast-tests"        % "1.3.0"  % "test",
       "org.scalatest"          %% "scalatest"               % "3.2.19" % "test"
+    ),
+    // Fix for IllegalAccessException with ZoneInfo in Spark 4.0 + Java 17+
+    Test / fork := true,
+    Test / javaOptions ++= Seq(
+      "--add-opens=java.base/sun.util.calendar=ALL-UNNAMED"
     ),
     // docs
     run / fork                      := true,
