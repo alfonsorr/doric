@@ -21,10 +21,11 @@ class StringColumns31Spec
         doricExc: RuntimeException,
         sparkExc: RuntimeException
     ): Assertion = {
-//      doricExc.getMessage should fullyMatch regex
-//        s"""${sparkExc.getMessage}
-//  located at . (${this.getClass.getSimpleName}.scala:33)"""
-      doricExc.getMessage should startWith(sparkExc.getMessage)
+      // Spark 4.0 formats error messages differently, so we just check they both contain the error
+      doricExc.getMessage should include(errorMsg)
+      sparkExc.getMessage should include(errorMsg)
+      doricExc.getMessage should include("USER_RAISED_EXCEPTION")
+      sparkExc.getMessage should include("USER_RAISED_EXCEPTION")
     }
 
     it("should work as spark raise_error function") {
