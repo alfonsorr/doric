@@ -3,16 +3,14 @@ package types
 
 import doric.Equalities._
 import doric.sem.{DoricMultiError, GenDoricError}
-
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.catalyst.ScalaReflection
 import org.apache.spark.sql.catalyst.expressions.{GenericRow, GenericRowWithSchema}
 import org.apache.spark.sql.internal.SQLConf
 import org.apache.spark.sql.types.StructType
 
-class SerializeSparkTypeSpec
-    extends DoricTestElements
-    with SerializeSparkTypeSpec_Specific {
+class SerializeSparkTypesSpec
+    extends DoricTestElements {
 
   describe("Simple Java/Scala types") {
 
