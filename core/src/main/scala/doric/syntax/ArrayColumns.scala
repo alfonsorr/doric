@@ -1,7 +1,13 @@
 package doric
 package syntax
 
-import scala.language.higherKinds
+import cats.implicits._
+import doric.types.{CollectionType, LiteralSparkType, SparkType}
+import org.apache.spark.sql.doric.{DoricUnresolvedFunction => df}
+import org.apache.spark.sql.{functions => f}
+
+//import scala.language.higherKinds
+import scala.reflect.ClassTag
 /*
 protected final case class Zipper[T1: SparkType, T2: SparkType, F[_]: CollectionType](
     col: DoricColumn[F[T1]],
@@ -24,7 +30,7 @@ protected final case class Zipper[T1: SparkType, T2: SparkType, F[_]: Collection
       .toDC
   }
 }
-
+*/
 protected trait ArrayColumns {
 
   /**
@@ -90,9 +96,9 @@ protected trait ArrayColumns {
       */
     def getIndex(n: Int): DoricColumn[T] =
       (col.elem, n.lit.elem)
-        .mapN(df.fn("element_at", _, _))
+        .mapN((c,n) => df.fn("element_at", c, n + 1 ))
         .toDC
-
+/*
     /**
       * Transform each element with the provided function.
       *
@@ -246,8 +252,8 @@ protected trait ArrayColumns {
           new Column(ArrayFilter(a.expr, lam1(f.expr, x.expr)))
         )
         .toDC
-    }
-
+    }*/
+/*
     /**
       * Returns null if the array is null, true if the array contains `value`, and false otherwise.
       *
@@ -260,7 +266,7 @@ protected trait ArrayColumns {
           new Column(ArrayContains(c.expr, v.expr))
         })
         .toDC
-
+*/
     /**
       * Removes duplicate values from the array.
       *
@@ -288,7 +294,7 @@ protected trait ArrayColumns {
       */
     def intersect(col2: ArrayColumn[T]): ArrayColumn[T] =
       (col.elem, col2.elem).mapN(f.array_intersect).toDC
-
+/*
     /**
       * Concatenates the elements of `column` using the `delimiter`. Null values are replaced with
       * `nullReplacement`.
@@ -320,7 +326,7 @@ protected trait ArrayColumns {
           new Column(ArrayJoin(c.expr, d.expr, None))
         })
         .toDC
-
+*/
     /**
       * Returns the maximum value in the array.
       *
@@ -462,7 +468,7 @@ protected trait ArrayColumns {
       * @see [[org.apache.spark.sql.functions.explode_outer]]
       */
     def explodeOuter: DoricColumn[T] = col.elem.map(f.explode_outer).toDC
-
+/*
     /**
       * Creates a new row for each element with position in the given array column.
       *
@@ -517,7 +523,7 @@ protected trait ArrayColumns {
         .elem
         .map(f.explode_outer)
         .toDC
-
+*/
     /**
       * Returns an array with reverse order of elements.
       *
@@ -562,7 +568,7 @@ protected trait ArrayColumns {
       (col.elem, start.elem, length.elem)
         .mapN((a, b, c) => f.slice(a, b, c))
         .toDC
-
+/*
     /**
       * DORIC EXCLUSIVE! Given any array[e] column this method will return a new
       * array struct[i, e] column, where the first element is the index and
@@ -610,7 +616,7 @@ protected trait ArrayColumns {
       val cols = col +: (other +: others)
       cols.toList.traverse(_.elem).map(f.arrays_zip).toDC
     }
-
+*/
     /**
       * Creates a new map column.
       * The array in the first column is used for keys.
@@ -648,7 +654,7 @@ protected trait ArrayColumns {
       * @todo scaladoc link (issue #135)
       */
     def toJson(options: Map[String, String] = Map.empty): StringColumn =
-      col.elem.map(x => f.to_json(x, options.asJava)).toDC
+      col.elem.map(x => f.to_json(x, options)).toDC
 
     // ===== Methods from ArrayColumns3x (commented out to avoid compilation errors) =====
 
@@ -763,4 +769,3 @@ protected trait ArrayColumns {
       col.elem.map(f.flatten).toDC
   }
 }
-*/

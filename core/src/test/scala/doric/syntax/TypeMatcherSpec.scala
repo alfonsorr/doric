@@ -7,7 +7,6 @@ import org.apache.spark.sql.types.{IntegerType, StringType}
 class TypeMatcherSpec
     extends DoricTestElements
     with TypeMatcher
-    //with ArrayColumns
     {
 
   import doric.implicitConversions.stringCname
@@ -21,14 +20,14 @@ class TypeMatcherSpec
         val testColumn: String => IntegerColumn = matchToType[Int](_)
           .caseType[Int](identity)
           .caseType[String](_.unsafeCast)
-          //.caseType[Array[Int]](_.getIndex(0) + col("int")) // getIndex not implemented yet
+          .caseType[Array[Int]](_.getIndex(0) + col("int")) // getIndex not implemented yet
           .inOtherCase(12.lit)
 
-        // Note: colArr test expects 2 but gets 12 (default) since Array[Int] case is commented out
-        // df.withColumn(result, testColumn("colArr"))
-        //   .selectCName(result)
-        //   .as[Int]
-        //   .head() shouldBe 2
+         //Note: colArr test expects 2 but gets 12 (default) since Array[Int] case is commented out
+         df.withColumn(result, testColumn("colArr"))
+           .selectCName(result)
+           .as[Int]
+           .head() shouldBe 2
 
         df.withColumn(result, testColumn("int"))
           .selectCName(result)
@@ -55,7 +54,7 @@ class TypeMatcherSpec
       }
 
       // Test commented out - getIndex not implemented for arrays yet
-      /*it("should return an error in case of valid match has an error") {
+      it("should return an error in case of valid match has an error") {
         val testColumn = matchToType[Int]("colArr")
           .caseType[Int](identity)
           .caseType[String](_.unsafeCast)
@@ -65,9 +64,9 @@ class TypeMatcherSpec
         intercept[DoricMultiError] {
           df.select(testColumn)
         } should containAllErrors(
-          ColumnNotFound("int2", List("colArr", "int", "str"))
+          ColumnNotFound("int2", List("int", "str", "colArr"))
         )
-      }*/
+      }
 
       it(
         "should return an error if no mach used and the default case has an error"
@@ -80,7 +79,7 @@ class TypeMatcherSpec
         intercept[DoricMultiError] {
           df.select(testColumn)
         } should containAllErrors(
-          ColumnNotFound("int3", List("colArr", "int", "str"))
+          ColumnNotFound("int3", List("int", "str", "colArr"))
         )
       }
 

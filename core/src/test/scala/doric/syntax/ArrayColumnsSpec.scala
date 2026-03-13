@@ -2,7 +2,7 @@ package doric
 package syntax
 
 //import doric.SparkAuxFunctions.createLambda
-/*
+
 class ArrayColumnsSpec extends DoricTestElements {
 
   import spark.implicits._
@@ -20,7 +20,7 @@ class ArrayColumnsSpec extends DoricTestElements {
         .as[Int]
         .head() shouldBe 2
     }
-
+/*
     it(
       "should transform the elements of the array with the provided function"
     ) {
@@ -1350,8 +1350,8 @@ class ArrayColumnsSpec extends DoricTestElements {
     testOrder(AscNullsFirst, Seq(null, "", "A", "B"))
     testOrder(Desc, Seq(null, "B", "A", ""))
     testOrder(DescNullsLast, Seq("B", "A", "", null))
-    testOrder(DescNullsFirst, Seq(null, "B", "A", ""))
+    testOrder(DescNullsFirst, Seq(null, "B", "A", ""))*/
   }
 
 }
-*/
+

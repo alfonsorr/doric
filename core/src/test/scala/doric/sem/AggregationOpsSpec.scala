@@ -1,10 +1,8 @@
 package doric
 package sem
-/*
-class AggregationOpsSpec extends DoricTestElements {
 
-  import spark.implicits._
-  describe("Aggregate") {
+class AggregationOpsSpec extends DoricTestElements {
+/*  describe("Aggregate") {
     val str  = "str"
     val str2 = "str2"
     val num2 = "num2"
@@ -87,5 +85,5 @@ class AggregationOpsSpec extends DoricTestElements {
       }
     }
   }
-}
 */
+}

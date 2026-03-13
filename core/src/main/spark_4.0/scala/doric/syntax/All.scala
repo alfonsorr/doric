@@ -1,8 +1,8 @@
 package doric.syntax
 
 private[doric] trait All
-//    extends ArrayColumns
-    extends TypeMatcher
+    extends ArrayColumns
+    with TypeMatcher
     with CommonColumns
     with DStructs
     with LiteralConversions

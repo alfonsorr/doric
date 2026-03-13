@@ -82,6 +82,15 @@ class DeserializeSparkTypeSpec
         deserializeSparkType[java.time.LocalDate](java.time.LocalDate.now())
         deserializeSparkType[java.time.Instant](java.time.Instant.now())
       }
+
+      // Datetime type
+      deserializeSparkType[CalendarInterval](new CalendarInterval(0, 0, 0))
+
+      // Interval type
+
+      deserializeSparkType[java.time.Duration](java.time.Duration.ZERO)
+      deserializeSparkType[java.time.Period](java.time.Period.ZERO)
+
     }
   }
 
@@ -155,21 +164,6 @@ class DeserializeSparkTypeSpec
       deserializeSparkType[(List[Int], User, Map[Int, Option[User]])](
         (List(0, 0), User("", 0), Map(0 -> None, 1 -> Some(User("", 0))))
       )
-    }
-  }
-
-  describe("Simple Java/Scala types") {
-
-    it("should match Atomic Spark SQL types") {
-
-      // Datetime type
-      deserializeSparkType[CalendarInterval](new CalendarInterval(0, 0, 0))
-
-      // Interval type
-
-      deserializeSparkType[java.time.Duration](java.time.Duration.ZERO)
-      deserializeSparkType[java.time.Period](java.time.Period.ZERO)
-
     }
   }
 
