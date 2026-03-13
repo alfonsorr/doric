@@ -91,6 +91,24 @@ trait NumericOperationsSpec
         )
       }
 
+      it(s"acosh function $numTypeStr") {
+        testDoricSpark[T, Double](
+          List(Some(-1), Some(1), Some(2), None),
+          List(None, Some(0.0), Some(1.31696), None),
+          _.acosh,
+          f.acosh
+        )
+      }
+
+      it(s"asinh function $numTypeStr") {
+        testDoricSpark[T, Double](
+          List(Some(-1), Some(1), Some(2), None),
+          List(Some(-0.88137), Some(0.88137), Some(1.44364), None),
+          _.asinh,
+          f.asinh
+        )
+      }
+
       it(s"atan2 function $numTypeStr") {
         testDoricSpark2[T, T, Double](
           List(
@@ -561,6 +579,15 @@ trait NumericOperationsSpec
           f.nanvl
         )
       }
+
+      it(s"atanh function $numTypeStr") {
+        testDoricSparkDecimals[T, Double](
+          List(Some(-0.2f), Some(0.4f), Some(0.0f), None),
+          List(Some(-0.20273), Some(0.423649), Some(0.0), None),
+          _.atanh,
+          f.atanh
+        )
+      }
     }
   }
 }
@@ -784,6 +811,56 @@ df.show()
             .collect()
         )
       }
+    }
+  }
+
+  describe("timestampSeconds doric function") {
+    import spark.implicits._
+    import java.sql.Timestamp
+
+    it("should work as spark timestamp_seconds function with integers") {
+      val df = List(Some(123), Some(1), None)
+        .toDF("col1")
+
+      df.testColumns("col1")(
+        c => colInt(c).timestampSeconds,
+        c => f.timestamp_seconds(f.col(c)),
+        List(
+          Some(Timestamp.valueOf("1970-01-01 00:02:03")),
+          Some(Timestamp.valueOf("1970-01-01 00:00:01")),
+          None
+        )
+      )
+    }
+
+    it("should work as spark timestamp_seconds function with longs") {
+      val df = List(Some(123L), Some(1L), None)
+        .toDF("col1")
+
+      df.testColumns("col1")(
+        c => colLong(c).timestampSeconds,
+        c => f.timestamp_seconds(f.col(c)),
+        List(
+          Some(Timestamp.valueOf("1970-01-01 00:02:03")),
+          Some(Timestamp.valueOf("1970-01-01 00:00:01")),
+          None
+        )
+      )
+    }
+
+    it("should work as spark timestamp_seconds function with doubles") {
+      val df = List(Some(123.2), Some(1.9), None)
+        .toDF("col1")
+
+      df.testColumns("col1")(
+        c => colDouble(c).timestampSeconds,
+        c => f.timestamp_seconds(f.col(c)),
+        List(
+          Some(Timestamp.valueOf("1970-01-01 00:02:03.2")),
+          Some(Timestamp.valueOf("1970-01-01 00:00:01.9")),
+          None
+        )
+      )
     }
   }
 }
